@@ -1,9 +1,14 @@
-# Demo Group website - V2
+# Demo Group + DemoShop - V3
 
-Moderna Demo Group prezentacija sa ugrađenim DemoShop katalogom.
+V3 uključuje:
 
-V2 uključuje sekciju O nama, osam grupa usluga, 33 grupisana projekta,
-filtriranje radova po kategorijama i FAQ.
+- modernu Demo Group prezentaciju;
+- sekciju O nama i osam grupa usluga;
+- 33 grupisana projekta i 67 fotografija;
+- filtriranje radova po kategorijama;
+- ugrađeni DemoShop katalog;
+- 12 usklađenih kategorija u DemoShop stranici Naši proizvodi i radovi;
+- poruku Novi radovi uskoro za kategorije bez fotografija.
 
-Za objavljivanje postavite kompletan sadržaj paketa u korijen GitHub
+Postavite kompletan sadržaj paketa u korijen postojećeg GitHub
 repozitorijuma. `index.html` mora ostati u korijenu.
