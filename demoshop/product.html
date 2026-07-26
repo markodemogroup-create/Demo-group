@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Detalji proizvoda, dostupne boje, veličine, cena i lager.">
+  <title>Proizvod — DemoShop</title>
+  <link rel="preconnect" href="https://demo-group-api.marko-demogroup.workers.dev">
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+  <link rel="stylesheet" href="style.css?v=59">
+  <link rel="stylesheet" href="product-availability.css?v=17">
+</head>
+<body data-demoshop-build="57">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="DemoShop početna"><img class="brand-logo" src="assets/brand/demoshop-logo.png" alt="DemoShop"></a>
+      <form class="header-search" role="search" action="index.html" data-header-search>
+        <label class="visually-hidden" for="headerSearchInput">Pretraga kataloga</label>
+        <input id="headerSearchInput" name="search" type="search" placeholder="Pretraga po nazivu ili šifri" autocomplete="off" data-header-search-input>
+        <button type="submit" aria-label="Pretraži katalog">⌕</button>
+        <div class="search-suggestions hidden" role="listbox" aria-label="Predlozi proizvoda" data-header-search-suggestions></div>
+      </form>
+      <div class="header-actions"><a class="back-link" href="index.html">← Katalog</a><a class="cart-link" href="cart.html">Upit <span class="cart-count" data-cart-count>0</span></a></div>
+    </div>
+  </header>
+
+  <main class="container product-page">
+    <div id="productMessage" class="message">Učitavanje proizvoda…</div>
+    <article id="productDetail" class="product-detail hidden">
+      <section class="gallery-panel">
+        <div id="galleryModes" class="gallery-modes hidden" aria-label="Prikaz proizvoda">
+          <button id="galleryImagesButton" class="active" type="button" aria-pressed="true">Slike</button>
+          <button id="galleryDimensionsButton" type="button" aria-pressed="false">Dimenzije</button>
+        </div>
+        <div class="main-image-wrap"><img id="mainImage" alt=""></div>
+        <div id="thumbs" class="thumbs"></div>
+      </section>
+
+      <section class="product-info">
+        <p id="breadcrumb" class="eyebrow"></p>
+        <div id="productBadges" class="product-page-badges" aria-label="Oznake proizvoda"></div>
+        <h1 id="productName"></h1>
+        <p class="model-line">Model <strong id="modelCode"></strong></p>
+
+        <div class="price-row"><span id="price">—</span><small>Cena po komadu · bez PDV-a</small><strong id="priceWithVat" class="price-with-vat">—</strong></div>
+
+        <div class="option-block">
+          <div class="option-heading"><strong>Boja / nijansa</strong><span id="selectedShadeLabel"></span></div>
+          <div id="colorOptions" class="color-options"></div>
+        </div>
+
+        <div id="sizeBlock" class="option-block compact-size-picker">
+          <div class="option-heading"><strong>Veličina</strong><span id="selectedSizeLabel"></span></div>
+          <div id="sizeOptions" class="size-options"></div>
+        </div>
+
+        <div id="variantTableBlock" class="variant-table-block hidden">
+          <div class="variant-table-head"><span>Veličina</span><span>Cena</span><span>Zaliha</span><span>Dolazak</span></div>
+          <div id="variantTableBody" class="variant-table-body"></div>
+        </div>
+
+        <div class="variant-card">
+          <div><span>Šifra artikla</span><strong id="variantCode">—</strong></div>
+          <div><span>Dostupnost</span><strong id="stock">—</strong></div>
+          <div id="arrivalBlock" class="hidden"><span>Najavljeni dolazak</span><strong id="arrival">—</strong></div>
+        </div>
+
+        <div class="add-to-cart-row">
+          <div class="quantity-picker" aria-label="Količina proizvoda">
+            <span>Količina</span>
+            <div><button id="quantityMinus" type="button" aria-label="Smanji količinu">−</button><output id="quantity" aria-live="polite">1</output><button id="quantityPlus" type="button" aria-label="Povećaj količinu">+</button></div>
+            <small id="packageHint">Minimalna količina i korak: 1 kom.</small>
+          </div>
+          <button id="quoteButton" class="quote-button" type="button">Dodaj u upit</button>
+        </div>
+        <p id="cartFeedback" class="helper">Izaberite boju i veličinu, zatim dodajte tačnu varijantu u upit.</p>
+      </section>
+    </article>
+
+    <section id="productExtra" class="product-extra hidden">
+      <details class="info-section" open>
+        <summary>Opis</summary>
+        <div class="info-content"><p id="productDescription"></p><p id="productDescriptionLong"></p></div>
+      </details>
+
+      <details class="info-section" open>
+        <summary>Specifikacije</summary>
+        <div class="specification-columns">
+          <div><h3>Detalji proizvoda</h3><dl id="productSpecifications" class="spec-list"></dl></div>
+          <div><h3>Logističke informacije</h3><dl id="productLogistics" class="spec-list"></dl><div id="productPrintMethodsBlock"><h3>Preporučeni tip štampe</h3><div id="productPrintMethods" class="print-methods"></div></div></div>
+        </div>
+      </details>
+
+      <details id="productVideoSection" class="info-section hidden">
+        <summary>Video proizvoda</summary>
+        <div id="productVideo" class="product-video"></div>
+      </details>
+
+      <details id="productDocumentsSection" class="info-section hidden">
+        <summary>Dokumentacija</summary>
+        <div id="productDocuments" class="document-list"></div>
+      </details>
+
+      <details id="productMeasurementsSection" class="info-section hidden">
+        <summary>Mere i dimenzije</summary>
+        <div id="productMeasurements" class="measurement-content"></div>
+      </details>
+    </section>
+
+    <section id="relatedProductsSection" class="related-products hidden" aria-labelledby="relatedProductsTitle">
+      <div class="related-products-heading">
+        <div><p class="eyebrow">JOŠ IZ ISTE KATEGORIJE</p><h2 id="relatedProductsTitle">Slični proizvodi</h2></div>
+        <a id="relatedProductsLink" href="index.html">Pogledaj sve →</a>
+      </div>
+      <div id="relatedProductsGrid" class="related-products-grid"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <a class="footer-logo footer-logo-clean" href="index.html" aria-label="DemoShop početna"><img src="assets/brand/demoshop-icon-transparent-v59.png" alt=""><span><b>DEMO</b><b>SHOP</b></span></a>
+        <p>Katalog promotivnih proizvoda i realizovane štampe kompanije Demo Group.</p>
+        <a class="footer-company-link" href="https://demogroup.rs/" target="_blank" rel="noopener">Posetite zvanični Demo Group sajt <span>↗</span></a>
+      </div>
+      <div class="footer-column"><h2>DemoShop</h2><a href="index.html">Katalog proizvoda</a><a href="radovi.html">Naši radovi</a><a href="cart.html">Pošaljite upit</a></div>
+      <div class="footer-column"><h2>Kontakt</h2><address>Janka Veselinovića 30<br>Šabac, Srbija</address><a href="tel:+38115300230">+381 15 300 230</a><a href="tel:+38166300230">+381 66 300 230</a></div>
+      <div class="footer-column"><h2>Pišite nam</h2><a href="mailto:demogroup2004@gmail.com">demogroup2004@gmail.com</a><p>Štampamo vreme, dan po dan.</p></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 Demo Group. Sva prava zadržana.</span><span>Cene su informativne, bez PDV-a i potvrđuju se kroz upit.</span></div>
+  </footer>
+  <script src="cart-store.js?v=59"></script>
+  <script src="header-search.js?v=59"></script>
+  <script src="product.js?v=59"></script>
+</body>
+</html>
