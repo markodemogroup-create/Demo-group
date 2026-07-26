@@ -73,7 +73,7 @@
     </div>
     <div class="service-grid">
       <article class="service-card"><span>01</span><h3>Knjige i monografije</h3><p>Od prve stranice do savršenog poveza - štampa koja čuva priču.</p><b>↗</b></article>
-      <article class="service-card"><span>02</span><h3>Katalozi i brošure</h3><p>Prodajni materijali koji izgledaju jednako dobro kao vaš brend.</p><b>↗</b></article>
+      <article class="service-card"><span>02</span><h3>Brošure i lifleti</h3><p>Prodajni materijali koji izgledaju jednako dobro kao vaš brend.</p><b>↗</b></article>
       <article class="service-card"><span>03</span><h3>Rokovnici i blokovi</h3><p>Praktični, pažljivo izrađeni i potpuno prilagođeni vašem identitetu.</p><b>↗</b></article>
       <article class="service-card"><span>04</span><h3>Ambalaža i kutije</h3><p>Konstrukcija, štampa i završna obrada koja proizvod stavlja u prvi plan.</p><b>↗</b></article>
       <article class="service-card"><span>05</span><h3>Fascikle i galanterija</h3><p>Poslovni materijali koji organizuju dokumente i dosljedno predstavljaju vaš brend.</p><b>↗</b></article>
@@ -94,7 +94,7 @@
         <select id="work-filter">
           <option value="all">Svi radovi</option>
           <option value="knjige">Knjige i monografije</option>
-          <option value="katalozi">Katalozi i brošure</option>
+          <option value="katalozi">Brošure i lifleti</option>
           <option value="fascikle">Fascikle</option>
           <option value="flajeri">Flajeri i letci</option>
           <option value="rokovnici">Rokovnici i blokovi</option>
@@ -152,13 +152,13 @@ const projects=[
   {title:"Monografija škole",cat:"Knjige i monografije",key:"knjige",images:["093007","093008","093020"]},
   {title:"Crno-beli spomenar",cat:"Knjige i monografije",key:"knjige",images:["093048","093057"]},
   {title:"Drina plače i pamti",cat:"Knjige i monografije",key:"knjige",images:["093130","093139"]},
-  {title:"M1 poslovna publikacija",cat:"Katalozi i brošure",key:"katalozi",images:["093210","093228"]},
-  {title:"Fortuna Foto",cat:"Katalozi i brošure",key:"katalozi",images:["093319","093332"]},
-  {title:"MD Poliklinika",cat:"Katalozi i brošure",key:"katalozi",images:["093348","093355"]},
-  {title:"Mercator katalog",cat:"Katalozi i brošure",key:"katalozi",images:["093429","093436"]},
-  {title:"Zoom Optic",cat:"Katalozi i brošure",key:"katalozi",images:["093444","093452"]},
-  {title:"Poslovni savetnik",cat:"Katalozi i brošure",key:"katalozi",images:["093501","093507"]},
-  {title:"ABD-PROM katalog",cat:"Katalozi i brošure",key:"katalozi",images:["093542","093552","093605"]},
+  {title:"M1 poslovna publikacija",cat:"Fascikle",key:"fascikle",images:["093210","093228"]},
+  {title:"Fortuna Foto",cat:"Fascikle",key:"fascikle",images:["093319","093332"]},
+  {title:"MD Poliklinika",cat:"Fascikle",key:"fascikle",images:["093348","093355"]},
+  {title:"Mercator katalog",cat:"Fascikle",key:"fascikle",images:["093429","093436"]},
+  {title:"Zoom Optic",cat:"Fascikle",key:"fascikle",images:["093444","093452"]},
+  {title:"Poslovni savetnik",cat:"Fascikle",key:"fascikle",images:["093501","093507"]},
+  {title:"ABD-PROM katalog",cat:"Fascikle",key:"fascikle",images:["093542","093552","093605"]},
   {title:"Global Mont fascikla",cat:"Fascikle",key:"fascikle",images:["093633","093643"]},
   {title:"MD Poliklinika letak",cat:"Flajeri i letci",key:"flajeri",images:["094017"]},
   {title:"Global Mont poslovna mapa",cat:"Fascikle",key:"fascikle",images:["094003"]},
@@ -172,15 +172,15 @@ const projects=[
   {title:"DPS Klas poslovni rokovnik",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094245","094251","094302"]},
   {title:"DPS Klas spiralni rokovnik",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094312","094317"]},
   {title:"Poslovni savetnik blok",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094323","094328"]},
-  {title:"Christyns Agri",cat:"Katalozi i brošure",key:"katalozi",images:["094347","094403"]},
-  {title:"Đukić katalog",cat:"Katalozi i brošure",key:"katalozi",images:["094414"]},
-  {title:"Luks katalog",cat:"Katalozi i brošure",key:"katalozi",images:["094424"]},
+  {title:"Christyns Agri",cat:"Fascikle",key:"fascikle",images:["094347","094403"]},
+  {title:"Đukić dvolisnica",cat:"Brošure i lifleti",key:"katalozi",images:["094414"]},
+  {title:"LUX dvolisnica",cat:"Brošure i lifleti",key:"katalozi",images:["094424"]},
   {title:"Melisa magazin",cat:"Časopisi",key:"casopisi",images:["094434"]},
   {title:"Super Protector",cat:"Ambalaža i kutije",key:"ambalaza",images:["094510","094533"]},
   {title:"Biljna apoteka",cat:"Ambalaža i kutije",key:"ambalaza",images:["094539","094547","094607","094614"]},
   {title:"Manastirska ambalaža",cat:"Ambalaža i kutije",key:"ambalaza",images:["094722","094728","094733","094758","094804","094810"]},
   {title:"Bela koza",cat:"Ambalaža i kutije",key:"ambalaza",images:["094838"]},
-  {title:"Turistička brošura",cat:"Katalozi i brošure",key:"katalozi",images:["094913","094917"]}
+  {title:"Turistička brošura",cat:"Brošure i lifleti",key:"katalozi",images:["094913","094917"]}
 ];
 const gallery=document.getElementById("all-works");
 const rotations={"094017":90,"094150":180};
