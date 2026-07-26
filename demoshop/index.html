@@ -1,0 +1,260 @@
+﻿<!doctype html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DemoShop katalog promotivnih proizvoda sa bojama, veličinama, cenama i lagerom.">
+  <title>DemoShop — Katalog promotivnih proizvoda</title>
+  <link rel="preconnect" href="https://demo-group-api.marko-demogroup.workers.dev">
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+  <link rel="stylesheet" href="style.css?v=59">
+  <link rel="stylesheet" href="catalog-taxonomy.css?v=13">
+</head>
+<body data-demoshop-build="57">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="DemoShop početna">
+        <img class="brand-logo" src="assets/brand/demoshop-logo.png" alt="DemoShop">
+      </a>
+      <form id="searchForm" class="header-search" role="search">
+        <label class="visually-hidden" for="searchInput">Pretraga kataloga</label>
+        <input id="searchInput" type="search" placeholder="Pretraga po nazivu ili šifri" autocomplete="off">
+        <button type="submit" aria-label="Pretraži katalog">⌕</button>
+        <button id="clearSearch" class="header-search-clear hidden" type="button" aria-label="Poništi pretragu">×</button>
+        <div id="searchSuggestions" class="search-suggestions hidden" role="listbox" aria-label="Predlozi proizvoda"></div>
+      </form>
+      <div class="header-note"><span class="status-dot"></span><span id="apiStatus">Povezivanje sa katalogom</span></div>
+      <a class="cart-link" href="cart.html">Upit <span class="cart-count" data-cart-count>0</span></a>
+    </div>
+  </header>
+
+  <nav class="catalog-nav" aria-label="Glavna navigacija kataloga">
+    <div class="container nav-inner">
+      <button id="categoriesToggle" class="categories-toggle" type="button" aria-expanded="false" aria-controls="categoriesMenu">Kategorije <span aria-hidden="true">⌄</span></button>
+      <div class="new-menu-wrap">
+        <button id="newMenuToggle" class="new-menu-toggle" type="button" aria-expanded="false" aria-controls="newMenu">Novo <span aria-hidden="true">⌄</span></button>
+        <div id="newMenu" class="new-menu hidden" role="menu">
+          <button type="button" role="menuitem" data-status-collection="new" data-status-label="Novo"><strong>Novo</strong><small>Najnoviji proizvodi u katalogu</small></button>
+          <button type="button" role="menuitem" data-status-collection="coming" data-status-label="Uskoro dolazi"><strong>Uskoro dolazi</strong><small>Najavljeni proizvodi i dopune</small></button>
+          <button type="button" role="menuitem" data-status-collection="arrived" data-status-label="Upravo stiglo"><strong>Upravo stiglo</strong><small>Sveže dopunjeno na lageru</small></button>
+        </div>
+      </div>
+      <button class="quick-category" type="button" data-category="TX">Tekstil</button>
+      <button class="quick-category" type="button" data-category="KS">Kućni program</button>
+      <button class="quick-category" type="button" data-category="TE">Tehnologija</button>
+      <button class="quick-category" type="button" data-category="TP">Torbe i putovanje</button>
+      <button class="quick-category" type="button" data-category="OL">Olovke</button>
+      <a class="portfolio-nav-link portfolio-nav-cta" href="radovi.html">Naši proizvodi</a>
+    </div>
+    <div id="categoriesMenu" class="categories-menu hidden">
+      <div class="container"><div id="categoriesGrid" class="categories-grid"></div></div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="promo-banner-section" aria-label="Aktuelna ponuda">
+      <div class="container">
+        <div id="heroShowcase" class="promo-banner" aria-roledescription="carousel" aria-label="Aktuelne DemoShop ponude">
+          <div class="promo-banner-viewport">
+            <article class="promo-banner-slide promo-banner-image-slide active" data-hero-slide="0" aria-hidden="false"><a href="?search=ABSOLUT#searchForm" aria-label="Pogledaj ABSOLUT kolekciju"><img src="assets/banners/hero-01.webp" alt="ABSOLUT kolekcija" fetchpriority="high"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="1" aria-hidden="true" tabindex="-1"><a href="?category=TX&amp;subCategory=TX%20-%2012#searchForm" aria-label="Pogledaj novu tekstilnu kolekciju"><img src="assets/banners/hero-02.webp" alt="Nova tekstilna kolekcija" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="2" aria-hidden="true" tabindex="-1"><a href="?search=MASTER%20KID#searchForm" aria-label="Pogledaj MASTER KID"><img src="assets/banners/hero-03.webp" alt="MASTER KID" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="3" aria-hidden="true" tabindex="-1"><a href="?collection=summer-picks#searchForm" aria-label="Pogledaj letnju kolekciju"><img src="assets/banners/hero-04.gif" alt="Letnja kolekcija" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="4" aria-hidden="true" tabindex="-1"><a href="?search=INFINITY#searchForm" aria-label="Pogledaj INFINITY kolekciju"><img src="assets/banners/hero-05.webp" alt="INFINITY kolekcija" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="5" aria-hidden="true" tabindex="-1"><a href="?search=TAHITI#searchForm" aria-label="Pogledaj TAHITI"><img src="assets/banners/hero-06.webp" alt="TAHITI" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="6" aria-hidden="true" tabindex="-1"><a href="?collection=target-shirts#searchForm" aria-label="Pogledaj TARGET kolekciju"><img src="assets/banners/hero-07.webp" alt="TARGET kolekcija" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="7" aria-hidden="true" tabindex="-1"><a href="?search=BETTY#searchForm" aria-label="Pogledaj BETTY"><img src="assets/banners/hero-08.webp" alt="BETTY" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="8" aria-hidden="true" tabindex="-1"><a href="?collection=edison-baracuda#searchForm" aria-label="Pogledaj EDISON i BARACUDA kolekciju"><img src="assets/banners/hero-09.webp" alt="EDISON i BARACUDA kolekcija" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="9" aria-hidden="true" tabindex="-1"><a href="?collection=pigna#searchForm" aria-label="Pogledaj PIGNA kolekciju"><img src="assets/banners/hero-10.webp" alt="PIGNA kolekcija" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="10" aria-hidden="true" tabindex="-1"><a href="?category=TP#searchForm" aria-label="Pogledaj kolekciju torbi i putovanja"><img src="assets/banners/hero-11.webp" alt="Torbe i putovanja" loading="lazy"></a></article>
+            <article class="promo-banner-slide promo-banner-image-slide" data-hero-slide="11" aria-hidden="true" tabindex="-1"><a href="?collection=everyday-bags#searchForm" aria-label="Pogledaj kolekciju torbi"><img src="assets/banners/hero-12.jpg" alt="Kolekcija torbi" loading="lazy"></a></article>
+          </div>
+
+          <div class="promo-banner-controls">
+            <div class="promo-banner-dots" aria-label="Izbor banera">
+              <button type="button" class="active" data-hero-dot="0" aria-label="Baner 1" aria-current="true"></button>
+              <button type="button" data-hero-dot="1" aria-label="Baner 2" aria-current="false"></button>
+              <button type="button" data-hero-dot="2" aria-label="Baner 3" aria-current="false"></button>
+              <button type="button" data-hero-dot="3" aria-label="Baner 4" aria-current="false"></button>
+              <button type="button" data-hero-dot="4" aria-label="Baner 5" aria-current="false"></button>
+              <button type="button" data-hero-dot="5" aria-label="Baner 6" aria-current="false"></button>
+              <button type="button" data-hero-dot="6" aria-label="Baner 7" aria-current="false"></button>
+              <button type="button" data-hero-dot="7" aria-label="Baner 8" aria-current="false"></button>
+              <button type="button" data-hero-dot="8" aria-label="Baner 9" aria-current="false"></button>
+              <button type="button" data-hero-dot="9" aria-label="Baner 10" aria-current="false"></button>
+              <button type="button" data-hero-dot="10" aria-label="Baner 11" aria-current="false"></button>
+              <button type="button" data-hero-dot="11" aria-label="Baner 12" aria-current="false"></button>
+            </div>
+          </div>
+        </div>
+        <span id="heroTotal" class="visually-hidden">1.756</span>
+      </div>
+    </section>
+
+    <section id="noviteti" class="home-new-products" aria-labelledby="newProductsTitle">
+      <div class="container">
+        <div class="new-products-heading">
+          <div>
+            <p class="eyebrow">SVEŽE IZ KATALOGA</p>
+            <h2 id="newProductsTitle">Noviteti</h2>
+          </div>
+        </div>
+        <p id="newProductsMessage" class="new-products-message">Učitavanje najnovijih proizvoda…</p>
+        <div class="new-products-viewport">
+          <div id="newProductsGrid" class="new-products-track" aria-live="polite"></div>
+        </div>
+        <div id="newProductsDots" class="new-products-dots" aria-label="Pozicija slajdera"></div>
+      </div>
+    </section>
+
+    <section class="home-promo-stories" aria-labelledby="promoStoriesTitle">
+      <div class="container">
+        <div class="promo-stories-heading">
+          <div>
+            <p class="eyebrow">IDEJE ZA VAŠ BREND</p>
+            <h2 id="promoStoriesTitle">Izdvajamo iz kataloga</h2>
+          </div>
+        </div>
+        <div class="promo-stories-viewport">
+          <div id="promoStoriesTrack" class="promo-stories-track">
+            <a class="promo-story promo-story-dark" href="?collection=swiss-pens#searchForm">
+              <span>POSLOVNA ELEGANCIJA</span><strong>Swiss made olovke</strong><small>Preciznost koja ostavlja utisak</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/10218_000.webp" alt="DS3 MAT olovka">
+            </a>
+            <a class="promo-story promo-story-blue" href="?search=QS40#searchForm">
+              <span>NOVO U KATALOGU</span><strong>QS40 AIR</strong><small>Savremeni dizajn za svaki sto</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/10220_000.webp" alt="QS40 AIR olovka">
+            </a>
+            <a class="promo-story promo-story-green" href="?collection=eco-writing#searchForm">
+              <span>ODRŽIVI IZBOR</span><strong>Pišite zeleniju priču</strong><small>KIND SOFT i ZED kolekcija</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/10216_000.webp" alt="KIND SOFT olovka">
+            </a>
+            <a class="promo-story promo-story-violet" href="?search=MULTI%20KEY%20TAG#searchForm">
+              <span>PAMETNI DODACI</span><strong>Važne stvari na dohvat ruke</strong><small>MULTI KEY TAG</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/38223_000.webp" alt="MULTI KEY TAG privezak">
+            </a>
+            <a class="promo-story promo-story-paper" href="?collection=business-notes#searchForm">
+              <span>ZA SVAKU DOBRU IDEJU</span><strong>Beležnice sa karakterom</strong><small>DOMINGO A5 i FUTRO</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/34799_000.webp" alt="DOMINGO A5 beležnica">
+            </a>
+            <a class="promo-story promo-story-rose" href="?search=NOTO%20ROSE%20GOLD#searchForm">
+              <span>MALI POKLON, VELIKI UTISAK</span><strong>NOTO Rose Gold</strong><small>Elegantan privezak za ključeve</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/33248_000.webp" alt="NOTO Rose Gold privezak">
+            </a>
+            <a class="promo-story promo-story-home" href="?collection=pigna#searchForm">
+              <span>TRENUTAK ZA PAUZU</span><strong>PIGNA kolekcija</strong><small>Staklene šolje sa dvostrukim zidom</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/44185_000.webp" alt="PIGNA MAXI šolje">
+            </a>
+            <a class="promo-story promo-story-red" href="?search=SONDER#searchForm">
+              <span>PRAKTIČNO I UVEK PRI RUCI</span><strong>SONDER 4/1</strong><small>Otvarač koji ide svuda sa vama</small>
+              <img src="https://apiv2.promosolution.services/content/ModelItem/32363_000.webp" alt="SONDER otvarač">
+            </a>
+          </div>
+        </div>
+        <div id="promoStoriesDots" class="promo-stories-dots" aria-label="Pozicija promotivnog slidera"></div>
+      </div>
+    </section>
+
+    <section id="izdvojeno" class="home-highlights" aria-labelledby="highlightsTitle">
+      <div class="container">
+        <div class="highlights-heading">
+          <div>
+            <p class="eyebrow">BRZI IZBOR</p>
+            <h2 id="highlightsTitle">Izdvojene kolekcije</h2>
+          </div>
+          <p>Tri najtraženije grupe proizvoda, povezane direktno sa aktuelnim katalogom.</p>
+        </div>
+        <div class="highlight-grid">
+          <button class="highlight-card highlight-textile" type="button"
+            data-highlight-category="TX" data-highlight-subcategory="TX - 12" data-highlight-label="Majice, duksevi i jakne">
+            <span class="highlight-kicker">Za tim, događaj i svakodnevni rad</span>
+            <strong>Tekstil</strong>
+            <span class="highlight-description">Majice, duksevi i jakne</span>
+            <small><b data-highlight-count="TX - 12">—</b> modela u katalogu</small>
+            <span class="highlight-link">Pogledaj kolekciju <b aria-hidden="true">→</b></span>
+            <span class="highlight-art" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+
+          <button class="highlight-card highlight-home" type="button"
+            data-highlight-category="KS" data-highlight-subcategory="KS - 01" data-highlight-label="Šolje">
+            <span class="highlight-kicker">Pokloni koji ostaju u upotrebi</span>
+            <strong>Kućni program</strong>
+            <span class="highlight-description">Šolje i praktični promo proizvodi</span>
+            <small><b data-highlight-count="KS - 01">—</b> modela u kolekciji šolja</small>
+            <span class="highlight-link">Pogledaj kolekciju <b aria-hidden="true">→</b></span>
+            <span class="highlight-art" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+
+          <button class="highlight-card highlight-tech" type="button"
+            data-highlight-category="TE" data-highlight-label="Tehnologija">
+            <span class="highlight-kicker">Savremeni pokloni za svaki sto</span>
+            <strong>Tehnologija</strong>
+            <span class="highlight-description">Punjači, audio i pametni gedžeti</span>
+            <small><b data-highlight-count="TE">—</b> modela u katalogu</small>
+            <span class="highlight-link">Pogledaj kolekciju <b aria-hidden="true">→</b></span>
+            <span class="highlight-art" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogStart" class="container catalog-shell">
+      <button id="mobileFiltersToggle" class="mobile-filters-toggle" type="button" aria-expanded="false" aria-controls="catalogFilters">
+        Filteri <span id="mobileFilterCount">0</span>
+      </button>
+
+      <div class="catalog-layout">
+        <aside id="catalogFilters" class="catalog-filters" aria-label="Filteri kataloga">
+          <div class="filters-top">
+            <strong>Filteri</strong>
+            <button id="clearAllFilters" type="button">Poništi sve</button>
+          </div>
+          <div id="categoryFilterTree" class="filter-category-tree"></div>
+          <div id="dynamicFilters" class="dynamic-filters">
+            <p class="filters-loading">Učitavanje filtera…</p>
+          </div>
+        </aside>
+
+        <div class="catalog-results">
+
+      <div class="results-bar">
+        <div><strong id="totalMatches">—</strong> <span id="resultsLabel">proizvoda</span></div>
+        <div id="pageInfo">Strana —</div>
+      </div>
+
+      <div id="activeFilter" class="active-filter hidden">
+        <div><span>Aktivni izbor</span><strong id="activeFilterName"></strong></div>
+        <button id="clearCategory" type="button">Prikaži sve ×</button>
+      </div>
+
+      <div id="message" class="message" role="status">Učitavanje proizvoda…</div>
+      <section id="productGrid" class="product-grid" aria-live="polite"></section>
+
+      <nav class="pagination" aria-label="Straničenje kataloga">
+        <button id="prevPage" type="button">← Prethodna</button>
+        <span id="paginationText">—</span>
+        <button id="nextPage" type="button">Sledeća →</button>
+      </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <a class="footer-logo footer-logo-clean" href="index.html" aria-label="DemoShop početna"><img src="assets/brand/demoshop-icon-transparent-v59.png" alt=""><span><b>DEMO</b><b>SHOP</b></span></a>
+        <p>Katalog promotivnih proizvoda i realizovane štampe kompanije Demo Group.</p>
+        <a class="footer-company-link" href="https://demogroup.rs/" target="_blank" rel="noopener">Posetite zvanični Demo Group sajt <span>↗</span></a>
+      </div>
+      <div class="footer-column"><h2>DemoShop</h2><a href="index.html">Katalog proizvoda</a><a href="radovi.html">Naši radovi</a><a href="cart.html">Pošaljite upit</a></div>
+      <div class="footer-column"><h2>Kontakt</h2><address>Janka Veselinovića 30<br>Šabac, Srbija</address><a href="tel:+38115300230">+381 15 300 230</a><a href="tel:+38166300230">+381 66 300 230</a></div>
+      <div class="footer-column"><h2>Pišite nam</h2><a href="mailto:demogroup2004@gmail.com">demogroup2004@gmail.com</a><p>Štampamo vreme, dan po dan.</p></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 Demo Group. Sva prava zadržana.</span><span>Cene su informativne, bez PDV-a i potvrđuju se kroz upit.</span></div>
+  </footer>
+  <script src="cart-store.js?v=59"></script>
+  <script src="catalog-taxonomy.js?v=13"></script>
+  <script src="script.js?v=59"></script>
+</body>
+</html>

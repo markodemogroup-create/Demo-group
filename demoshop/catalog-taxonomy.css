@@ -1,0 +1,42 @@
+/* Treci nivo kataloga: npr. Solje > Keramicke / Metalne / Termo */
+.menu-subcategory-group {
+  border-bottom: 1px solid #f0f0f2;
+  padding: 2px 0 7px;
+}
+
+.menu-subcategory-title {
+  color: #27272c !important;
+  font-weight: 800 !important;
+}
+
+.menu-tertiary {
+  display: grid;
+  gap: 1px;
+  padding: 1px 0 3px 12px;
+}
+
+.menu-tertiary button {
+  position: relative;
+  padding: 5px 0 5px 11px !important;
+  color: #73737b !important;
+}
+
+.menu-tertiary button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d5d5da;
+  transform: translateY(-50%);
+}
+
+.menu-tertiary button:hover {
+  color: var(--brand-teal-dark) !important;
+}
+
+.menu-tertiary button:hover::before {
+  background: var(--brand-teal);
+}

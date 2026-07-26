@@ -1,0 +1,72 @@
+/* Dostupnost, lager i najavljeni dolazak varijanti */
+.variant-table-head,
+.variant-table-row {
+  grid-template-columns: 1.5fr .8fr .65fr .9fr;
+}
+
+.variant-card:has(#arrivalBlock:not(.hidden)) {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 700px) {
+  .variant-table-block {
+    overflow-x: auto;
+  }
+
+  .variant-table-head,
+  .variant-table-row {
+    min-width: 620px;
+  }
+
+  .variant-card:has(#arrivalBlock:not(.hidden)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dokumentacija proizvoda */
+.document-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 2px 28px;
+}
+
+.document-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.document-item span {
+  color: var(--brand-teal-dark);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.document-item strong {
+  font-size: 13px;
+}
+
+.document-item em {
+  color: var(--muted);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.document-item:not(.document-item-static):hover {
+  border-color: var(--brand-teal);
+  box-shadow: 0 8px 25px rgba(20, 20, 24, .06);
+}
+
+@media (max-width: 700px) {
+  .document-list {
+    grid-template-columns: 1fr;
+  }
+}
