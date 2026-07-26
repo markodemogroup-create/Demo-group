@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Izbor realizovanih projekata štampe, poslovnog materijala, letaka, časopisa i kalendara.">
-  <title>Naši radovi — DemoShop</title>
+  <title>Naši proizvodi i radovi — DemoShop</title>
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="stylesheet" href="style.css?v=59">
-  <link rel="stylesheet" href="radovi.css?v=2">
+  <link rel="stylesheet" href="radovi.css?v=3">
 </head>
 <body data-demoshop-build="57">
   <header class="site-header">
@@ -28,8 +28,8 @@
       <div class="container portfolio-hero-inner">
         <div>
           <p class="eyebrow">REALIZOVANO ZA KLIJENTE</p>
-          <h1>Štampa koja ostavlja utisak.</h1>
-          <p>Od prvog nacrta do gotovog proizvoda — letci, časopisi, kalendari, kese i kompletan poslovni materijal.</p>
+          <h1>Proizvodi koji nose vaš brend.</h1>
+          <p>Od prvog nacrta do gotovog proizvoda — štampa, tekstil, gravura, ambalaža i kompletan poslovni program.</p>
         </div>
         <div class="portfolio-summary" aria-label="Pregled realizacija">
           <span><strong>7</strong> izdvojenih realizacija</span>
@@ -40,26 +40,34 @@
 
     <section class="container portfolio-gallery" aria-labelledby="portfolioTitle">
       <div class="portfolio-heading">
-        <div><p class="eyebrow">IZABRANI PROJEKTI</p><h2 id="portfolioTitle">Naši radovi</h2></div>
-        <p>Izaberite kategoriju ili otvorite fotografiju za detaljniji pregled.</p>
+        <div><p class="eyebrow">NAŠA PROIZVODNJA</p><h2 id="portfolioTitle">Naši proizvodi i radovi</h2></div>
+        <p>Izaberite kategoriju. Za nove oblasti uskoro dodajemo fotografije realizovanih projekata.</p>
       </div>
 
       <div class="portfolio-filters" role="group" aria-label="Filter kategorija">
-        <button class="active" type="button" data-work-filter="all" aria-pressed="true">Sve</button>
-        <button type="button" data-work-filter="letci" aria-pressed="false">Letci i brošure</button>
-        <button type="button" data-work-filter="katalozi" aria-pressed="false">Katalozi i časopisi</button>
-        <button type="button" data-work-filter="kalendari" aria-pressed="false">Kalendari i rokovnici</button>
-        <button type="button" data-work-filter="poslovni" aria-pressed="false">Poslovni materijal</button>
-        <button type="button" data-work-filter="ambalaza" aria-pressed="false">Kese i ambalaža</button>
+        <button class="active" type="button" data-work-filter="all" aria-pressed="true">Svi radovi</button>
+        <button type="button" data-work-filter="knjige" aria-pressed="false">Knjige i monografije</button>
+        <button type="button" data-work-filter="katalozi" aria-pressed="false">Katalozi i brošure</button>
+        <button type="button" data-work-filter="fascikle" aria-pressed="false">Fascikle</button>
+        <button type="button" data-work-filter="letci" aria-pressed="false">Flajeri i letci</button>
+        <button type="button" data-work-filter="rokovnici" aria-pressed="false">Rokovnici i blokovi</button>
+        <button type="button" data-work-filter="casopisi" aria-pressed="false">Časopisi</button>
+        <button type="button" data-work-filter="ambalaza" aria-pressed="false">Ambalaža i kutije</button>
+        <button type="button" data-work-filter="tekstil" aria-pressed="false">Majice i tekstil</button>
+        <button type="button" data-work-filter="gravura" aria-pressed="false">Laserska gravura</button>
+        <button type="button" data-work-filter="promo" aria-pressed="false">Promo proizvodi</button>
+        <button type="button" data-work-filter="pokloni" aria-pressed="false">Poslovni pokloni</button>
       </div>
 
+      <div class="portfolio-filter-status"><strong id="workResultCount">7 radova</strong><span>Odaberite kategoriju za uži pregled.</span></div>
+
       <div class="portfolio-grid">
-        <button class="work-card work-card-wide" type="button" data-work-card data-categories="letci" data-image="assets/radovi/trolist-modern.webp" data-title="Trodelni promotivni letak" data-description="Dizajn i priprema trodelnog letka za sportski događaj.">
+        <button class="work-card work-card-wide" type="button" data-work-card data-categories="letci katalozi" data-image="assets/radovi/trolist-modern.webp" data-title="Trodelni promotivni letak" data-description="Dizajn i priprema trodelnog letka za sportski događaj.">
           <span class="work-image"><img src="assets/radovi/trolist-modern.webp" alt="Trodelni promotivni letak" loading="eager"></span>
           <span class="work-copy"><small>LETCI I BROŠURE</small><strong>Trodelni promotivni letak</strong><span>Sportski događaj · dizajn i priprema</span></span>
         </button>
 
-        <button class="work-card" type="button" data-work-card data-categories="katalozi" data-image="assets/radovi/melisa-modern.webp" data-title="Melisa časopis" data-description="Prelom, dizajn i priprema časopisa za štampu.">
+        <button class="work-card" type="button" data-work-card data-categories="katalozi casopisi" data-image="assets/radovi/melisa-modern.webp" data-title="Melisa časopis" data-description="Prelom, dizajn i priprema časopisa za štampu.">
           <span class="work-image"><img src="assets/radovi/melisa-modern.webp" alt="Melisa časopis" loading="lazy"></span>
           <span class="work-copy"><small>KATALOZI I ČASOPISI</small><strong>Melisa časopis</strong><span>Prelom i priprema za štampu</span></span>
         </button>
@@ -69,25 +77,30 @@
           <span class="work-copy"><small>LETCI I BROŠURE</small><strong>Promotivni letci</strong><span>Više formata i namena</span></span>
         </button>
 
-        <button class="work-card work-card-tall" type="button" data-work-card data-categories="kalendari poslovni" data-image="assets/radovi/toplana-modern.webp" data-title="Toplane Srbije" data-description="Komplet kalendara, rokovnika i poslovnog materijala.">
+        <button class="work-card work-card-tall" type="button" data-work-card data-categories="rokovnici promo" data-image="assets/radovi/toplana-modern.webp" data-title="Toplane Srbije" data-description="Komplet kalendara, rokovnika i poslovnog materijala.">
           <span class="work-image"><img src="assets/radovi/toplana-modern.webp" alt="Kalendari i rokovnici Toplane Srbije" loading="lazy"></span>
           <span class="work-copy"><small>KALENDARI I ROKOVNICI</small><strong>Toplane Srbije</strong><span>Komplet poslovnog materijala</span></span>
         </button>
 
-        <button class="work-card" type="button" data-work-card data-categories="poslovni ambalaza" data-image="assets/radovi/prodanovic-modern.webp" data-title="Prodanović" data-description="Brendirane kese, blokovi i prateći poslovni materijal.">
+        <button class="work-card" type="button" data-work-card data-categories="rokovnici ambalaza promo" data-image="assets/radovi/prodanovic-modern.webp" data-title="Prodanović" data-description="Brendirane kese, blokovi i prateći poslovni materijal.">
           <span class="work-image"><img src="assets/radovi/prodanovic-modern.webp" alt="Poslovni materijal Prodanović" loading="lazy"></span>
           <span class="work-copy"><small>POSLOVNI MATERIJAL</small><strong>Prodanović</strong><span>Kese, blokovi i kalendari</span></span>
         </button>
 
-        <button class="work-card" type="button" data-work-card data-categories="poslovni ambalaza" data-image="assets/radovi/montera-modern.webp" data-title="Montera" data-description="Usklađen komplet kesa, blokova i poslovnih materijala.">
+        <button class="work-card" type="button" data-work-card data-categories="rokovnici ambalaza promo" data-image="assets/radovi/montera-modern.webp" data-title="Montera" data-description="Usklađen komplet kesa, blokova i poslovnih materijala.">
           <span class="work-image"><img src="assets/radovi/montera-modern.webp" alt="Poslovni materijal Montera" loading="lazy"></span>
           <span class="work-copy"><small>POSLOVNI MATERIJAL</small><strong>Montera</strong><span>Brendirani poslovni komplet</span></span>
         </button>
 
-        <button class="work-card work-card-wide" type="button" data-work-card data-categories="poslovni ambalaza" data-image="assets/radovi/alfa-sorb-modern.webp" data-title="Alfa Sorb" data-description="Minimalističke brendirane kese, blok i poslovna kartica.">
+        <button class="work-card work-card-wide" type="button" data-work-card data-categories="ambalaza promo" data-image="assets/radovi/alfa-sorb-modern.webp" data-title="Alfa Sorb" data-description="Minimalističke brendirane kese, blok i poslovna kartica.">
           <span class="work-image"><img src="assets/radovi/alfa-sorb-modern.webp" alt="Poslovni materijal Alfa Sorb" loading="lazy"></span>
           <span class="work-copy"><small>KESE I AMBALAŽA</small><strong>Alfa Sorb</strong><span>Kese i poslovni materijal</span></span>
         </button>
+      </div>
+      <div id="workEmptyState" class="work-empty-state hidden">
+        <span>✦</span><h3>Novi radovi uskoro</h3>
+        <p>Pripremamo fotografije iz ove kategorije. Pošaljite nam upit i rado ćemo pokazati dostupne uzorke i mogućnosti izrade.</p>
+        <a href="cart.html">Pošaljite upit <b>→</b></a>
       </div>
     </section>
 
@@ -106,7 +119,7 @@
       <div class="footer-about">
         <a class="footer-logo footer-logo-clean" href="index.html" aria-label="DemoShop početna"><img src="assets/brand/demoshop-icon-transparent-v59.png" alt=""><span><b>DEMO</b><b>SHOP</b></span></a>
         <p>Katalog promotivnih proizvoda i realizovane štampe kompanije Demo Group.</p>
-        <a class="footer-company-link" href="https://demogroup.rs/" target="_blank" rel="noopener">Posetite zvanični Demo Group sajt <span>↗</span></a>
+        <a class="footer-company-link" href="../index.html">Posetite zvanični Demo Group sajt <span>↗</span></a>
       </div>
       <div class="footer-column"><h2>DemoShop</h2><a href="index.html">Katalog proizvoda</a><a href="radovi.html">Naši radovi</a><a href="cart.html">Pošaljite upit</a></div>
       <div class="footer-column"><h2>Kontakt</h2><address>Janka Veselinovića 30<br>Šabac, Srbija</address><a href="tel:+38115300230">+381 15 300 230</a><a href="tel:+38166300230">+381 66 300 230</a></div>
@@ -116,6 +129,6 @@
   </footer>
   <script src="cart-store.js?v=59"></script>
   <script src="header-search.js?v=59"></script>
-  <script src="radovi.js?v=2"></script>
+  <script src="radovi.js?v=3"></script>
 </body>
 </html>

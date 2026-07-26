@@ -4,6 +4,8 @@ const modal = document.getElementById("workModal");
 const modalImage = document.getElementById("workModalImage");
 const modalTitle = document.getElementById("workModalTitle");
 const modalDescription = document.getElementById("workModalDescription");
+const workResultCount = document.getElementById("workResultCount");
+const workEmptyState = document.getElementById("workEmptyState");
 
 filterButtons.forEach(button => {
   button.addEventListener("click", () => {
@@ -13,10 +15,16 @@ filterButtons.forEach(button => {
       item.classList.toggle("active", active);
       item.setAttribute("aria-pressed", String(active));
     });
+    let visible = 0;
     workCards.forEach(card => {
       const categories = (card.dataset.categories || "").split(/\s+/);
-      card.classList.toggle("hidden", filter !== "all" && !categories.includes(filter));
+      const show = filter === "all" || categories.includes(filter);
+      card.classList.toggle("hidden", !show);
+      if (show) visible += 1;
     });
+    if (workResultCount) workResultCount.textContent = visible ? `${visible} ${visible === 1 ? "rad" : "radova"}` : "Nova kategorija";
+    document.querySelector(".portfolio-grid")?.classList.toggle("hidden", visible === 0);
+    workEmptyState?.classList.toggle("hidden", visible !== 0);
   });
 });
 
