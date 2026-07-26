@@ -1,10 +1,9 @@
-# Demo Group website
+# Demo Group website - V2
 
-Statički Demo Group sajt sa ugrađenim DemoShop katalogom.
+Moderna Demo Group prezentacija sa ugrađenim DemoShop katalogom.
 
-## GitHub Pages
+V2 uključuje sekciju O nama, osam grupa usluga, 33 grupisana projekta,
+filtriranje radova po kategorijama i FAQ.
 
-Otpremite kompletan sadržaj ovog paketa u korijen repozitorijuma. Kao GitHub
-Pages izvor odaberite glavnu granu i korijenski folder.
-
-Početna stranica je `index.html`, a DemoShop se nalazi u folderu `demoshop`.
+Za objavljivanje postavite kompletan sadržaj paketa u korijen GitHub
+repozitorijuma. `index.html` mora ostati u korijenu.

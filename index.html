@@ -15,7 +15,7 @@
       <span class="brand-type"><b>DEMO</b><small>GROUP</small></span>
     </a>
     <nav aria-label="Glavna navigacija">
-      <a href="#usluge">Usluge</a><a href="#radovi">Naši radovi</a>
+      <a href="#o-nama">O nama</a><a href="#usluge">Usluge</a><a href="#radovi">Naši radovi</a>
       <a href="demoshop/index.html">Naši proizvodi</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a>
     </nav>
     <a class="button button-small" href="#kontakt">Zatraži ponudu <span>↗</span></a>
@@ -45,7 +45,26 @@
     </div>
   </section>
 
-  <div class="ticker"><span>OFFSET ŠTAMPA</span><b>✦</b><span>DIGITALNA ŠTAMPA</span><b>✦</b><span>AMBALAŽA</span><b>✦</b><span>DORADA</span><b>✦</b><span>POSLOVNI POKLONI</span></div>
+  <div class="ticker"><span>OFFSET ŠTAMPA</span><b>✦</b><span>DIGITALNA ŠTAMPA</span><b>✦</b><span>AMBALAŽA</span><b>✦</b><span>FASCIKLE</span><b>✦</b><span>TEKSTIL</span><b>✦</b><span>GRAVURA</span><b>✦</b><span>DORADA</span><b>✦</b><span>POSLOVNI POKLONI</span></div>
+
+  <section class="about section" id="o-nama">
+    <div class="about-lead">
+      <span class="kicker">O NAMA</span>
+      <h2>Više od štampe.<br><em>Partner vašem brendu.</em></h2>
+      <div class="about-signature">DEMO <span>GROUP</span></div>
+    </div>
+    <div class="about-content">
+      <p class="about-intro">Više od dvije decenije ideje pretvaramo u proizvode koji se vide, koriste i pamte.</p>
+      <p>Demo Group spaja iskustvo, savremenu proizvodnju i pažnju prema detalju. Od prvog razgovora i pripreme do štampe, dorade i isporuke - svaki korak vodimo odgovorno i precizno.</p>
+      <p>Radimo sa kompanijama, ustanovama, agencijama i malim brendovima kojima je potreban pouzdan partner za štampu i promociju.</p>
+      <div class="about-facts">
+        <div><strong>20+</strong><span>godina iskustva</span></div>
+        <div><strong>01</strong><span>partner za cijeli proces</span></div>
+        <div><strong>RS</strong><span>isporuka širom Srbije</span></div>
+      </div>
+      <a class="text-link" href="#kontakt">Razgovarajmo o vašem projektu <span>↗</span></a>
+    </div>
+  </section>
 
   <section class="services section" id="usluge">
     <div class="section-heading">
@@ -57,6 +76,10 @@
       <article class="service-card"><span>02</span><h3>Katalozi i brošure</h3><p>Prodajni materijali koji izgledaju jednako dobro kao vaš brend.</p><b>↗</b></article>
       <article class="service-card"><span>03</span><h3>Rokovnici i blokovi</h3><p>Praktični, pažljivo izrađeni i potpuno prilagođeni vašem identitetu.</p><b>↗</b></article>
       <article class="service-card"><span>04</span><h3>Ambalaža i kutije</h3><p>Konstrukcija, štampa i završna obrada koja proizvod stavlja u prvi plan.</p><b>↗</b></article>
+      <article class="service-card"><span>05</span><h3>Fascikle i galanterija</h3><p>Poslovni materijali koji organizuju dokumente i dosljedno predstavljaju vaš brend.</p><b>↗</b></article>
+      <article class="service-card"><span>06</span><h3>Majice i tekstil</h3><p>Brendirana odjeća za timove, događaje, promocije i svakodnevnu upotrebu.</p><b>↗</b></article>
+      <article class="service-card"><span>07</span><h3>Laserska gravura</h3><p>Precizno i trajno personalizovanje poslovnih poklona i promotivnih proizvoda.</p><b>↗</b></article>
+      <article class="service-card"><span>08</span><h3>Promo proizvodi</h3><p>Pažljivo odabrani artikli koji vaš brend drže u rukama pravih ljudi.</p><b>↗</b></article>
     </div>
   </section>
 
@@ -65,7 +88,27 @@
       <div><span class="kicker">NAŠI RADOVI</span><h2>Kvalitet se ne obećava.<br><em>On se vidi.</em></h2></div>
       <a class="outline-button" href="demoshop/index.html">Otvori Demo Shop <span>↗</span></a>
     </div>
+    <div class="work-toolbar">
+      <div><span>Pregled galerije</span><strong id="visible-count">33 projekta</strong></div>
+      <label for="work-filter">Izaberite kategoriju
+        <select id="work-filter">
+          <option value="all">Svi radovi</option>
+          <option value="knjige">Knjige i monografije</option>
+          <option value="katalozi">Katalozi i brošure</option>
+          <option value="fascikle">Fascikle</option>
+          <option value="flajeri">Flajeri i letci</option>
+          <option value="rokovnici">Rokovnici i blokovi</option>
+          <option value="casopisi">Časopisi</option>
+          <option value="ambalaza">Ambalaža i kutije</option>
+          <option value="tekstil">Majice i tekstil</option>
+          <option value="gravura">Laserska gravura</option>
+          <option value="promo">Promo proizvodi</option>
+          <option value="pokloni">Poslovni pokloni</option>
+        </select>
+      </label>
+    </div>
     <div class="work-grid" id="all-works"></div>
+    <div class="coming-soon" id="coming-soon" hidden><span>✦</span><h3>Novi radovi uskoro</h3><p>Pripremamo fotografije iz ove kategorije. U međuvremenu nas kontaktirajte za uzorke i ponudu.</p><a class="outline-button" href="#kontakt">Pošaljite upit <span>↗</span></a></div>
   </section>
 
   <section class="faq section" id="faq">
@@ -105,46 +148,46 @@
 </main>
 <script>
 const projects=[
-  {title:"Arhiv na trgu",cat:"Knjige i monografije",images:["092925","092937"]},
-  {title:"Monografija škole",cat:"Knjige i monografije",images:["093007","093008","093020"]},
-  {title:"Crno-beli spomenar",cat:"Knjige i monografije",images:["093048","093057"]},
-  {title:"Drina plače i pamti",cat:"Knjige i monografije",images:["093130","093139"]},
-  {title:"M1 poslovna publikacija",cat:"Katalozi i brošure",images:["093210","093228"]},
-  {title:"Fortuna Foto",cat:"Katalozi i brošure",images:["093319","093332"]},
-  {title:"MD Poliklinika",cat:"Katalozi i brošure",images:["093348","093355"]},
-  {title:"Mercator katalog",cat:"Katalozi i brošure",images:["093429","093436"]},
-  {title:"Zoom Optic",cat:"Katalozi i brošure",images:["093444","093452"]},
-  {title:"Poslovni savetnik",cat:"Katalozi i brošure",images:["093501","093507"]},
-  {title:"ABD-PROM katalog",cat:"Katalozi i brošure",images:["093542","093552","093605"]},
-  {title:"Global Mont fascikla",cat:"Katalozi i brošure",images:["093633","093643"]},
-  {title:"MD Poliklinika letak",cat:"Promotivni materijal",images:["094017"]},
-  {title:"Global Mont poslovna mapa",cat:"Katalozi i brošure",images:["094003"]},
-  {title:"Monterra blok",cat:"Rokovnici i blokovi",images:["094026","094056"]},
-  {title:"Christyns blok",cat:"Rokovnici i blokovi",images:["094112","094121","094150"]},
-  {title:"RoyalMedika blok",cat:"Rokovnici i blokovi",images:["094129"]},
-  {title:"Prodanović blok",cat:"Rokovnici i blokovi",images:["094201"]},
-  {title:"Toplane Srbije",cat:"Rokovnici i blokovi",images:["094211","094215"]},
-  {title:"Global Mont rokovnik",cat:"Rokovnici i blokovi",images:["094223"]},
-  {title:"DPS Klas rokovnik",cat:"Rokovnici i blokovi",images:["094229","094238"]},
-  {title:"DPS Klas poslovni rokovnik",cat:"Rokovnici i blokovi",images:["094245","094251","094302"]},
-  {title:"DPS Klas spiralni rokovnik",cat:"Rokovnici i blokovi",images:["094312","094317"]},
-  {title:"Poslovni savetnik blok",cat:"Rokovnici i blokovi",images:["094323","094328"]},
-  {title:"Christyns Agri",cat:"Katalozi i brošure",images:["094347","094403"]},
-  {title:"Đukić katalog",cat:"Katalozi i brošure",images:["094414"]},
-  {title:"Luks katalog",cat:"Katalozi i brošure",images:["094424"]},
-  {title:"Melisa magazin",cat:"Časopisi",images:["094434"]},
-  {title:"Super Protector",cat:"Ambalaža i kutije",images:["094510","094533"]},
-  {title:"Biljna apoteka",cat:"Ambalaža i kutije",images:["094539","094547","094607","094614"]},
-  {title:"Manastirska ambalaža",cat:"Ambalaža i kutije",images:["094722","094728","094733","094758","094804","094810"]},
-  {title:"Bela koza",cat:"Ambalaža i kutije",images:["094838"]},
-  {title:"Turistička brošura",cat:"Katalozi i brošure",images:["094913","094917"]}
+  {title:"Arhiv na trgu",cat:"Knjige i monografije",key:"knjige",images:["092925","092937"]},
+  {title:"Monografija škole",cat:"Knjige i monografije",key:"knjige",images:["093007","093008","093020"]},
+  {title:"Crno-beli spomenar",cat:"Knjige i monografije",key:"knjige",images:["093048","093057"]},
+  {title:"Drina plače i pamti",cat:"Knjige i monografije",key:"knjige",images:["093130","093139"]},
+  {title:"M1 poslovna publikacija",cat:"Katalozi i brošure",key:"katalozi",images:["093210","093228"]},
+  {title:"Fortuna Foto",cat:"Katalozi i brošure",key:"katalozi",images:["093319","093332"]},
+  {title:"MD Poliklinika",cat:"Katalozi i brošure",key:"katalozi",images:["093348","093355"]},
+  {title:"Mercator katalog",cat:"Katalozi i brošure",key:"katalozi",images:["093429","093436"]},
+  {title:"Zoom Optic",cat:"Katalozi i brošure",key:"katalozi",images:["093444","093452"]},
+  {title:"Poslovni savetnik",cat:"Katalozi i brošure",key:"katalozi",images:["093501","093507"]},
+  {title:"ABD-PROM katalog",cat:"Katalozi i brošure",key:"katalozi",images:["093542","093552","093605"]},
+  {title:"Global Mont fascikla",cat:"Fascikle",key:"fascikle",images:["093633","093643"]},
+  {title:"MD Poliklinika letak",cat:"Flajeri i letci",key:"flajeri",images:["094017"]},
+  {title:"Global Mont poslovna mapa",cat:"Fascikle",key:"fascikle",images:["094003"]},
+  {title:"Monterra blok",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094026","094056"]},
+  {title:"Christyns blok",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094112","094121","094150"]},
+  {title:"RoyalMedika blok",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094129"]},
+  {title:"Prodanović blok",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094201"]},
+  {title:"Toplane Srbije",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094211","094215"]},
+  {title:"Global Mont rokovnik",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094223"]},
+  {title:"DPS Klas rokovnik",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094229","094238"]},
+  {title:"DPS Klas poslovni rokovnik",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094245","094251","094302"]},
+  {title:"DPS Klas spiralni rokovnik",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094312","094317"]},
+  {title:"Poslovni savetnik blok",cat:"Rokovnici i blokovi",key:"rokovnici",images:["094323","094328"]},
+  {title:"Christyns Agri",cat:"Katalozi i brošure",key:"katalozi",images:["094347","094403"]},
+  {title:"Đukić katalog",cat:"Katalozi i brošure",key:"katalozi",images:["094414"]},
+  {title:"Luks katalog",cat:"Katalozi i brošure",key:"katalozi",images:["094424"]},
+  {title:"Melisa magazin",cat:"Časopisi",key:"casopisi",images:["094434"]},
+  {title:"Super Protector",cat:"Ambalaža i kutije",key:"ambalaza",images:["094510","094533"]},
+  {title:"Biljna apoteka",cat:"Ambalaža i kutije",key:"ambalaza",images:["094539","094547","094607","094614"]},
+  {title:"Manastirska ambalaža",cat:"Ambalaža i kutije",key:"ambalaza",images:["094722","094728","094733","094758","094804","094810"]},
+  {title:"Bela koza",cat:"Ambalaža i kutije",key:"ambalaza",images:["094838"]},
+  {title:"Turistička brošura",cat:"Katalozi i brošure",key:"katalozi",images:["094913","094917"]}
 ];
 const gallery=document.getElementById("all-works");
 const rotations={"094017":90,"094150":180};
 gallery.innerHTML=projects.map((project,i)=>{
   const count=project.images.length;
   const rotate=rotations[project.images[0]]||0;
-  return `<article class="work-card grouped-card" data-index="${i}" data-active="0">
+  return `<article class="work-card grouped-card" data-index="${i}" data-active="0" data-category="${project.key}">
     <div class="work-image">
       <img loading="lazy" src="images/demo-group-${project.images[0]}.webp" alt="${project.title}" style="--rotation:${rotate}deg">
       ${count>1?`<button class="work-nav prev" type="button" aria-label="Prethodna fotografija">←</button><button class="work-nav next" type="button" aria-label="Sljedeća fotografija">→</button><span class="work-count">1 / ${count}</span>`:""}
@@ -164,6 +207,21 @@ gallery.addEventListener("click",event=>{
   image.src=`images/demo-group-${project.images[active]}.webp`;
   image.style.setProperty("--rotation",`${rotations[project.images[active]]||0}deg`);
   card.querySelector(".work-count").textContent=`${active+1} / ${project.images.length}`;
+});
+const filter=document.getElementById("work-filter");
+const countLabel=document.getElementById("visible-count");
+const comingSoon=document.getElementById("coming-soon");
+filter.addEventListener("change",()=>{
+  const selected=filter.value;
+  let visible=0;
+  gallery.querySelectorAll(".grouped-card").forEach(card=>{
+    const show=selected==="all"||card.dataset.category===selected;
+    card.hidden=!show;
+    if(show)visible++;
+  });
+  gallery.hidden=visible===0;
+  comingSoon.hidden=visible!==0;
+  countLabel.textContent=visible?`${visible} ${visible===1?"projekat":"projekata"}`:"Nova kategorija";
 });
 </script>
 </body>
