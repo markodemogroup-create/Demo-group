@@ -5,19 +5,38 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Demo Group | Štampa koja ostavlja utisak</title>
   <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 <main id="pocetna">
   <header class="site-header">
     <a class="brand" href="#pocetna" aria-label="Demo Group početna">
-      <span class="brand-mark" aria-hidden="true"><img src="images/demo-group-logo-original.png?v=13" alt=""></span>
+      <span class="brand-mark" aria-hidden="true"><img src="images/demo-group-logo-original.png?v=14" alt=""></span>
       <span class="brand-type"><b>DEMO</b><small>GROUP</small></span>
     </a>
     <nav aria-label="Glavna navigacija">
       <a href="#o-nama">O nama</a><a href="#usluge">Usluge</a><a href="#radovi">Naši radovi</a>
       <a href="https://demoshop-v2.pages.dev/" target="_blank" rel="noopener">Naši proizvodi</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a>
     </nav>
+    <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Otvori meni">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-navigation" id="mobile-navigation" hidden>
+      <div class="mobile-navigation-backdrop" data-mobile-menu-close></div>
+      <div class="mobile-navigation-panel">
+        <div class="mobile-navigation-head">
+          <span>MENI</span>
+          <button type="button" aria-label="Zatvori meni" data-mobile-menu-close>×</button>
+        </div>
+        <a href="#o-nama">O nama <span>→</span></a>
+        <a href="#usluge">Usluge <span>→</span></a>
+        <a href="#radovi">Naši radovi <span>→</span></a>
+        <a href="https://demoshop-v2.pages.dev/" target="_blank" rel="noopener">Naši proizvodi <span>↗</span></a>
+        <a href="#faq">FAQ <span>→</span></a>
+        <a href="#kontakt">Kontakt <span>→</span></a>
+        <a class="mobile-navigation-cta" href="#kontakt" data-contact-open>Zatraži ponudu <span>↗</span></a>
+      </div>
+    </div>
     <div class="header-actions">
       <a class="shop-button" href="https://demoshop-v2.pages.dev/" target="_blank" rel="noopener">DemoShop <span>↗</span></a>
       <a class="button button-small" href="#kontakt" data-contact-open>Zatraži ponudu <span>↗</span></a>
@@ -138,7 +157,7 @@
       <a class="outline-button" href="https://demoshop-v2.pages.dev/" target="_blank" rel="noopener">Otvori DemoShop <span>↗</span></a>
     </div>
     <div class="work-toolbar">
-      <div><span>Pregled galerije</span><strong id="visible-count">33 projekta</strong></div>
+      <div><span>Pregled galerije</span><strong id="visible-count">31 projekat</strong></div>
       <label for="work-filter">Izaberite kategoriju
         <select id="work-filter">
           <option value="all">Svi radovi</option>
@@ -157,6 +176,9 @@
       </label>
     </div>
     <div class="work-grid" id="all-works"></div>
+    <div class="work-load-more" id="work-load-more" hidden>
+      <button class="outline-button" type="button">Učitaj još radova <span>↓</span></button>
+    </div>
     <div class="coming-soon" id="coming-soon" hidden><span>✦</span><h3>Novi radovi uskoro</h3><p>Pripremamo fotografije iz ove kategorije. U međuvremenu nas kontaktirajte za uzorke i ponudu.</p><a class="outline-button" href="#kontakt" data-contact-open>Pošaljite upit <span>↗</span></a></div>
   </section>
 
@@ -281,7 +303,7 @@
   </section>
 
   <footer>
-    <a class="brand" href="#pocetna"><span class="brand-mark"><img src="images/demo-group-logo-original.png?v=13" alt=""></span><span class="brand-type"><b>DEMO</b><small>GROUP</small></span></a>
+    <a class="brand" href="#pocetna"><span class="brand-mark"><img src="images/demo-group-logo-original.png?v=14" alt=""></span><span class="brand-type"><b>DEMO</b><small>GROUP</small></span></a>
     <p>Štampa koja ostavlja utisak.</p>
     <div><a href="https://demoshop-v2.pages.dev/" target="_blank" rel="noopener">DemoShop</a><a href="mailto:marko.demogroup@gmail.com">marko.demogroup@gmail.com</a><span>Šabac, Srbija</span></div>
   </footer>
@@ -421,18 +443,55 @@ gallery.addEventListener("click",event=>{
 const filter=document.getElementById("work-filter");
 const countLabel=document.getElementById("visible-count");
 const comingSoon=document.getElementById("coming-soon");
-filter.addEventListener("change",()=>{
+const loadMoreWrap=document.getElementById("work-load-more");
+const loadMoreButton=loadMoreWrap.querySelector("button");
+let mobileVisibleLimit=8;
+const galleryLimit=()=>window.matchMedia("(max-width:640px)").matches?mobileVisibleLimit:Infinity;
+const refreshGallery=()=>{
   const selected=filter.value;
   let visible=0;
+  let shown=0;
   gallery.querySelectorAll(".grouped-card").forEach(card=>{
     const show=selected==="all"||card.dataset.category===selected;
-    card.hidden=!show;
     if(show)visible++;
+    const display=show&&shown<galleryLimit();
+    card.hidden=!display;
+    if(display)shown++;
   });
   gallery.hidden=visible===0;
   comingSoon.hidden=visible!==0;
+  loadMoreWrap.hidden=visible===0||shown>=visible||!window.matchMedia("(max-width:640px)").matches;
   countLabel.textContent=visible?`${visible} ${visible===1?"projekat":"projekata"}`:"Nova kategorija";
+};
+filter.addEventListener("change",()=>{
+  mobileVisibleLimit=8;
+  refreshGallery();
 });
+loadMoreButton.addEventListener("click",()=>{
+  mobileVisibleLimit+=8;
+  refreshGallery();
+});
+window.addEventListener("resize",refreshGallery);
+refreshGallery();
+
+const mobileMenu=document.getElementById("mobile-navigation");
+const mobileMenuToggle=document.querySelector(".mobile-menu-toggle");
+let mobileMenuOpener=null;
+const openMobileMenu=()=>{
+  mobileMenuOpener=document.activeElement;
+  mobileMenu.hidden=false;
+  mobileMenuToggle.setAttribute("aria-expanded","true");
+  document.body.classList.add("mobile-menu-open");
+  mobileMenu.querySelector(".mobile-navigation-panel>a")?.focus();
+};
+const closeMobileMenu=()=>{
+  mobileMenu.hidden=true;
+  mobileMenuToggle.setAttribute("aria-expanded","false");
+  document.body.classList.remove("mobile-menu-open");
+};
+mobileMenuToggle.addEventListener("click",()=>mobileMenu.hidden?openMobileMenu():closeMobileMenu());
+mobileMenu.querySelectorAll("[data-mobile-menu-close]").forEach(control=>control.addEventListener("click",closeMobileMenu));
+mobileMenu.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMobileMenu));
 
 const contactModal=document.getElementById("contact-modal");
 let contactOpener=null;
@@ -458,6 +517,7 @@ contactModal.querySelectorAll("[data-contact-close]").forEach(control=>{
 });
 document.addEventListener("keydown",event=>{
   if(event.key==="Escape"&&!contactModal.hidden)closeContactModal();
+  else if(event.key==="Escape"&&!mobileMenu.hidden)closeMobileMenu();
 });
 
 document.querySelectorAll(".contact-form").forEach(form=>{

@@ -1,12 +1,16 @@
-# Demo Group - V13
+# Demo Group - V14
 
-V13 uključuje:
+V14 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
 - sekcije O nama, usluge, radovi, FAQ i proces izrade;
 - 31 grupisan projekat sa 65 fotografija;
 - filtriranje radova po kategorijama;
+- pregledniju tipografiju i kraće razmake između sekcija;
+- mobilni meni sa svim glavnim vezama;
+- početni prikaz osam radova na telefonu i dugme „Učitaj još radova“;
+- doteran prikaz za telefone, tablete i računare;
 - kontakt-sekciju sa adresom, društvenim mrežama i dva broja telefona;
 - zajednički kontakt-prozor za dugmad Pošaljite upit i Zatraži ponudu;
 - formular za upit i ponudu sa prilogom do ukupno 10 MB;
