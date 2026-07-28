@@ -1,14 +1,25 @@
-# Demo Group + DemoShop - V3
+# Demo Group - V13
 
-V3 uključuje:
+V13 uključuje:
 
-- modernu Demo Group prezentaciju;
-- sekciju O nama i osam grupa usluga;
-- 33 grupisana projekta i 67 fotografija;
+- moderan Demo Group prezentacioni sajt;
+- originalni Demo Group logo bez pozadine;
+- sekcije O nama, usluge, radovi, FAQ i proces izrade;
+- 31 grupisan projekat sa 65 fotografija;
 - filtriranje radova po kategorijama;
-- ugrađeni DemoShop katalog;
-- 12 usklađenih kategorija u DemoShop stranici Naši proizvodi i radovi;
-- poruku Novi radovi uskoro za kategorije bez fotografija.
+- kontakt-sekciju sa adresom, društvenim mrežama i dva broja telefona;
+- zajednički kontakt-prozor za dugmad Pošaljite upit i Zatraži ponudu;
+- formular za upit i ponudu sa prilogom do ukupno 10 MB;
+- slanje upita na marko.demogroup@gmail.com.
 
-Postavite kompletan sadržaj paketa u korijen postojećeg GitHub
-repozitorijuma. `index.html` mora ostati u korijenu.
+## Postavljanje
+
+Raspakujte ZIP i postavite kompletan sadržaj paketa u koren postojećeg
+GitHub repozitorijuma `Demo-group`. Fajl `index.html` mora ostati u korenu.
+
+## Jednokratna aktivacija formulara
+
+Posle objavljivanja pošaljite jedan probni upit preko sajta. Na adresu
+`marko.demogroup@gmail.com` stići će poruka za potvrdu formulara. Otvorite
+je i potvrdite adresu. Nakon toga će svi novi upiti i prilozi stizati na
+taj Gmail nalog.
