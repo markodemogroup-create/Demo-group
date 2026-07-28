@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Demo Group | Štampa koja ostavlja utisak</title>
   <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 <main id="pocetna">
@@ -380,6 +380,21 @@
     </div>
   </section>
 </div>
+
+<div class="work-lightbox" id="work-lightbox" role="dialog" aria-modal="true" aria-labelledby="work-lightbox-title" hidden>
+  <div class="work-lightbox-backdrop" data-work-lightbox-close></div>
+  <button class="work-lightbox-close" type="button" aria-label="Zatvori veliki pregled" data-work-lightbox-close>×</button>
+  <button class="work-lightbox-nav work-lightbox-prev" type="button" aria-label="Prethodna fotografija">←</button>
+  <div class="work-lightbox-content">
+    <div class="work-lightbox-stage"><img id="work-lightbox-image" alt=""></div>
+    <div class="work-lightbox-caption">
+      <div><strong id="work-lightbox-title"></strong><span id="work-lightbox-count"></span></div>
+      <button class="work-lightbox-zoom" type="button" aria-pressed="false">Uvećaj sliku ＋</button>
+    </div>
+  </div>
+  <button class="work-lightbox-nav work-lightbox-next" type="button" aria-label="Sledeća fotografija">→</button>
+</div>
+
 <script>
 const projects=[
   {title:"Arhiv na trgu",cat:"Knjige i monografije",key:"knjige",images:["092925","092937"]},
@@ -420,33 +435,101 @@ gallery.innerHTML=projects.map((project,i)=>{
   const count=project.images.length;
   const rotate=rotations[project.images[0]]||0;
   return `<article class="work-card grouped-card" data-index="${i}" data-active="0" data-category="${project.key}">
-    <div class="work-image">
+    <div class="work-image" role="button" tabindex="0" aria-label="Otvori veliki pregled: ${project.title}">
       <img loading="lazy" src="images/demo-group-${project.images[0]}.webp" alt="${project.title}" style="--rotation:${rotate}deg">
       ${count>1?`<button class="work-nav prev" type="button" aria-label="Prethodna fotografija">←</button><button class="work-nav next" type="button" aria-label="Sledeća fotografija">→</button><span class="work-count">1 / ${count}</span>`:""}
     </div>
     <small>${project.cat}</small><h3>${project.title}</h3>
   </article>`;
 }).join("");
+const workLightbox=document.getElementById("work-lightbox");
+const workLightboxImage=document.getElementById("work-lightbox-image");
+const workLightboxTitle=document.getElementById("work-lightbox-title");
+const workLightboxCount=document.getElementById("work-lightbox-count");
+const workLightboxZoom=document.querySelector(".work-lightbox-zoom");
+let lightboxProjectIndex=0;
+let lightboxImageIndex=0;
+let lightboxOpener=null;
+let lightboxTouchStart=0;
+const updateWorkLightbox=()=>{
+  const project=projects[lightboxProjectIndex];
+  const id=project.images[lightboxImageIndex];
+  workLightboxImage.src=`images/demo-group-${id}.webp`;
+  workLightboxImage.alt=project.title;
+  workLightboxImage.style.setProperty("--lightbox-rotation",`${rotations[id]||0}deg`);
+  workLightboxTitle.textContent=project.title;
+  workLightboxCount.textContent=`${project.cat} · ${lightboxImageIndex+1} / ${project.images.length}`;
+  const multiple=project.images.length>1;
+  document.querySelector(".work-lightbox-prev").hidden=!multiple;
+  document.querySelector(".work-lightbox-next").hidden=!multiple;
+  workLightbox.classList.remove("is-zoomed");
+  workLightboxZoom.setAttribute("aria-pressed","false");
+  workLightboxZoom.textContent="Uvećaj sliku ＋";
+};
+const openWorkLightbox=card=>{
+  lightboxOpener=card.querySelector(".work-image");
+  lightboxProjectIndex=Number(card.dataset.index);
+  lightboxImageIndex=Number(card.dataset.active);
+  updateWorkLightbox();
+  workLightbox.hidden=false;
+  document.body.classList.add("modal-open");
+  requestAnimationFrame(()=>workLightbox.querySelector(".work-lightbox-close").focus());
+};
+const closeWorkLightbox=()=>{
+  workLightbox.hidden=true;
+  workLightbox.classList.remove("is-zoomed");
+  document.body.classList.remove("modal-open");
+  lightboxOpener?.focus();
+};
+const moveWorkLightbox=direction=>{
+  const project=projects[lightboxProjectIndex];
+  lightboxImageIndex=(lightboxImageIndex+direction+project.images.length)%project.images.length;
+  updateWorkLightbox();
+};
 gallery.addEventListener("click",event=>{
   const button=event.target.closest(".work-nav");
-  if(!button)return;
-  const card=button.closest(".grouped-card");
-  const project=projects[Number(card.dataset.index)];
-  let active=Number(card.dataset.active);
-  active=(active+(button.classList.contains("next")?1:-1)+project.images.length)%project.images.length;
-  card.dataset.active=String(active);
-  const image=card.querySelector("img");
-  image.src=`images/demo-group-${project.images[active]}.webp`;
-  image.style.setProperty("--rotation",`${rotations[project.images[active]]||0}deg`);
-  card.querySelector(".work-count").textContent=`${active+1} / ${project.images.length}`;
+  const card=event.target.closest(".grouped-card");
+  if(!card)return;
+  if(button){
+    const project=projects[Number(card.dataset.index)];
+    let active=Number(card.dataset.active);
+    active=(active+(button.classList.contains("next")?1:-1)+project.images.length)%project.images.length;
+    card.dataset.active=String(active);
+    const image=card.querySelector("img");
+    image.src=`images/demo-group-${project.images[active]}.webp`;
+    image.style.setProperty("--rotation",`${rotations[project.images[active]]||0}deg`);
+    card.querySelector(".work-count").textContent=`${active+1} / ${project.images.length}`;
+    return;
+  }
+  if(event.target.closest(".work-image"))openWorkLightbox(card);
 });
+gallery.addEventListener("keydown",event=>{
+  if((event.key==="Enter"||event.key===" ")&&event.target.classList.contains("work-image")){
+    event.preventDefault();
+    openWorkLightbox(event.target.closest(".grouped-card"));
+  }
+});
+workLightbox.querySelectorAll("[data-work-lightbox-close]").forEach(control=>control.addEventListener("click",closeWorkLightbox));
+document.querySelector(".work-lightbox-prev").addEventListener("click",()=>moveWorkLightbox(-1));
+document.querySelector(".work-lightbox-next").addEventListener("click",()=>moveWorkLightbox(1));
+workLightboxZoom.addEventListener("click",()=>{
+  const zoomed=workLightbox.classList.toggle("is-zoomed");
+  workLightboxZoom.setAttribute("aria-pressed",String(zoomed));
+  workLightboxZoom.textContent=zoomed?"Vrati prikaz −":"Uvećaj sliku ＋";
+});
+workLightboxImage.addEventListener("dblclick",()=>workLightboxZoom.click());
+workLightbox.addEventListener("touchstart",event=>{lightboxTouchStart=event.changedTouches[0].clientX},{passive:true});
+workLightbox.addEventListener("touchend",event=>{
+  const distance=event.changedTouches[0].clientX-lightboxTouchStart;
+  if(Math.abs(distance)>55&&!workLightbox.classList.contains("is-zoomed"))moveWorkLightbox(distance<0?1:-1);
+},{passive:true});
 const filter=document.getElementById("work-filter");
 const countLabel=document.getElementById("visible-count");
 const comingSoon=document.getElementById("coming-soon");
 const loadMoreWrap=document.getElementById("work-load-more");
 const loadMoreButton=loadMoreWrap.querySelector("button");
-let mobileVisibleLimit=8;
-const galleryLimit=()=>window.matchMedia("(max-width:640px)").matches?mobileVisibleLimit:Infinity;
+let visibleLimit=12;
+const galleryBatch=()=>window.matchMedia("(max-width:640px)").matches?8:window.matchMedia("(max-width:1100px)").matches?9:12;
 const refreshGallery=()=>{
   const selected=filter.value;
   let visible=0;
@@ -454,24 +537,33 @@ const refreshGallery=()=>{
   gallery.querySelectorAll(".grouped-card").forEach(card=>{
     const show=selected==="all"||card.dataset.category===selected;
     if(show)visible++;
-    const display=show&&shown<galleryLimit();
+    const display=show&&shown<visibleLimit;
     card.hidden=!display;
     if(display)shown++;
   });
   gallery.hidden=visible===0;
   comingSoon.hidden=visible!==0;
-  loadMoreWrap.hidden=visible===0||shown>=visible||!window.matchMedia("(max-width:640px)").matches;
+  loadMoreWrap.hidden=visible===0||shown>=visible;
   countLabel.textContent=visible?`${visible} ${visible===1?"projekat":"projekata"}`:"Nova kategorija";
 };
 filter.addEventListener("change",()=>{
-  mobileVisibleLimit=8;
+  visibleLimit=galleryBatch();
   refreshGallery();
 });
 loadMoreButton.addEventListener("click",()=>{
-  mobileVisibleLimit+=8;
+  visibleLimit+=galleryBatch();
   refreshGallery();
 });
-window.addEventListener("resize",refreshGallery);
+let previousGalleryBatch=galleryBatch();
+window.addEventListener("resize",()=>{
+  const nextBatch=galleryBatch();
+  if(nextBatch!==previousGalleryBatch){
+    previousGalleryBatch=nextBatch;
+    visibleLimit=nextBatch;
+  }
+  refreshGallery();
+});
+visibleLimit=galleryBatch();
 refreshGallery();
 
 const mobileMenu=document.getElementById("mobile-navigation");
@@ -516,7 +608,10 @@ contactModal.querySelectorAll("[data-contact-close]").forEach(control=>{
   control.addEventListener("click",closeContactModal);
 });
 document.addEventListener("keydown",event=>{
-  if(event.key==="Escape"&&!contactModal.hidden)closeContactModal();
+  if(event.key==="Escape"&&!workLightbox.hidden)closeWorkLightbox();
+  else if(!workLightbox.hidden&&event.key==="ArrowLeft")moveWorkLightbox(-1);
+  else if(!workLightbox.hidden&&event.key==="ArrowRight")moveWorkLightbox(1);
+  else if(event.key==="Escape"&&!contactModal.hidden)closeContactModal();
   else if(event.key==="Escape"&&!mobileMenu.hidden)closeMobileMenu();
 });
 
