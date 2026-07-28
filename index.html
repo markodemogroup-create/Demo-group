@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Demo Group | Štampa koja ostavlja utisak</title>
   <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=15">
+  <link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
 <main id="pocetna">
@@ -639,8 +639,10 @@ document.querySelectorAll(".contact-form").forEach(form=>{
 
 const contactParams=new URLSearchParams(window.location.search);
 if(contactParams.get("upit")==="uspesno"){
-  document.querySelector("[data-form-success]")?.removeAttribute("hidden");
+  const successMessage=document.querySelector("[data-form-success]");
+  successMessage?.removeAttribute("hidden");
   history.replaceState(null,"",`${window.location.pathname}#kontakt`);
+  window.setTimeout(()=>successMessage?.setAttribute("hidden",""),7000);
 }
 </script>
 </body>

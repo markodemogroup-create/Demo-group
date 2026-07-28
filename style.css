@@ -45,6 +45,7 @@ footer{padding:30px clamp(24px,7vw,100px) 50px;display:flex;align-items:center;g
 
 /* v15 - veliki pregled radova i pravilno skraćena galerija */
 .work-load-more[hidden]{display:none!important}
+.form-success[hidden]{display:none!important}
 .work-lightbox[hidden]{display:none}
 .work-lightbox{position:fixed;inset:0;z-index:1400;display:grid;grid-template-columns:72px minmax(0,1fr) 72px;align-items:center;padding:28px;background:rgba(10,13,19,.94);backdrop-filter:blur(12px)}
 .work-lightbox-backdrop{position:absolute;inset:0}
