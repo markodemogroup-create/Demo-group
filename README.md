@@ -1,4 +1,4 @@
-# Demo Group - V14
+# Demo Group - V18
 
 V14 uključuje:
 
@@ -14,7 +14,9 @@ V14 uključuje:
 - kontakt-sekciju sa adresom, društvenim mrežama i dva broja telefona;
 - zajednički kontakt-prozor za dugmad Pošaljite upit i Zatraži ponudu;
 - formular za upit i ponudu sa prilogom do ukupno 10 MB;
-- slanje upita na marko.demogroup@gmail.com.
+- slanje upita na info@demogroup.rs;
+- trajno preusmeravanje pomoćnog `demo-group.pages.dev` domena na `demogroup.rs`;
+- stabilan veliki pregled svih slika u galeriji.
 
 ## Postavljanje
 
@@ -24,6 +26,6 @@ GitHub repozitorijuma `Demo-group`. Fajl `index.html` mora ostati u korenu.
 ## Jednokratna aktivacija formulara
 
 Posle objavljivanja pošaljite jedan probni upit preko sajta. Na adresu
-`marko.demogroup@gmail.com` stići će poruka za potvrdu formulara. Otvorite
+`info@demogroup.rs` stići će poruka za potvrdu formulara. Otvorite
 je i potvrdite adresu. Nakon toga će svi novi upiti i prilozi stizati na
-taj Gmail nalog.
+adresu `info@demogroup.rs`.
