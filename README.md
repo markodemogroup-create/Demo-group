@@ -1,6 +1,6 @@
-# Demo Group - V20
+# Demo Group - V21
 
-V20 uključuje:
+V21 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
@@ -17,7 +17,8 @@ V20 uključuje:
 - slanje upita na info@demogroup.rs;
 - trajno preusmeravanje pomoćnog `demo-group.pages.dev` domena na `demogroup.rs`;
 - stabilan veliki pregled svih slika u galeriji;
-- prikaz cele fotografije bez unutrašnjeg vertikalnog skrolovanja i bez zumiranja.
+- prikaz cele fotografije bez sečenja, unutrašnjeg vertikalnog skrolovanja i zumiranja;
+- sve veze ka prodavnici vode direktno na `demoshop.rs`.
 
 ## Postavljanje
 
