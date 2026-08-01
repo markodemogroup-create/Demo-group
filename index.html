@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Demo Group | Štampa koja ostavlja utisak</title>
   <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=18">
+  <link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
 <main id="pocetna">
@@ -389,7 +389,6 @@
     <div class="work-lightbox-stage"><img id="work-lightbox-image" alt=""></div>
     <div class="work-lightbox-caption">
       <div><strong id="work-lightbox-title"></strong><span id="work-lightbox-count"></span></div>
-      <button class="work-lightbox-zoom" type="button" aria-pressed="false">Uvećaj sliku ＋</button>
     </div>
   </div>
   <button class="work-lightbox-nav work-lightbox-next" type="button" aria-label="Sledeća fotografija">→</button>
@@ -398,7 +397,7 @@
 <script>
 const projects=[
   {title:"Arhiv na trgu",cat:"Knjige i monografije",key:"knjige",images:["092925","092937"]},
-  {title:"Monografija škole",cat:"Knjige i monografije",key:"knjige",images:["093007","093008","093020"]},
+  {title:"Monografija škole",cat:"Knjige i monografije",key:"knjige",images:["093008","093020"]},
   {title:"Crno-beli spomenar",cat:"Knjige i monografije",key:"knjige",images:["093048","093057"]},
   {title:"Drina plače i pamti",cat:"Knjige i monografije",key:"knjige",images:["093130","093139"]},
   {title:"M1 fascikla",cat:"Fascikle",key:"fascikle",images:["093210","093228"]},
@@ -446,7 +445,6 @@ const workLightbox=document.getElementById("work-lightbox");
 const workLightboxImage=document.getElementById("work-lightbox-image");
 const workLightboxTitle=document.getElementById("work-lightbox-title");
 const workLightboxCount=document.getElementById("work-lightbox-count");
-const workLightboxZoom=document.querySelector(".work-lightbox-zoom");
 let lightboxProjectIndex=0;
 let lightboxImageIndex=0;
 let lightboxOpener=null;
@@ -462,9 +460,6 @@ const updateWorkLightbox=()=>{
   const multiple=project.images.length>1;
   document.querySelector(".work-lightbox-prev").hidden=!multiple;
   document.querySelector(".work-lightbox-next").hidden=!multiple;
-  workLightbox.classList.remove("is-zoomed");
-  workLightboxZoom.setAttribute("aria-pressed","false");
-  workLightboxZoom.textContent="Uvećaj sliku ＋";
 };
 const openWorkLightbox=card=>{
   lightboxOpener=card.querySelector(".work-image");
@@ -477,7 +472,6 @@ const openWorkLightbox=card=>{
 };
 const closeWorkLightbox=()=>{
   workLightbox.hidden=true;
-  workLightbox.classList.remove("is-zoomed");
   document.body.classList.remove("modal-open");
   lightboxOpener?.focus();
 };
@@ -512,16 +506,10 @@ gallery.addEventListener("keydown",event=>{
 workLightbox.querySelectorAll("[data-work-lightbox-close]").forEach(control=>control.addEventListener("click",closeWorkLightbox));
 document.querySelector(".work-lightbox-prev").addEventListener("click",()=>moveWorkLightbox(-1));
 document.querySelector(".work-lightbox-next").addEventListener("click",()=>moveWorkLightbox(1));
-workLightboxZoom.addEventListener("click",()=>{
-  const zoomed=workLightbox.classList.toggle("is-zoomed");
-  workLightboxZoom.setAttribute("aria-pressed",String(zoomed));
-  workLightboxZoom.textContent=zoomed?"Vrati prikaz −":"Uvećaj sliku ＋";
-});
-workLightboxImage.addEventListener("dblclick",()=>workLightboxZoom.click());
 workLightbox.addEventListener("touchstart",event=>{lightboxTouchStart=event.changedTouches[0].clientX},{passive:true});
 workLightbox.addEventListener("touchend",event=>{
   const distance=event.changedTouches[0].clientX-lightboxTouchStart;
-  if(Math.abs(distance)>55&&!workLightbox.classList.contains("is-zoomed"))moveWorkLightbox(distance<0?1:-1);
+  if(Math.abs(distance)>55)moveWorkLightbox(distance<0?1:-1);
 },{passive:true});
 const filter=document.getElementById("work-filter");
 const countLabel=document.getElementById("visible-count");
