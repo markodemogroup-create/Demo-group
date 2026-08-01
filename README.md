@@ -1,6 +1,6 @@
-# Demo Group - V18
+# Demo Group - V20
 
-V14 uključuje:
+V20 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
@@ -16,7 +16,8 @@ V14 uključuje:
 - formular za upit i ponudu sa prilogom do ukupno 10 MB;
 - slanje upita na info@demogroup.rs;
 - trajno preusmeravanje pomoćnog `demo-group.pages.dev` domena na `demogroup.rs`;
-- stabilan veliki pregled svih slika u galeriji.
+- stabilan veliki pregled svih slika u galeriji;
+- prikaz cele fotografije bez unutrašnjeg vertikalnog skrolovanja i bez zumiranja.
 
 ## Postavljanje
 
