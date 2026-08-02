@@ -1,6 +1,6 @@
-# Demo Group - V25
+# Demo Group - V26
 
-V25 uključuje:
+V26 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
@@ -31,6 +31,7 @@ V25 uključuje:
 - padajući meni „Štampa“ na računaru i pregledne veze u mobilnom meniju;
 - klikabilne pojedinačne email adrese ispod `info@demogroup.rs`;
 - ažurirane SEO naslove, opise, `robots.txt` i `sitemap.xml`.
+- Google Search Console verifikacionu datoteku za `demogroup.rs`.
 
 ## Postavljanje
 
