@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Demo Group | Štampa koja ostavlja utisak</title>
-  <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=24">
+  <title>Demo Group Šabac | Štampa, katalozi, flajeri i ambalaža</title>
+  <meta name="description" content="Demo Group štamparija u Šapcu: knjige, katalozi, flajeri, fascikle, ambalaža, dorada i promotivni proizvodi za vaš brend.">
+  <link rel="canonical" href="https://demogroup.rs/">
+  <link rel="stylesheet" href="style.css?v=25">
 </head>
 <body>
 <main id="pocetna">
@@ -15,7 +16,7 @@
       <span class="brand-type"><b>DEMO</b><small>GROUP</small></span>
     </a>
     <nav aria-label="Glavna navigacija">
-      <a href="#o-nama">O nama</a><a href="#usluge">Usluge</a><a href="#stampa-upiti">Štampa</a><a href="#radovi">Naši radovi</a>
+      <a href="#o-nama">O nama</a><a href="#usluge">Usluge</a><span class="nav-dropdown"><button type="button">Štampa <span>⌄</span></button><span class="nav-dropdown-menu"><a href="/flajeri/">Flajeri i letci</a><a href="/katalozi-i-casopisi/">Katalozi i časopisi</a><a href="/nasi-radovi/">Naši radovi</a><a href="#kontakt" data-contact-open>Pošaljite upit</a></span></span><a href="/nasi-radovi/">Naši radovi</a>
       <a href="https://demoshop.rs/" target="_blank" rel="noopener">Naši proizvodi</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a>
     </nav>
     <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Otvori meni">
@@ -30,8 +31,9 @@
         </div>
         <a href="#o-nama">O nama <span>→</span></a>
         <a href="#usluge">Usluge <span>→</span></a>
-        <a href="#stampa-upiti">Štampa <span>→</span></a>
-        <a href="#radovi">Naši radovi <span>→</span></a>
+        <a href="/flajeri/">Flajeri i letci <span>→</span></a>
+        <a href="/katalozi-i-casopisi/">Katalozi i časopisi <span>→</span></a>
+        <a href="/nasi-radovi/">Naši radovi <span>→</span></a>
         <a href="https://demoshop.rs/" target="_blank" rel="noopener">Naši proizvodi <span>↗</span></a>
         <a href="#faq">FAQ <span>→</span></a>
         <a href="#kontakt">Kontakt <span>→</span></a>
@@ -77,10 +79,10 @@
       <p>Izaberite proizvod i nastavite direktno u DemoShop katalog. Tamo možete pregledati modele i poslati upit.</p>
     </div>
     <div class="popular-grid">
-      <a class="popular-card" href="#katalozi-casopisi">
+      <a class="popular-card" href="/katalozi-i-casopisi/">
         <span class="popular-image" style="--card-image:url('images/demo-group-094913.webp')"><img src="images/demo-group-094913.webp" alt="Brošure i lifleti"></span><span class="popular-number">01</span><div><small>Promotivna štampa</small><h3>Brošure i lifleti</h3><b>Pogledajte radove ↗</b></div>
       </a>
-      <a class="popular-card" href="#flajeri-letci">
+      <a class="popular-card" href="/flajeri/">
         <span class="popular-image" style="--card-image:url('images/demo-group-094414.webp')"><img src="images/demo-group-094414.webp" alt="Flajeri i lifleti"></span><span class="popular-number">02</span><div><small>Brza i jasna promocija</small><h3>Flajeri i lifleti</h3><b>Pogledajte radove ↗</b></div>
       </a>
       <a class="popular-card" href="https://demoshop.rs/radovi.html?category=fascikle" target="_blank" rel="noopener">
@@ -99,13 +101,13 @@
     <div class="section-action"><a class="button" href="https://demoshop.rs/" target="_blank" rel="noopener">Pogledajte ceo DemoShop <span>↗</span></a></div>
   </section>
 
-  <section class="print-offers section" id="stampa-upiti">
+  <section class="print-offers print-offers-home section" id="stampa-upiti">
     <div class="section-heading print-offers-heading">
       <div><span class="kicker">ŠTAMPA PO MERI</span><h2>Od prve ideje do materijala<br><em>spremnog za vaše kupce.</em></h2></div>
       <p>Izaberite proizvod, unesite osnovne podatke i pošaljite nam upit. Na osnovu formata, tiraža i dorade pripremićemo odgovarajuću ponudu.</p>
     </div>
 
-    <article class="print-offer" id="flajeri-letci">
+    <div class="print-offers-grid"><article class="print-offer" id="flajeri-letci">
       <div class="print-offer-visual">
         <img src="images/demo-group-flajeri-v23.png" alt="Realističan prikaz Demo Group flajera i letaka" loading="lazy">
         <span>01</span>
@@ -115,7 +117,7 @@
         <h3>Flajeri i letci</h3>
         <p>Za akcije, događaje, cenovnike i predstavljanje usluga. Biramo format, papir i doradu tako da poruka bude jasna, a štampa usklađena sa vašim brendom.</p>
         <ul class="print-benefits"><li>Formati A6, A5, A4, DL i izrada po meri</li><li>Jednostrana ili obostrana štampa u punom koloru</li><li>Izbor papira i završne dorade prema nameni</li></ul>
-        <button class="button print-quote-button" type="button" data-quote-open="flyers">Pošaljite upit za flajere <span>↗</span></button>
+        <div class="print-card-actions"><button class="button print-quote-button" type="button" data-quote-open="flyers">Pošaljite upit <span>↗</span></button><a class="service-detail-link" href="/flajeri/">Detalji usluge →</a></div>
       </div>
     </article>
 
@@ -129,9 +131,9 @@
         <h3>Katalozi i časopisi</h3>
         <p>Od prodajnih kataloga do periodičnih izdanja — pomažemo pri izboru formata, papira, poveza i završne obrade kako bi svaka stranica predstavljala vaš brend dosledno i kvalitetno.</p>
         <ul class="print-benefits"><li>Formati, broj strana i papir prilagođeni projektu</li><li>Klamer, lepljeni, spiralni ili tvrdi povez</li><li>Precizna štampa i završna obrada korica</li></ul>
-        <button class="button print-quote-button" type="button" data-quote-open="catalogs">Pošaljite upit za katalog ili časopis <span>↗</span></button>
+        <div class="print-card-actions"><button class="button print-quote-button" type="button" data-quote-open="catalogs">Pošaljite upit <span>↗</span></button><a class="service-detail-link" href="/katalozi-i-casopisi/">Detalji usluge →</a></div>
       </div>
-    </article>
+    </article></div>
   </section>
 
   <section class="about section" id="o-nama">
@@ -190,28 +192,11 @@
   <section class="work-section" id="radovi">
     <div class="section-heading light">
       <div><span class="kicker">NAŠI RADOVI</span><h2>Kvalitet se ne obećava.<br><em>On se vidi.</em></h2></div>
-      <a class="outline-button" href="https://demoshop.rs/" target="_blank" rel="noopener">Otvori DemoShop <span>↗</span></a>
+      <a class="outline-button" href="/nasi-radovi/">Pogledajte sve radove <span>↗</span></a>
     </div>
-    <div class="work-toolbar">
-      <div><span>Pregled galerije</span><strong id="visible-count">31 projekat</strong></div>
-      <label for="work-filter">Izaberite kategoriju
-        <select id="work-filter">
-          <option value="all">Svi radovi</option>
-          <option value="knjige">Knjige i monografije</option>
-          <option value="katalozi">Brošure i lifleti</option>
-          <option value="fascikle">Fascikle</option>
-          <option value="flajeri">Flajeri i letci</option>
-          <option value="rokovnici">Rokovnici i blokovi</option>
-          <option value="casopisi">Časopisi</option>
-          <option value="ambalaza">Ambalaža i kutije</option>
-          <option value="tekstil">Majice i tekstil</option>
-          <option value="gravura">Laserska gravura</option>
-          <option value="promo">Promo proizvodi</option>
-          <option value="pokloni">Poslovni pokloni</option>
-        </select>
-      </label>
-    </div>
-    <div class="work-grid" id="all-works"></div>
+    <div class="home-work-intro"><p>Na početnoj izdvajamo šest projekata. Kompletnu galeriju sa kategorijama možete otvoriti na posebnoj stranici.</p><a class="button button-light" href="/nasi-radovi/">Pogledajte sve radove <span>↗</span></a></div>
+    <select id="work-filter" hidden><option value="all">Svi radovi</option></select><strong id="visible-count" hidden></strong>
+    <div class="work-grid" id="all-works" data-home-gallery></div>
     <div class="work-load-more" id="work-load-more" hidden>
       <button class="outline-button" type="button">Učitaj još radova <span>↓</span></button>
     </div>
@@ -268,7 +253,7 @@
           <a href="tel:+381666551107"><small>Marko Marjanović · marko@demogroup.rs</small><strong>066 655 1107</strong><span>↗</span></a>
         </div>
         <dl class="contact-list">
-          <div><dt>E-adresa</dt><dd><a href="mailto:info@demogroup.rs">info@demogroup.rs</a></dd></div>
+          <div><dt>E-adresa</dt><dd class="contact-emails"><a href="mailto:info@demogroup.rs">info@demogroup.rs</a><a href="mailto:dejan@demogroup.rs">dejan@demogroup.rs</a><a href="mailto:tanja@demogroup.rs">tanja@demogroup.rs</a><a href="mailto:marko@demogroup.rs">marko@demogroup.rs</a></dd></div>
           <div><dt>Adresa</dt><dd>Janka Veselinovića 30, 15000 Šabac</dd></div>
           <div><dt>Društvene mreže</dt><dd><a href="https://instagram.com/demogroup.rs/" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/demogroup.rs" target="_blank" rel="noopener">Facebook</a></dd></div>
         </dl>
@@ -544,7 +529,8 @@ const projects=[
 ];
 const gallery=document.getElementById("all-works");
 const rotations={"093429":180,"094017":90};
-gallery.innerHTML=projects.map((project,i)=>{
+const displayedProjects=gallery.hasAttribute("data-home-gallery")?projects.slice(0,6):projects;
+gallery.innerHTML=displayedProjects.map((project,i)=>{
   const count=project.images.length;
   const rotate=rotations[project.images[0]]||0;
   return `<article class="work-card grouped-card" data-index="${i}" data-active="0" data-category="${project.key}">

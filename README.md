@@ -1,6 +1,6 @@
-# Demo Group - V24
+# Demo Group - V25
 
-V24 uključuje:
+V25 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
@@ -25,6 +25,12 @@ V24 uključuje:
 - gramature 115 g za flajere i 90 g / 115 g za kataloge i časopise;
 - jasno zeleno obaveštenje posle uspešno poslatog upita.
 - pojedinačne email adrese Dejana, Tanje i Marka i u brzom kontaktnom prozoru.
+- kraću početnu stranicu sa šest izdvojenih projekata;
+- zasebnu stranicu `/nasi-radovi/` sa kompletnom galerijom i filterima;
+- zasebne SEO stranice `/flajeri/` i `/katalozi-i-casopisi/`;
+- padajući meni „Štampa“ na računaru i pregledne veze u mobilnom meniju;
+- klikabilne pojedinačne email adrese ispod `info@demogroup.rs`;
+- ažurirane SEO naslove, opise, `robots.txt` i `sitemap.xml`.
 
 ## Postavljanje
 
