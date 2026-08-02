@@ -90,6 +90,27 @@ footer{padding:30px clamp(24px,7vw,100px) 50px;display:flex;align-items:center;g
 @media(max-width:1100px){.service-page-hero figure{min-height:0;padding:28px}.service-page-hero figure img{width:min(90%,760px);max-height:620px}}
 @media(max-width:900px){.print-offers-home .print-offer-visual img{max-height:384px}}
 @media(max-width:640px){.service-page-hero figure{padding:14px}.service-page-hero figure img{width:94%;max-height:480px}.print-offers-home .print-offer-visual{padding:12px}.print-offers-home .print-offer-visual img{max-height:276px}}
+
+/* V28: kompaktnija glavna kontakt forma na većim ekranima */
+@media(min-width:761px){
+  .contact-section .contact-heading{margin-bottom:34px}
+  .contact-section .contact-details{padding:36px}
+  .contact-section .contact-details>p{margin-bottom:22px}
+  .contact-section .contact-calls{gap:8px}
+  .contact-section .contact-calls>a{min-height:68px;padding:13px 16px}
+  .contact-section .contact-calls strong{font-size:20px}
+  .contact-section .contact-list{margin-top:24px}
+  .contact-section .contact-list>div{padding:12px 0}
+  .contact-section .contact-form-card{padding:30px clamp(26px,3vw,42px)}
+  .contact-section .form-intro p{margin-bottom:20px}
+  .contact-section .contact-form{gap:12px}
+  .contact-section .form-grid{gap:12px 16px}
+  .contact-section .contact-form input,.contact-section .contact-form select,.contact-section .contact-form textarea{padding:11px 13px}
+  .contact-section .contact-form textarea{min-height:92px}
+  .contact-section .file-field{min-height:64px;padding:9px 13px}
+  .contact-section .file-icon{width:38px;height:38px}
+  .contact-section .large-file-note{margin-top:-4px}
+}
 .work-lightbox-caption{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 19px;color:#fff}
 .work-lightbox-caption>div{display:grid;gap:3px}
 .work-lightbox-caption strong{font:700 17px Manrope}
