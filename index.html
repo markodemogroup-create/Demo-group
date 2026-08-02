@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Demo Group | Štampa koja ostavlja utisak</title>
   <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="style.css?v=23">
 </head>
 <body>
 <main id="pocetna">
@@ -15,7 +15,7 @@
       <span class="brand-type"><b>DEMO</b><small>GROUP</small></span>
     </a>
     <nav aria-label="Glavna navigacija">
-      <a href="#o-nama">O nama</a><a href="#usluge">Usluge</a><a href="#radovi">Naši radovi</a>
+      <a href="#o-nama">O nama</a><a href="#usluge">Usluge</a><a href="#stampa-upiti">Štampa</a><a href="#radovi">Naši radovi</a>
       <a href="https://demoshop.rs/" target="_blank" rel="noopener">Naši proizvodi</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a>
     </nav>
     <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Otvori meni">
@@ -30,6 +30,7 @@
         </div>
         <a href="#o-nama">O nama <span>→</span></a>
         <a href="#usluge">Usluge <span>→</span></a>
+        <a href="#stampa-upiti">Štampa <span>→</span></a>
         <a href="#radovi">Naši radovi <span>→</span></a>
         <a href="https://demoshop.rs/" target="_blank" rel="noopener">Naši proizvodi <span>↗</span></a>
         <a href="#faq">FAQ <span>→</span></a>
@@ -106,65 +107,29 @@
 
     <article class="print-offer" id="flajeri-letci">
       <div class="print-offer-visual">
-        <img class="print-offer-image-rotated" src="images/demo-group-094017.webp" alt="Primer Demo Group flajera i letaka" loading="lazy">
+        <img src="images/demo-group-flajeri-v23.png" alt="Realističan prikaz Demo Group flajera i letaka" loading="lazy">
         <span>01</span>
       </div>
       <div class="print-offer-content">
         <span class="kicker">BRZA I JASNA PROMOCIJA</span>
         <h3>Flajeri i letci</h3>
         <p>Za akcije, događaje, cenovnike i predstavljanje usluga. Biramo format, papir i doradu tako da poruka bude jasna, a štampa usklađena sa vašim brendom.</p>
-        <form class="product-quote-form" action="https://formsubmit.co/info@demogroup.rs" method="POST">
-          <input type="hidden" name="_subject" value="Novi upit za flajere i letke">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://demogroup.rs/?upit=uspesno#kontakt">
-          <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
-          <div class="quote-form-title"><b>Upit za flajere i letke</b><small>Unesite poznate podatke — ostalo možemo zajedno definisati.</small></div>
-          <div class="quote-fields">
-            <label>Format<select name="Format"><option>A6</option><option>A5</option><option>A4</option><option>DL</option><option>Drugi format</option></select></label>
-            <label>Tiraž *<input type="number" name="Tiraž" min="1" inputmode="numeric" required placeholder="Na primer: 500"></label>
-            <label>Štampa<select name="Štampa"><option>Obostrano u boji (4/4)</option><option>Jednostrano u boji (4/0)</option><option>Crno-belo</option><option>Nisam siguran/na</option></select></label>
-            <label>Papir<select name="Papir"><option>130 g</option><option>150 g</option><option>170 g</option><option>250 g</option><option>Preporuka Demo Groupa</option></select></label>
-            <label>Ime i prezime / firma *<input type="text" name="Ime i firma" autocomplete="name" required></label>
-            <label>Telefon *<input type="tel" name="Telefon" autocomplete="tel" required></label>
-            <label>E-adresa *<input type="email" name="_replyto" autocomplete="email" required></label>
-            <label>Rok ili napomena<input type="text" name="Rok i napomena" placeholder="Dorada, savijanje, željeni rok..."></label>
-          </div>
-          <label class="quote-check"><input type="checkbox" name="Plastifikacija" value="Da"><span>Potrebna je plastifikacija ili dodatna dorada</span></label>
-          <button class="button form-submit" type="submit">Pošaljite upit za flajere <span>↗</span></button>
-        </form>
+        <ul class="print-benefits"><li>Formati A6, A5, A4, DL i izrada po meri</li><li>Jednostrana ili obostrana štampa u punom koloru</li><li>Izbor papira i završne dorade prema nameni</li></ul>
+        <button class="button print-quote-button" type="button" data-quote-open="flyers">Pošaljite upit za flajere <span>↗</span></button>
       </div>
     </article>
 
     <article class="print-offer print-offer-reverse" id="katalozi-casopisi">
       <div class="print-offer-visual">
-        <img src="images/demo-group-094434.webp" alt="Primer Demo Group časopisa i kataloga" loading="lazy">
+        <img src="images/demo-group-katalozi-casopisi-v23.png" alt="Realističan prikaz Demo Group kataloga i časopisa" loading="lazy">
         <span>02</span>
       </div>
       <div class="print-offer-content">
         <span class="kicker">SADRŽAJ KOJI OSTAVLJA UTISAK</span>
         <h3>Katalozi i časopisi</h3>
         <p>Od prodajnih kataloga do periodičnih izdanja — pomažemo pri izboru formata, papira, poveza i završne obrade kako bi svaka stranica predstavljala vaš brend dosledno i kvalitetno.</p>
-        <form class="product-quote-form" action="https://formsubmit.co/info@demogroup.rs" method="POST">
-          <input type="hidden" name="_subject" value="Novi upit za kataloge i časopise">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://demogroup.rs/?upit=uspesno#kontakt">
-          <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
-          <div class="quote-form-title"><b>Upit za kataloge i časopise</b><small>Broj strana kod klasičnog poveza najčešće se planira u grupama po četiri.</small></div>
-          <div class="quote-fields">
-            <label>Format<select name="Format"><option>A4</option><option>A5</option><option>Kvadratni</option><option>Drugi format</option></select></label>
-            <label>Broj strana *<input type="number" name="Broj strana" min="4" step="4" value="16" required></label>
-            <label>Tiraž *<input type="number" name="Tiraž" min="1" inputmode="numeric" required placeholder="Na primer: 200"></label>
-            <label>Štampa<select name="Štampa"><option>U boji (4/4)</option><option>Crno-belo</option><option>Kombinovano</option></select></label>
-            <label>Papir<select name="Papir"><option>130 g</option><option>150 g</option><option>170 g</option><option>Preporuka Demo Groupa</option></select></label>
-            <label>Povez<select name="Povez"><option>Klamer</option><option>Lepljeni povez</option><option>Spirala</option><option>Tvrdi povez</option><option>Potrebna mi je preporuka</option></select></label>
-            <label>Ime i prezime / firma *<input type="text" name="Ime i firma" autocomplete="name" required></label>
-            <label>Telefon *<input type="tel" name="Telefon" autocomplete="tel" required></label>
-            <label>E-adresa *<input type="email" name="_replyto" autocomplete="email" required></label>
-            <label>Rok ili napomena<input type="text" name="Rok i napomena" placeholder="Korice, dorada, željeni rok..."></label>
-          </div>
-          <label class="quote-check"><input type="checkbox" name="Plastifikacija korica" value="Da"><span>Želim plastifikaciju korica</span></label>
-          <button class="button form-submit" type="submit">Pošaljite upit za katalog <span>↗</span></button>
-        </form>
+        <ul class="print-benefits"><li>Formati, broj strana i papir prilagođeni projektu</li><li>Klamer, lepljeni, spiralni ili tvrdi povez</li><li>Precizna štampa i završna obrada korica</li></ul>
+        <button class="button print-quote-button" type="button" data-quote-open="catalogs">Pošaljite upit za katalog ili časopis <span>↗</span></button>
       </div>
     </article>
   </section>
@@ -298,8 +263,9 @@
         <h3>Razgovarajmo o vašem projektu.</h3>
         <p>Za brži dogovor možete nas pozvati, a kompletnu pripremu poslati kroz formular.</p>
         <div class="contact-calls">
-          <a href="tel:+38163227674"><small>Pozovite</small><strong>063 227 674</strong><span>↗</span></a>
-          <a href="tel:+381666551104"><small>Pozovite</small><strong>066 655 1104</strong><span>↗</span></a>
+          <a href="tel:+38163227674"><small>Dejan Marjanović · dejan@demogroup.rs</small><strong>063 227 674</strong><span>↗</span></a>
+          <a href="tel:+381666551104"><small>Tanja Marjanović · tanja@demogroup.rs</small><strong>066 655 1104</strong><span>↗</span></a>
+          <a href="tel:+381666551107"><small>Marko Marjanović · marko@demogroup.rs</small><strong>066 655 1107</strong><span>↗</span></a>
         </div>
         <dl class="contact-list">
           <div><dt>E-adresa</dt><dd><a href="mailto:info@demogroup.rs">info@demogroup.rs</a></dd></div>
@@ -367,7 +333,7 @@
           <p class="form-status" aria-live="polite"></p>
         </form>
         <div class="form-success" data-form-success hidden>
-          <span>✓</span><div><strong>Hvala, upit je poslat.</strong><p>Javićemo vam se u najkraćem roku.</p></div>
+          <span>✓</span><div><strong>Vaš upit je uspešno poslat.</strong><p>Hvala vam na ukazanom poverenju.</p></div>
         </div>
       </div>
     </div>
@@ -379,6 +345,39 @@
     <div><a href="https://demoshop.rs/" target="_blank" rel="noopener">DemoShop</a><a href="mailto:info@demogroup.rs">info@demogroup.rs</a><span>Šabac, Srbija</span></div>
   </footer>
 </main>
+
+<div class="contact-modal quote-modal" id="quote-modal" hidden>
+  <div class="contact-modal-backdrop" data-quote-close></div>
+  <section class="contact-modal-panel quote-modal-panel" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+    <button class="modal-close" type="button" aria-label="Zatvori prozor" data-quote-close>×</button>
+    <div class="modal-header">
+      <span class="kicker">ŠTAMPA PO MERI</span>
+      <h2 id="quote-modal-title">Pošaljite podatke za ponudu</h2>
+      <p>Unesite podatke koje znate — za ostalo ćemo vam rado preporučiti najbolje rešenje.</p>
+    </div>
+    <form class="product-quote-form" data-quote-form="flyers" action="https://formsubmit.co/info@demogroup.rs" method="POST">
+      <input type="hidden" name="_subject" value="Novi upit za flajere i letke"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://demogroup.rs/?upit=uspesno#kontakt"><input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+      <div class="quote-form-title"><b>Upit za flajere i letke</b><small>Polja označena zvezdicom su obavezna.</small></div>
+      <div class="quote-fields">
+        <label>Format<select name="Format"><option>A6</option><option>A5</option><option>A4</option><option>DL</option><option>Drugi format</option></select></label>
+        <label>Tiraž *<input type="number" name="Tiraž" min="1" inputmode="numeric" required placeholder="Na primer: 500"></label>
+        <label>Štampa<select name="Štampa"><option>Obostrano u boji (4/4)</option><option>Jednostrano u boji (4/0)</option><option>Crno-belo</option><option>Nisam siguran/na</option></select></label>
+        <label>Papir<select name="Papir"><option>115 g</option><option>130 g</option><option>150 g</option><option>170 g</option><option>250 g</option><option>Preporuka Demo Groupa</option></select></label>
+        <label>Ime i prezime / firma *<input type="text" name="Ime i firma" autocomplete="name" required></label><label>Telefon *<input type="tel" name="Telefon" autocomplete="tel" required></label><label>E-adresa *<input type="email" name="_replyto" autocomplete="email" required></label><label>Rok ili napomena<input type="text" name="Rok i napomena" placeholder="Dorada, savijanje, željeni rok..."></label>
+      </div>
+      <label class="quote-check"><input type="checkbox" name="Plastifikacija" value="Da"><span>Potrebna je plastifikacija ili dodatna dorada</span></label><button class="button form-submit" type="submit">Pošaljite upit za flajere <span>↗</span></button>
+    </form>
+    <form class="product-quote-form" data-quote-form="catalogs" action="https://formsubmit.co/info@demogroup.rs" method="POST" hidden>
+      <input type="hidden" name="_subject" value="Novi upit za kataloge i časopise"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://demogroup.rs/?upit=uspesno#kontakt"><input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+      <div class="quote-form-title"><b>Upit za kataloge i časopise</b><small>Broj strana kod klasičnog poveza najčešće se planira u grupama po četiri.</small></div>
+      <div class="quote-fields">
+        <label>Format<select name="Format"><option>A4</option><option>A5</option><option>Kvadratni</option><option>Drugi format</option></select></label><label>Broj strana *<input type="number" name="Broj strana" min="4" step="4" value="16" required></label><label>Tiraž *<input type="number" name="Tiraž" min="1" inputmode="numeric" required placeholder="Na primer: 200"></label><label>Štampa<select name="Štampa"><option>U boji (4/4)</option><option>Crno-belo</option><option>Kombinovano</option></select></label>
+        <label>Papir<select name="Papir"><option>90 g</option><option>115 g</option><option>130 g</option><option>150 g</option><option>170 g</option><option>Preporuka Demo Groupa</option></select></label><label>Povez<select name="Povez"><option>Klamer</option><option>Lepljeni povez</option><option>Spirala</option><option>Tvrdi povez</option><option>Potrebna mi je preporuka</option></select></label><label>Ime i prezime / firma *<input type="text" name="Ime i firma" autocomplete="name" required></label><label>Telefon *<input type="tel" name="Telefon" autocomplete="tel" required></label><label>E-adresa *<input type="email" name="_replyto" autocomplete="email" required></label><label>Rok ili napomena<input type="text" name="Rok i napomena" placeholder="Korice, dorada, željeni rok..."></label>
+      </div>
+      <label class="quote-check"><input type="checkbox" name="Plastifikacija korica" value="Da"><span>Želim plastifikaciju korica</span></label><button class="button form-submit" type="submit">Pošaljite upit za katalog ili časopis <span>↗</span></button>
+    </form>
+  </section>
+</div>
 
 <div class="contact-modal" id="contact-modal" hidden>
   <div class="contact-modal-backdrop" data-contact-close></div>
@@ -392,8 +391,9 @@
     <div class="modal-layout">
       <aside class="modal-call-options">
         <span class="contact-label">BRZ POZIV</span>
-        <a href="tel:+38163227674"><small>Pozovite</small><strong>063 227 674</strong><span>↗</span></a>
-        <a href="tel:+381666551104"><small>Pozovite</small><strong>066 655 1104</strong><span>↗</span></a>
+        <a href="tel:+38163227674"><small>Dejan Marjanović</small><strong>063 227 674</strong><span>↗</span></a>
+        <a href="tel:+381666551104"><small>Tanja Marjanović</small><strong>066 655 1104</strong><span>↗</span></a>
+        <a href="tel:+381666551107"><small>Marko Marjanović</small><strong>066 655 1107</strong><span>↗</span></a>
         <p>Možete nam pisati i direktno:</p>
         <a class="modal-email" href="mailto:info@demogroup.rs">info@demogroup.rs</a>
       </aside>
@@ -688,6 +688,22 @@ mobileMenu.querySelectorAll("[data-mobile-menu-close]").forEach(control=>control
 mobileMenu.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMobileMenu));
 
 const contactModal=document.getElementById("contact-modal");
+const quoteModal=document.getElementById("quote-modal");
+let quoteOpener=null;
+const openQuoteModal=(type,opener)=>{
+  quoteOpener=opener||document.activeElement;
+  quoteModal.querySelectorAll("[data-quote-form]").forEach(form=>form.hidden=form.dataset.quoteForm!==type);
+  quoteModal.hidden=false;
+  document.body.classList.add("modal-open");
+  requestAnimationFrame(()=>quoteModal.querySelector('[data-quote-form]:not([hidden]) input:not([type="hidden"])')?.focus());
+};
+const closeQuoteModal=()=>{
+  quoteModal.hidden=true;
+  document.body.classList.remove("modal-open");
+  quoteOpener?.focus();
+};
+document.querySelectorAll("[data-quote-open]").forEach(button=>button.addEventListener("click",()=>openQuoteModal(button.dataset.quoteOpen,button)));
+quoteModal.querySelectorAll("[data-quote-close]").forEach(control=>control.addEventListener("click",closeQuoteModal));
 let contactOpener=null;
 const openContactModal=opener=>{
   contactOpener=opener||document.activeElement;
@@ -713,6 +729,7 @@ document.addEventListener("keydown",event=>{
   if(event.key==="Escape"&&!workLightbox.hidden)closeWorkLightbox();
   else if(!workLightbox.hidden&&event.key==="ArrowLeft")moveWorkLightbox(-1);
   else if(!workLightbox.hidden&&event.key==="ArrowRight")moveWorkLightbox(1);
+  else if(event.key==="Escape"&&!quoteModal.hidden)closeQuoteModal();
   else if(event.key==="Escape"&&!contactModal.hidden)closeContactModal();
   else if(event.key==="Escape"&&!mobileMenu.hidden)closeMobileMenu();
 });

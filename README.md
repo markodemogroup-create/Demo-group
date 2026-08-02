@@ -1,6 +1,6 @@
-# Demo Group - V22
+# Demo Group - V23
 
-V22 uključuje:
+V23 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
@@ -11,7 +11,7 @@ V22 uključuje:
 - mobilni meni sa svim glavnim vezama;
 - početni prikaz osam radova na telefonu i dugme „Učitaj još radova“;
 - doteran prikaz za telefone, tablete i računare;
-- kontakt-sekciju sa adresom, društvenim mrežama i dva broja telefona;
+- kontakt-sekciju sa adresom, društvenim mrežama i kontaktima Dejana, Tanje i Marka;
 - zajednički kontakt-prozor za dugmad Pošaljite upit i Zatraži ponudu;
 - formular za upit i ponudu sa prilogom do ukupno 10 MB;
 - slanje upita na info@demogroup.rs;
@@ -19,6 +19,11 @@ V22 uključuje:
 - stabilan veliki pregled svih slika u galeriji;
 - prikaz cele fotografije bez sečenja, unutrašnjeg vertikalnog skrolovanja i zumiranja;
 - sve veze ka prodavnici vode direktno na `demoshop.rs`.
+- novu stavku „Štampa“ u glavnom i mobilnom meniju;
+- realistične prikaze flajera, kataloga i časopisa sa Demo Group brendom;
+- posebne upite za flajere i kataloge koji se otvaraju tek na klik;
+- gramature 115 g za flajere i 90 g / 115 g za kataloge i časopise;
+- jasno zeleno obaveštenje posle uspešno poslatog upita.
 
 ## Postavljanje
 
