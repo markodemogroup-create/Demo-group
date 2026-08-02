@@ -1,6 +1,6 @@
-# Demo Group - V23
+# Demo Group - V24
 
-V23 uključuje:
+V24 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
@@ -24,6 +24,7 @@ V23 uključuje:
 - posebne upite za flajere i kataloge koji se otvaraju tek na klik;
 - gramature 115 g za flajere i 90 g / 115 g za kataloge i časopise;
 - jasno zeleno obaveštenje posle uspešno poslatog upita.
+- pojedinačne email adrese Dejana, Tanje i Marka i u brzom kontaktnom prozoru.
 
 ## Postavljanje
 

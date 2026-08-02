@@ -59,6 +59,7 @@ footer{padding:30px clamp(24px,7vw,100px) 50px;display:flex;align-items:center;g
   .ticker{min-height:0;padding:16px 14px;gap:10px 16px}.ticker span{font-size:11px;letter-spacing:.055em}.ticker b{font-size:9px}
   .service-card{min-height:0;padding:25px 22px 28px}.service-card>span{min-width:46px;height:46px;font-size:18px}.service-card h3{margin:23px 42px 10px 0;font-size:24px}.service-card p{font-size:15px;line-height:1.55}.service-card>b{top:29px;right:22px;font-size:30px}
 }
+.modal-call-options small{overflow-wrap:anywhere}
 .work-lightbox[hidden]{display:none}
 .work-lightbox{position:fixed;inset:0;z-index:1400;display:grid;grid-template-columns:72px minmax(0,1fr) 72px;align-items:center;padding:28px;background:rgba(10,13,19,.94);backdrop-filter:blur(12px)}
 .work-lightbox-backdrop{position:absolute;inset:0}
