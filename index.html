@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Demo Group | Štampa koja ostavlja utisak</title>
   <meta name="description" content="Moderna probna verzija Demo Group sajta.">
-  <link rel="stylesheet" href="style.css?v=21">
+  <link rel="stylesheet" href="style.css?v=22">
 </head>
 <body>
 <main id="pocetna">
@@ -59,7 +59,7 @@
         <div><strong>100%</strong><span>posvećenosti detalju</span></div>
       </div>
     </div>
-    <div class="hero-visual" aria-label="Izbor Demo Group proizvoda">
+    <div class="hero-visual" aria-label="Izbor Demo Group proizvoda" data-hero-gallery>
       <div class="orb orb-one"></div><div class="orb orb-two"></div>
       <img class="product-shot shot-main" src="images/demo-group-093355.webp" alt="Demo Group štampana brošura">
       <img class="product-shot shot-left" src="images/demo-group-094223.webp" alt="Demo Group spiralni blok">
@@ -76,10 +76,10 @@
       <p>Izaberite proizvod i nastavite direktno u DemoShop katalog. Tamo možete pregledati modele i poslati upit.</p>
     </div>
     <div class="popular-grid">
-      <a class="popular-card" href="https://demoshop.rs/radovi.html?category=katalozi" target="_blank" rel="noopener">
+      <a class="popular-card" href="#katalozi-casopisi">
         <span class="popular-image" style="--card-image:url('images/demo-group-094913.webp')"><img src="images/demo-group-094913.webp" alt="Brošure i lifleti"></span><span class="popular-number">01</span><div><small>Promotivna štampa</small><h3>Brošure i lifleti</h3><b>Pogledajte radove ↗</b></div>
       </a>
-      <a class="popular-card" href="https://demoshop.rs/radovi.html?category=letci" target="_blank" rel="noopener">
+      <a class="popular-card" href="#flajeri-letci">
         <span class="popular-image" style="--card-image:url('images/demo-group-094414.webp')"><img src="images/demo-group-094414.webp" alt="Flajeri i lifleti"></span><span class="popular-number">02</span><div><small>Brza i jasna promocija</small><h3>Flajeri i lifleti</h3><b>Pogledajte radove ↗</b></div>
       </a>
       <a class="popular-card" href="https://demoshop.rs/radovi.html?category=fascikle" target="_blank" rel="noopener">
@@ -96,6 +96,77 @@
       </a>
     </div>
     <div class="section-action"><a class="button" href="https://demoshop.rs/" target="_blank" rel="noopener">Pogledajte ceo DemoShop <span>↗</span></a></div>
+  </section>
+
+  <section class="print-offers section" id="stampa-upiti">
+    <div class="section-heading print-offers-heading">
+      <div><span class="kicker">ŠTAMPA PO MERI</span><h2>Od prve ideje do materijala<br><em>spremnog za vaše kupce.</em></h2></div>
+      <p>Izaberite proizvod, unesite osnovne podatke i pošaljite nam upit. Na osnovu formata, tiraža i dorade pripremićemo odgovarajuću ponudu.</p>
+    </div>
+
+    <article class="print-offer" id="flajeri-letci">
+      <div class="print-offer-visual">
+        <img class="print-offer-image-rotated" src="images/demo-group-094017.webp" alt="Primer Demo Group flajera i letaka" loading="lazy">
+        <span>01</span>
+      </div>
+      <div class="print-offer-content">
+        <span class="kicker">BRZA I JASNA PROMOCIJA</span>
+        <h3>Flajeri i letci</h3>
+        <p>Za akcije, događaje, cenovnike i predstavljanje usluga. Biramo format, papir i doradu tako da poruka bude jasna, a štampa usklađena sa vašim brendom.</p>
+        <form class="product-quote-form" action="https://formsubmit.co/info@demogroup.rs" method="POST">
+          <input type="hidden" name="_subject" value="Novi upit za flajere i letke">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://demogroup.rs/?upit=uspesno#kontakt">
+          <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+          <div class="quote-form-title"><b>Upit za flajere i letke</b><small>Unesite poznate podatke — ostalo možemo zajedno definisati.</small></div>
+          <div class="quote-fields">
+            <label>Format<select name="Format"><option>A6</option><option>A5</option><option>A4</option><option>DL</option><option>Drugi format</option></select></label>
+            <label>Tiraž *<input type="number" name="Tiraž" min="1" inputmode="numeric" required placeholder="Na primer: 500"></label>
+            <label>Štampa<select name="Štampa"><option>Obostrano u boji (4/4)</option><option>Jednostrano u boji (4/0)</option><option>Crno-belo</option><option>Nisam siguran/na</option></select></label>
+            <label>Papir<select name="Papir"><option>130 g</option><option>150 g</option><option>170 g</option><option>250 g</option><option>Preporuka Demo Groupa</option></select></label>
+            <label>Ime i prezime / firma *<input type="text" name="Ime i firma" autocomplete="name" required></label>
+            <label>Telefon *<input type="tel" name="Telefon" autocomplete="tel" required></label>
+            <label>E-adresa *<input type="email" name="_replyto" autocomplete="email" required></label>
+            <label>Rok ili napomena<input type="text" name="Rok i napomena" placeholder="Dorada, savijanje, željeni rok..."></label>
+          </div>
+          <label class="quote-check"><input type="checkbox" name="Plastifikacija" value="Da"><span>Potrebna je plastifikacija ili dodatna dorada</span></label>
+          <button class="button form-submit" type="submit">Pošaljite upit za flajere <span>↗</span></button>
+        </form>
+      </div>
+    </article>
+
+    <article class="print-offer print-offer-reverse" id="katalozi-casopisi">
+      <div class="print-offer-visual">
+        <img src="images/demo-group-094434.webp" alt="Primer Demo Group časopisa i kataloga" loading="lazy">
+        <span>02</span>
+      </div>
+      <div class="print-offer-content">
+        <span class="kicker">SADRŽAJ KOJI OSTAVLJA UTISAK</span>
+        <h3>Katalozi i časopisi</h3>
+        <p>Od prodajnih kataloga do periodičnih izdanja — pomažemo pri izboru formata, papira, poveza i završne obrade kako bi svaka stranica predstavljala vaš brend dosledno i kvalitetno.</p>
+        <form class="product-quote-form" action="https://formsubmit.co/info@demogroup.rs" method="POST">
+          <input type="hidden" name="_subject" value="Novi upit za kataloge i časopise">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://demogroup.rs/?upit=uspesno#kontakt">
+          <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+          <div class="quote-form-title"><b>Upit za kataloge i časopise</b><small>Broj strana kod klasičnog poveza najčešće se planira u grupama po četiri.</small></div>
+          <div class="quote-fields">
+            <label>Format<select name="Format"><option>A4</option><option>A5</option><option>Kvadratni</option><option>Drugi format</option></select></label>
+            <label>Broj strana *<input type="number" name="Broj strana" min="4" step="4" value="16" required></label>
+            <label>Tiraž *<input type="number" name="Tiraž" min="1" inputmode="numeric" required placeholder="Na primer: 200"></label>
+            <label>Štampa<select name="Štampa"><option>U boji (4/4)</option><option>Crno-belo</option><option>Kombinovano</option></select></label>
+            <label>Papir<select name="Papir"><option>130 g</option><option>150 g</option><option>170 g</option><option>Preporuka Demo Groupa</option></select></label>
+            <label>Povez<select name="Povez"><option>Klamer</option><option>Lepljeni povez</option><option>Spirala</option><option>Tvrdi povez</option><option>Potrebna mi je preporuka</option></select></label>
+            <label>Ime i prezime / firma *<input type="text" name="Ime i firma" autocomplete="name" required></label>
+            <label>Telefon *<input type="tel" name="Telefon" autocomplete="tel" required></label>
+            <label>E-adresa *<input type="email" name="_replyto" autocomplete="email" required></label>
+            <label>Rok ili napomena<input type="text" name="Rok i napomena" placeholder="Korice, dorada, željeni rok..."></label>
+          </div>
+          <label class="quote-check"><input type="checkbox" name="Plastifikacija korica" value="Da"><span>Želim plastifikaciju korica</span></label>
+          <button class="button form-submit" type="submit">Pošaljite upit za katalog <span>↗</span></button>
+        </form>
+      </div>
+    </article>
   </section>
 
   <section class="about section" id="o-nama">
@@ -395,6 +466,49 @@
 </div>
 
 <script>
+const heroGallery=document.querySelector("[data-hero-gallery]");
+const heroSets=[
+  [
+    {src:"images/demo-group-093355.webp",alt:"Demo Group štampana brošura"},
+    {src:"images/demo-group-094223.webp",alt:"Demo Group spiralni blok"},
+    {src:"images/demo-group-094510.webp",alt:"Demo Group štampana ambalaža"}
+  ],
+  [
+    {src:"images/demo-group-094434.webp",alt:"Demo Group časopis"},
+    {src:"images/demo-group-094017.webp",alt:"Demo Group promotivni letak"},
+    {src:"images/demo-group-094913.webp",alt:"Demo Group turistička brošura"}
+  ],
+  [
+    {src:"images/demo-group-094026.webp",alt:"Demo Group poslovni blok"},
+    {src:"images/demo-group-093210.webp",alt:"Demo Group poslovna fascikla"},
+    {src:"images/demo-group-094539.webp",alt:"Demo Group brendirana ambalaža"}
+  ]
+];
+if(heroGallery&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  const heroImages=[heroGallery.querySelector(".shot-main"),heroGallery.querySelector(".shot-left"),heroGallery.querySelector(".shot-right")];
+  let heroSetIndex=0;
+  let heroTimer;
+  const showNextHeroSet=()=>{
+    heroSetIndex=(heroSetIndex+1)%heroSets.length;
+    heroGallery.classList.add("is-changing");
+    window.setTimeout(()=>{
+      heroImages.forEach((image,index)=>{
+        image.src=heroSets[heroSetIndex][index].src;
+        image.alt=heroSets[heroSetIndex][index].alt;
+      });
+      requestAnimationFrame(()=>heroGallery.classList.remove("is-changing"));
+    },480);
+  };
+  const startHero=()=>{window.clearInterval(heroTimer);heroTimer=window.setInterval(showNextHeroSet,4500)};
+  const pauseHero=()=>window.clearInterval(heroTimer);
+  heroGallery.addEventListener("mouseenter",pauseHero);
+  heroGallery.addEventListener("mouseleave",startHero);
+  heroGallery.addEventListener("focusin",pauseHero);
+  heroGallery.addEventListener("focusout",startHero);
+  document.addEventListener("visibilitychange",()=>document.hidden?pauseHero():startHero());
+  startHero();
+}
+
 const projects=[
   {title:"Arhiv na trgu",cat:"Knjige i monografije",key:"knjige",images:["092925","092937"]},
   {title:"Monografija škole",cat:"Knjige i monografije",key:"knjige",images:["093008","093020"]},

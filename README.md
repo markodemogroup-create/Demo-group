@@ -1,6 +1,6 @@
-# Demo Group - V21
+# Demo Group - V22
 
-V21 uključuje:
+V22 uključuje:
 
 - moderan Demo Group prezentacioni sajt;
 - originalni Demo Group logo bez pozadine;
