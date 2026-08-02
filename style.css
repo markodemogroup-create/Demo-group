@@ -81,6 +81,15 @@ footer{padding:30px clamp(24px,7vw,100px) 50px;display:flex;align-items:center;g
 @media(prefers-reduced-motion:reduce){.hero-visual .product-shot{transition:none}.hero-visual.is-changing .product-shot{opacity:1;transform:none!important}}
 .print-benefits{display:grid;gap:0;margin:30px 0 32px;padding:0;list-style:none;border-top:1px solid var(--line)}.print-benefits li{position:relative;padding:16px 12px 16px 36px;border-bottom:1px solid var(--line);color:#4e535c;line-height:1.45}.print-benefits li:before{content:"✓";position:absolute;left:4px;top:16px;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e8f8ef;color:#21834d;font-size:12px;font-weight:800}.print-quote-button{border:0;cursor:pointer;font-family:inherit}.quote-modal .product-quote-form[hidden]{display:none!important}.quote-modal-panel{width:min(900px,100%)}.quote-modal .product-quote-form{margin-top:28px}.contact-calls small{line-height:1.35}.contact-calls>a{min-height:78px}
 @media(max-width:640px){.print-benefits{margin:24px 0}.print-quote-button{width:100%;justify-content:center}.quote-modal .product-quote-form{padding:18px 14px;margin-top:22px}.quote-modal-panel{padding-top:58px}}
+
+/* V27: centrirane slike usluga bez sečenja */
+.service-page-hero figure{display:grid;place-items:center;min-height:560px;padding:clamp(20px,3vw,42px)}
+.service-page-hero figure img{width:min(92%,820px);height:auto;aspect-ratio:auto;max-height:680px;object-fit:contain;object-position:center}
+.print-offers-home .print-offer-visual{display:grid;place-items:center;padding:18px;background:#f5eeea}
+.print-offers-home .print-offer-visual img{width:100%;height:100%;min-height:0;max-height:324px;padding:0;object-fit:contain;object-position:center;border-radius:14px}
+@media(max-width:1100px){.service-page-hero figure{min-height:0;padding:28px}.service-page-hero figure img{width:min(90%,760px);max-height:620px}}
+@media(max-width:900px){.print-offers-home .print-offer-visual img{max-height:384px}}
+@media(max-width:640px){.service-page-hero figure{padding:14px}.service-page-hero figure img{width:94%;max-height:480px}.print-offers-home .print-offer-visual{padding:12px}.print-offers-home .print-offer-visual img{max-height:276px}}
 .work-lightbox-caption{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 19px;color:#fff}
 .work-lightbox-caption>div{display:grid;gap:3px}
 .work-lightbox-caption strong{font:700 17px Manrope}
