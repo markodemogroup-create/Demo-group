@@ -1,30 +1,581 @@
 <!doctype html>
-<html lang="sr-Latn">
+<html lang="sr-Latn-RS">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Naši radovi | Demo Group štamparija Šabac</title>
-  <meta name="description" content="Pogledajte Demo Group projekte: knjige, monografije, fascikle, flajere, kataloge, časopise, blokove i ambalažu.">
+  <meta name="description" content="Galerija Demo Group projekata: knjige i monografije, fascikle, katalozi i brošure, flajeri, rokovnici i blokovi, časopisi i ambalaža.">
   <link rel="canonical" href="https://demogroup.rs/nasi-radovi/">
-  <link rel="stylesheet" href="../style.css?v=25">
+  <meta name="theme-color" content="#C5222A">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Demo Group">
+  <meta property="og:locale" content="sr_RS">
+  <meta property="og:url" content="https://demogroup.rs/nasi-radovi/">
+  <meta property="og:title" content="Naši radovi | Demo Group štamparija Šabac">
+  <meta property="og:description" content="Galerija Demo Group projekata: knjige i monografije, fascikle, katalozi i brošure, flajeri, rokovnici i blokovi, časopisi i ambalaža.">
+  <meta property="og:image" content="https://demogroup.rs/assets/img/brand/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Demo Group — štamparija u Šapcu">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Naši radovi | Demo Group štamparija Šabac">
+  <meta name="twitter:description" content="Galerija Demo Group projekata: knjige i monografije, fascikle, katalozi i brošure, flajeri, rokovnici i blokovi, časopisi i ambalaža.">
+  <meta name="twitter:image" content="https://demogroup.rs/assets/img/brand/og-default.jpg">
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../assets/img/brand/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/brand/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://demogroup.rs/#organization","name":"Demo Group DOO","alternateName":"Demo Group","url":"https://demogroup.rs","logo":"https://demogroup.rs/assets/img/brand/icon-512.png","image":"https://demogroup.rs/assets/img/brand/og-default.jpg","email":"info@demogroup.rs","telephone":["+381666551104","+38163227674"],"taxID":"106895290","vatID":"106895290","identifier":{"@type":"PropertyValue","name":"Matični broj","value":"20701498"},"address":{"@type":"PostalAddress","streetAddress":"Janka Veselinovića 30","addressLocality":"Šabac","postalCode":"15000","addressCountry":"RS"},"openingHours":"Mo-Fr 08:00-16:00","sameAs":["https://instagram.com/demogroup.rs/","https://facebook.com/demogroup.rs","https://demoshop.rs/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Početna","item":"https://demogroup.rs/"},{"@type":"ListItem","position":2,"name":"Naši radovi"}]}</script>
 </head>
-<body class="inner-page">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Demo Group početna"><span class="brand-mark"><img src="../images/demo-group-logo-original.png?v=14" alt=""></span><span class="brand-type"><b>DEMO</b><small>GROUP</small></span></a>
-    <nav aria-label="Glavna navigacija"><a href="/">Početna</a><a href="/flajeri/">Flajeri</a><a href="/katalozi-i-casopisi/">Katalozi i časopisi</a><a href="/#kontakt">Kontakt</a></nav>
-    <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Otvori meni"><span></span><span></span><span></span></button>
-    <div class="mobile-navigation" id="mobile-navigation" hidden><div class="mobile-navigation-backdrop" data-mobile-menu-close></div><div class="mobile-navigation-panel"><div class="mobile-navigation-head"><span>MENI</span><button type="button" data-mobile-menu-close>×</button></div><a href="/">Početna <span>→</span></a><a href="/flajeri/">Flajeri <span>→</span></a><a href="/katalozi-i-casopisi/">Katalozi i časopisi <span>→</span></a><a href="/#kontakt">Kontakt <span>→</span></a></div></div>
-    <div class="header-actions"><a class="shop-button" href="https://demoshop.rs/" target="_blank" rel="noopener">DemoShop <span>↗</span></a><a class="button button-small" href="/#kontakt">Pošaljite upit <span>↗</span></a></div>
-  </header>
-  <main>
-    <section class="inner-hero"><span class="kicker">DEMO GROUP PORTFOLIO</span><h1>Naši <em>radovi.</em></h1><p>Izaberite kategoriju i pogledajte projekte koje smo proizveli za naše klijente.</p></section>
-    <section class="work-section inner-work" id="radovi">
-      <div class="work-toolbar"><div><span>Pregled galerije</span><strong id="visible-count">31 projekat</strong></div><label for="work-filter">Izaberite kategoriju<select id="work-filter"><option value="all">Svi radovi</option><option value="knjige">Knjige i monografije</option><option value="katalozi">Brošure i lifleti</option><option value="fascikle">Fascikle</option><option value="flajeri">Flajeri i letci</option><option value="rokovnici">Rokovnici i blokovi</option><option value="casopisi">Časopisi</option><option value="ambalaza">Ambalaža i kutije</option></select></label></div>
-      <div class="work-grid" id="all-works"></div><div class="work-load-more" id="work-load-more" hidden><button class="outline-button" type="button">Učitaj još radova <span>↓</span></button></div><div class="coming-soon" id="coming-soon" hidden><span>✦</span><h3>Novi radovi uskoro</h3><p>Pripremamo fotografije iz ove kategorije.</p><a class="outline-button" href="/#kontakt">Pošaljite upit <span>↗</span></a></div>
-    </section>
-    <section class="cta inner-cta"><div class="cta-copy"><span class="kicker">VAŠ PROJEKAT</span><h2>Želite sličan<br><em>rezultat?</em></h2><p>Pošaljite nam dimenzije, tiraž i rok.</p></div><div class="cta-actions"><a class="button button-light" href="/#kontakt">Pošaljite upit <span>↗</span></a></div></section>
-  </main>
-  <footer><a class="brand" href="/"><span class="brand-mark"><img src="../images/demo-group-logo-original.png?v=14" alt=""></span><span class="brand-type"><b>DEMO</b><small>GROUP</small></span></a><p>Štampa koja ostavlja utisak.</p><div><a href="mailto:info@demogroup.rs">info@demogroup.rs</a><span>Šabac, Srbija</span></div></footer>
-  <div class="work-lightbox" id="work-lightbox" hidden><div class="work-lightbox-backdrop" data-work-lightbox-close></div><button class="work-lightbox-close" type="button" aria-label="Zatvori" data-work-lightbox-close>×</button><button class="work-lightbox-nav work-lightbox-prev" type="button" aria-label="Prethodna">←</button><figure class="work-lightbox-stage"><img id="work-lightbox-image" alt=""><figcaption class="work-lightbox-caption"><strong id="work-lightbox-title"></strong><span id="work-lightbox-count"></span></figcaption></figure><button class="work-lightbox-nav work-lightbox-next" type="button" aria-label="Sledeća">→</button></div>
-  <script src="gallery.js?v=25"></script>
+<body>
+<a class="skip-link" href="#main">Preskoči na sadržaj</a>
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="../index.html" aria-label="Demo Group — početna strana">
+      <img src="../assets/img/brand/logo.webp" width="44" height="44" alt="" fetchpriority="high">
+      <span class="brand__type"><b>DEMO</b><span>GROUP</span></span>
+    </a>
+
+    <nav class="nav" aria-label="Glavna navigacija">
+      <div class="nav__item nav__item--feature">
+        <button class="nav__trigger" type="button" id="nav-kalendari"
+                aria-expanded="false" aria-controls="nav-kalendari-panel"
+                aria-haspopup="true">Kalendari 2027 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></button>
+        <div class="nav__panel" id="nav-kalendari-panel" style="--cols:4"
+             role="group" aria-labelledby="nav-kalendari">
+          <div class="nav__cols"><div class="nav__col"><h4><a href="../kalendari/7-lista/index.html">Kalendari 7 lista</a></h4><a href="../kalendari/ikone-7-lista/index.html">Ikone</a><a href="../kalendari/priroda-7-lista/index.html">Miris prirode</a><a href="../kalendari/moja-srbija-7-lista/index.html">Moja Srbija</a><a href="../kalendari/vojvodina-7-lista/index.html">Vojvodina</a><a href="../kalendari/duh-vremena-7-lista/index.html">Duh vremena</a><a href="../kalendari/duh-srbije-7-lista/index.html">Duh Srbije</a><a href="../kalendari/stara-srbija-7-lista/index.html">Stara Srbija</a><a href="../kalendari/manastiri-7-lista/index.html">Manastiri</a><a href="../kalendari/cvece-7-lista/index.html">Cveće</a><a href="../kalendari/vreme-lova-7-lista/index.html">Vreme lova</a><a href="../kalendari/drugari-7-lista/index.html">Moji ljubimci</a><a href="../kalendari/automobili-7-lista/index.html">Automobili</a></div><div class="nav__col"><h4><a href="../kalendari/4-lista/index.html">Kalendari 4 lista</a></h4><a href="../kalendari/duh-srbije-4-lista/index.html">Duh Srbije</a><a href="../kalendari/ikone-4-lista/index.html">Ikone</a><a href="../kalendari/manastiri-4-lista/index.html">Manastiri</a><a href="../kalendari/moja-srbija-4-lista/index.html">Moja Srbija</a><a href="../kalendari/priroda-4-lista/index.html">Priroda</a><a href="../kalendari/stara-srbija-4-lista/index.html">Stara Srbija</a></div><div class="nav__col"><h4><a href="../kalendari/stoni/index.html">Stoni kalendari</a></h4><a href="../kalendari/ikone/index.html">Ikone 2027</a><a href="../kalendari/moja-srbija/index.html">Moja Srbija 2027</a><a href="../kalendari/stara-srbija/index.html">Stara Srbija 2027</a><a href="../kalendari/duh-srbije/index.html">Duh Srbije 2027</a><a href="../kalendari/duh-vremena/index.html">Duh vremena 2027</a><a href="../kalendari/manastiri/index.html">Manastiri 2027</a><a href="../kalendari/priroda/index.html">Miris prirode 2027</a><a href="../kalendari/ikone-stoni-2/index.html">Ikone II 2027</a><a href="../kalendari/moja-srbija-stoni-2/index.html">Moja Srbija II 2027</a><a href="../kalendari/priroda-stoni-2/index.html">Priroda II 2027</a></div><div class="nav__col"><h4><a href="../kalendari/poslovni/index.html">Poslovni kalendari</a></h4><a href="../kalendari/priroda-trodelni/index.html">Trodelni Priroda 2027</a><a href="../kalendari/verski-trodelni/index.html">Trodelni Verski 2027</a><a href="../kalendari/verski-12-lista/index.html">Verski 2027</a><a href="../kalendari/priroda-12-lista/index.html">Priroda 2027</a></div></div>
+          <div class="nav__foot">
+            <a class="link-arrow" href="../kalendari/index.html">Svi kalendari 2027 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            <a class="link-arrow" href="../assets/catalogs/katalog-kalendara-2027.pdf" target="_blank" rel="noopener">Katalog kalendara 2027 (PDF, 9,1 MB) <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+          </div>
+        </div>
+      </div>
+      
+      <a class="nav__shop" href="https://demoshop.rs/" target="_blank" rel="noopener"><span class="nav__shop-name">DemoShop</span><span class="visually-hidden"> — </span><span class="nav__shop-sub">Reklamni materijal</span></a>
+      <a href="../o-nama/index.html">O nama</a>
+      <a href="../nasi-radovi/index.html">Naši radovi</a>
+      <div class="nav__item">
+        <button class="nav__trigger" type="button" id="nav-usluge"
+                aria-expanded="false" aria-controls="nav-usluge-panel"
+                aria-haspopup="true">Usluge <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></button>
+        <div class="nav__panel" id="nav-usluge-panel" style="--cols:4"
+             role="group" aria-labelledby="nav-usluge">
+          <div class="nav__cols"><div class="nav__col"><h4>Štampa</h4><a href="../flajeri/index.html">Flajeri i letci</a><a href="../katalozi-i-casopisi/index.html">Katalozi i časopisi</a><a href="../knjige-i-monografije/index.html">Knjige i monografije</a></div><div class="nav__col"><h4>Poslovni materijal</h4><a href="../fascikle/index.html">Fascikle</a><a href="../rokovnici-i-blokovi/index.html">Rokovnici i blokovi</a><a href="../ambalaza-i-kutije/index.html">Ambalaža i kutije</a><a href="../korporativna-stampa/index.html">Korporativna štampa</a></div><div class="nav__col"><h4>Brendiranje</h4><a href="../stampa-na-tekstilu/index.html">Štampa na tekstilu</a><a href="../gravura/index.html">Laserska gravura</a><a href="../promotivni-proizvodi/index.html">Promotivni proizvodi</a></div><div class="nav__col"><h4>Tehnologije</h4><a href="../offset-stampa/index.html">Offset štampa</a><a href="../digitalna-stampa/index.html">Digitalna štampa</a></div></div>
+          <div class="nav__foot">
+            <a class="link-arrow" href="../usluge/index.html">Pregled svih usluga <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <a href="../cesta-pitanja/index.html">Česta pitanja</a><a href="../kontakt/index.html">Kontakt</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="header-phone" href="tel:+38163227674" aria-label="Pozovite Demo Group: 063 227 674"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span>063 227 674</span></a>
+      <a class="btn btn--sm" href="../kontakt/index.html">Zatražite ponudu</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Otvori meni">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__backdrop" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Meni">
+    <div class="drawer__head">
+      <span>MENI</span>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Zatvori meni"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    </div>
+    <a href="../index.html">Početna <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <details class="drawer__group drawer__group--feature" open><summary>Kalendari 2027 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__sub"><a href="../kalendari/index.html">Svi kalendari 2027</a><a class="drawer__pdf" href="../assets/catalogs/katalog-kalendara-2027.pdf" target="_blank" rel="noopener">Katalog kalendara 2027 (PDF, 9,1 MB) <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a><details class="drawer__subgroup"><summary>Kalendari 7 lista <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__subsub"><a class="drawer__cat" href="../kalendari/7-lista/index.html">Svi kalendari 7 lista <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a href="../kalendari/ikone-7-lista/index.html">Ikone</a><a href="../kalendari/priroda-7-lista/index.html">Miris prirode</a><a href="../kalendari/moja-srbija-7-lista/index.html">Moja Srbija</a><a href="../kalendari/vojvodina-7-lista/index.html">Vojvodina</a><a href="../kalendari/duh-vremena-7-lista/index.html">Duh vremena</a><a href="../kalendari/duh-srbije-7-lista/index.html">Duh Srbije</a><a href="../kalendari/stara-srbija-7-lista/index.html">Stara Srbija</a><a href="../kalendari/manastiri-7-lista/index.html">Manastiri</a><a href="../kalendari/cvece-7-lista/index.html">Cveće</a><a href="../kalendari/vreme-lova-7-lista/index.html">Vreme lova</a><a href="../kalendari/drugari-7-lista/index.html">Moji ljubimci</a><a href="../kalendari/automobili-7-lista/index.html">Automobili</a></div></details><details class="drawer__subgroup"><summary>Kalendari 4 lista <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__subsub"><a class="drawer__cat" href="../kalendari/4-lista/index.html">Svi kalendari 4 lista <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a href="../kalendari/duh-srbije-4-lista/index.html">Duh Srbije</a><a href="../kalendari/ikone-4-lista/index.html">Ikone</a><a href="../kalendari/manastiri-4-lista/index.html">Manastiri</a><a href="../kalendari/moja-srbija-4-lista/index.html">Moja Srbija</a><a href="../kalendari/priroda-4-lista/index.html">Priroda</a><a href="../kalendari/stara-srbija-4-lista/index.html">Stara Srbija</a></div></details><details class="drawer__subgroup"><summary>Stoni kalendari <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__subsub"><a class="drawer__cat" href="../kalendari/stoni/index.html">Svi stoni kalendari <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a href="../kalendari/ikone/index.html">Ikone 2027</a><a href="../kalendari/moja-srbija/index.html">Moja Srbija 2027</a><a href="../kalendari/stara-srbija/index.html">Stara Srbija 2027</a><a href="../kalendari/duh-srbije/index.html">Duh Srbije 2027</a><a href="../kalendari/duh-vremena/index.html">Duh vremena 2027</a><a href="../kalendari/manastiri/index.html">Manastiri 2027</a><a href="../kalendari/priroda/index.html">Miris prirode 2027</a><a href="../kalendari/ikone-stoni-2/index.html">Ikone II 2027</a><a href="../kalendari/moja-srbija-stoni-2/index.html">Moja Srbija II 2027</a><a href="../kalendari/priroda-stoni-2/index.html">Priroda II 2027</a></div></details><details class="drawer__subgroup"><summary>Poslovni kalendari <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__subsub"><a class="drawer__cat" href="../kalendari/poslovni/index.html">Svi poslovni kalendari <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a href="../kalendari/priroda-trodelni/index.html">Trodelni Priroda 2027</a><a href="../kalendari/verski-trodelni/index.html">Trodelni Verski 2027</a><a href="../kalendari/verski-12-lista/index.html">Verski 2027</a><a href="../kalendari/priroda-12-lista/index.html">Priroda 2027</a></div></details></div></details>
+    <a href="https://demoshop.rs/" target="_blank" rel="noopener">DemoShop — reklamni materijal <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+    <a href="../o-nama/index.html">O nama <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <a href="../usluge/index.html">Sve usluge <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <details class="drawer__group"><summary>Štampa <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__sub"><a href="../flajeri/index.html">Flajeri i letci</a><a href="../katalozi-i-casopisi/index.html">Katalozi i časopisi</a><a href="../knjige-i-monografije/index.html">Knjige i monografije</a></div></details><details class="drawer__group"><summary>Poslovni materijal <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__sub"><a href="../fascikle/index.html">Fascikle</a><a href="../rokovnici-i-blokovi/index.html">Rokovnici i blokovi</a><a href="../ambalaza-i-kutije/index.html">Ambalaža i kutije</a><a href="../korporativna-stampa/index.html">Korporativna štampa</a></div></details><details class="drawer__group"><summary>Brendiranje <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__sub"><a href="../stampa-na-tekstilu/index.html">Štampa na tekstilu</a><a href="../gravura/index.html">Laserska gravura</a><a href="../promotivni-proizvodi/index.html">Promotivni proizvodi</a></div></details><details class="drawer__group"><summary>Tehnologije <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-9"/></svg></summary><div class="drawer__sub"><a href="../offset-stampa/index.html">Offset štampa</a><a href="../digitalna-stampa/index.html">Digitalna štampa</a></div></details>
+    <a href="../nasi-radovi/index.html">Naši radovi <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <a href="../cesta-pitanja/index.html">Česta pitanja <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <a href="../kontakt/index.html">Kontakt <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    <div class="drawer__cta">
+      <a class="btn btn--block" href="../kontakt/index.html">Zatražite ponudu</a>
+      <a class="btn btn--outline btn--block" href="tel:+38163227674"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> 063 227 674</a>
+    </div>
+    <div class="drawer__meta">
+      <p>Janka Veselinovića 30, 15000 Šabac<br>Ponedeljak–petak, 08:00–16:00</p>
+    </div>
+  </div>
+</div>
+
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <nav aria-label="Putanja"><ol class="breadcrumb"><li><a href="../index.html">Početna</a></li><li aria-current="page">Naši radovi</li></ol></nav>
+      <span class="kicker">Portfolio</span>
+      <h1>Naši <em>radovi.</em></h1>
+      <p class="lede">31 projekat koje smo izradili za naše klijente. Izaberite kategoriju, a klikom na fotografiju otvarate veliki pregled.</p>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap">
+      <div class="work-toolbar">
+        <div class="work-toolbar__count"><span>Pregled galerije</span><b data-work-count>31 projekat</b></div>
+        <div class="work-filters"><button type="button" data-filter="all" aria-pressed="true">Svi radovi</button><button type="button" data-filter="knjige" aria-pressed="false">Knjige i monografije (4)</button><button type="button" data-filter="katalozi" aria-pressed="false">Brošure i katalozi (3)</button><button type="button" data-filter="fascikle" aria-pressed="false">Fascikle (10)</button><button type="button" data-filter="flajeri" aria-pressed="false">Flajeri i letci (1)</button><button type="button" data-filter="rokovnici" aria-pressed="false">Rokovnici i blokovi (8)</button><button type="button" data-filter="casopisi" aria-pressed="false">Časopisi (1)</button><button type="button" data-filter="ambalaza" aria-pressed="false">Ambalaža i kutije (4)</button></div>
+      </div>
+      <div class="work-grid" id="work-grid"><article class="work-card" data-category="knjige" data-active="0"
+    data-photos="092925|092937" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Arhiv na trgu" data-category-label="Knjige i monografije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-092925.webp" width="900" height="1125" alt="Arhiv na trgu — Demo Group" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Arhiv na trgu"></button>
+  </div>
+  <small>Knjige i monografije</small>
+  <h3>Arhiv na trgu</h3>
+</article>
+<article class="work-card" data-category="knjige" data-active="0"
+    data-photos="093008|093020" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Monografija škole" data-category-label="Knjige i monografije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093008.webp" width="900" height="1125" alt="Monografija škole — Demo Group" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Monografija škole"></button>
+  </div>
+  <small>Knjige i monografije</small>
+  <h3>Monografija škole</h3>
+</article>
+<article class="work-card" data-category="knjige" data-active="0"
+    data-photos="093048|093057" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Crno-beli spomenar" data-category-label="Knjige i monografije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093048.webp" width="900" height="1125" alt="Crno-beli spomenar — Demo Group" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Crno-beli spomenar"></button>
+  </div>
+  <small>Knjige i monografije</small>
+  <h3>Crno-beli spomenar</h3>
+</article>
+<article class="work-card" data-category="knjige" data-active="0"
+    data-photos="093130|093139" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Drina plače i pamti" data-category-label="Knjige i monografije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093130.webp" width="900" height="1125" alt="Drina plače i pamti — Demo Group" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Drina plače i pamti"></button>
+  </div>
+  <small>Knjige i monografije</small>
+  <h3>Drina plače i pamti</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093210|093228" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="M1 fascikla" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093210.webp" width="900" height="1125" alt="M1 fascikla — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: M1 fascikla"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>M1 fascikla</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093319|093332" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Fortuna Foto" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093319.webp" width="900" height="1125" alt="Fortuna Foto — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Fortuna Foto"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Fortuna Foto</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093348|093355" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="MD Poliklinika" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093348.webp" width="900" height="1125" alt="MD Poliklinika — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: MD Poliklinika"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>MD Poliklinika</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093429|093436" data-rotations="180|0" data-base="../images/demo-group-"
+    data-title="Medikom fascikla" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093429.webp" width="900" height="1125" alt="Medikom fascikla — Demo Group" loading="lazy" style="--rotation:180deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Medikom fascikla"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Medikom fascikla</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093444|093452" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Zoom Optic" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093444.webp" width="900" height="1125" alt="Zoom Optic — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Zoom Optic"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Zoom Optic</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093501|093507" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Poslovni savetnik" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093501.webp" width="900" height="1125" alt="Poslovni savetnik — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Poslovni savetnik"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Poslovni savetnik</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093542|093552|093605" data-rotations="0|0|0" data-base="../images/demo-group-"
+    data-title="ABD-PROM katalog" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093542.webp" width="900" height="1125" alt="ABD-PROM katalog — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 3</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: ABD-PROM katalog"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>ABD-PROM katalog</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="093633|093643" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Global Mont fascikla" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-093633.webp" width="900" height="1125" alt="Global Mont fascikla — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Global Mont fascikla"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Global Mont fascikla</h3>
+</article>
+<article class="work-card" data-category="flajeri" data-active="0"
+    data-photos="094017" data-rotations="90" data-base="../images/demo-group-"
+    data-title="MD Poliklinika letak" data-category-label="Flajeri i letci">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094017.webp" width="900" height="1125" alt="MD Poliklinika letak — Demo Group" loading="lazy" style="--rotation:90deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: MD Poliklinika letak"></button>
+  </div>
+  <small>Flajeri i letci</small>
+  <h3>MD Poliklinika letak</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="094003" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Global Mont poslovna mapa" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094003.webp" width="900" height="1125" alt="Global Mont poslovna mapa — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Global Mont poslovna mapa"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Global Mont poslovna mapa</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094026|094056" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Monterra blok" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094026.webp" width="900" height="1125" alt="Monterra blok — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Monterra blok"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>Monterra blok</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094112" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Uniplast blok" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094112.webp" width="900" height="1125" alt="Uniplast blok — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Uniplast blok"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>Uniplast blok</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094129" data-rotations="0" data-base="../images/demo-group-"
+    data-title="RoyalMedika blok" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094129.webp" width="900" height="1125" alt="RoyalMedika blok — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: RoyalMedika blok"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>RoyalMedika blok</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094201" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Prodanović blok" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094201.webp" width="900" height="1125" alt="Prodanović blok — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Prodanović blok"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>Prodanović blok</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094211|094215" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Toplane Srbije" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094211.webp" width="900" height="1125" alt="Toplane Srbije — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Toplane Srbije"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>Toplane Srbije</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094223" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Global Mont rokovnik" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094223.webp" width="900" height="1125" alt="Global Mont rokovnik — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Global Mont rokovnik"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>Global Mont rokovnik</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094229|094238|094245|094251|094302|094312|094317" data-rotations="0|0|0|0|0|0|0" data-base="../images/demo-group-"
+    data-title="DPS Klas sveske" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094229.webp" width="900" height="1125" alt="DPS Klas sveske — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 7</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: DPS Klas sveske"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>DPS Klas sveske</h3>
+</article>
+<article class="work-card" data-category="rokovnici" data-active="0"
+    data-photos="094323|094328" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Poslovni savetnik blok" data-category-label="Rokovnici i blokovi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094323.webp" width="900" height="1125" alt="Poslovni savetnik blok — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Poslovni savetnik blok"></button>
+  </div>
+  <small>Rokovnici i blokovi</small>
+  <h3>Poslovni savetnik blok</h3>
+</article>
+<article class="work-card" data-category="fascikle" data-active="0"
+    data-photos="094347|094403" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Christeyns Agri" data-category-label="Fascikle">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094347.webp" width="900" height="1125" alt="Christeyns Agri — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Christeyns Agri"></button>
+  </div>
+  <small>Fascikle</small>
+  <h3>Christeyns Agri</h3>
+</article>
+<article class="work-card" data-category="katalozi" data-active="0"
+    data-photos="094414" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Đukić dvolisnica" data-category-label="Brošure i katalozi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094414.webp" width="900" height="1125" alt="Đukić dvolisnica — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Đukić dvolisnica"></button>
+  </div>
+  <small>Brošure i katalozi</small>
+  <h3>Đukić dvolisnica</h3>
+</article>
+<article class="work-card" data-category="katalozi" data-active="0"
+    data-photos="094424" data-rotations="0" data-base="../images/demo-group-"
+    data-title="LUX dvolisnica" data-category-label="Brošure i katalozi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094424.webp" width="900" height="1125" alt="LUX dvolisnica — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: LUX dvolisnica"></button>
+  </div>
+  <small>Brošure i katalozi</small>
+  <h3>LUX dvolisnica</h3>
+</article>
+<article class="work-card" data-category="casopisi" data-active="0"
+    data-photos="094434" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Melisa magazin" data-category-label="Časopisi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094434.webp" width="900" height="1125" alt="Melisa magazin — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Melisa magazin"></button>
+  </div>
+  <small>Časopisi</small>
+  <h3>Melisa magazin</h3>
+</article>
+<article class="work-card" data-category="ambalaza" data-active="0"
+    data-photos="094510|094533" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Super Protector" data-category-label="Ambalaža i kutije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094510.webp" width="900" height="1125" alt="Super Protector — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Super Protector"></button>
+  </div>
+  <small>Ambalaža i kutije</small>
+  <h3>Super Protector</h3>
+</article>
+<article class="work-card" data-category="ambalaza" data-active="0"
+    data-photos="094539|094547|094607|094614" data-rotations="0|0|0|0" data-base="../images/demo-group-"
+    data-title="Biljna apoteka" data-category-label="Ambalaža i kutije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094539.webp" width="900" height="1125" alt="Biljna apoteka — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 4</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Biljna apoteka"></button>
+  </div>
+  <small>Ambalaža i kutije</small>
+  <h3>Biljna apoteka</h3>
+</article>
+<article class="work-card" data-category="ambalaza" data-active="0"
+    data-photos="094722|094728|094733|094758|094804|094810" data-rotations="0|0|0|0|0|0" data-base="../images/demo-group-"
+    data-title="Manastirska ambalaža" data-category-label="Ambalaža i kutije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094722.webp" width="900" height="1125" alt="Manastirska ambalaža — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 6</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Manastirska ambalaža"></button>
+  </div>
+  <small>Ambalaža i kutije</small>
+  <h3>Manastirska ambalaža</h3>
+</article>
+<article class="work-card" data-category="ambalaza" data-active="0"
+    data-photos="094838" data-rotations="0" data-base="../images/demo-group-"
+    data-title="Bela koza" data-category-label="Ambalaža i kutije">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094838.webp" width="900" height="1125" alt="Bela koza — Demo Group" loading="lazy" style="--rotation:0deg">
+    
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Bela koza"></button>
+  </div>
+  <small>Ambalaža i kutije</small>
+  <h3>Bela koza</h3>
+</article>
+<article class="work-card" data-category="katalozi" data-active="0"
+    data-photos="094913|094917" data-rotations="0|0" data-base="../images/demo-group-"
+    data-title="Turistička brošura" data-category-label="Brošure i katalozi">
+  <div class="work-card__frame">
+    <img src="../images/demo-group-094913.webp" width="900" height="1125" alt="Turistička brošura — Demo Group" loading="lazy" style="--rotation:0deg">
+    <button class="work-nav work-nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button><button class="work-nav work-nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button><span class="work-count">1 / 2</span>
+    <button class="work-card__open" type="button" aria-label="Otvori veliki pregled: Turistička brošura"></button>
+  </div>
+  <small>Brošure i katalozi</small>
+  <h3>Turistička brošura</h3>
+</article></div>
+      <div id="work-more" class="section-foot">
+        <button class="btn btn--outline" type="button">Učitaj još radova <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg></button>
+      </div>
+      <div id="work-empty" hidden style="text-align:center;padding:80px 20px;border:1px dashed var(--ink-3);border-radius:var(--r-md)">
+        <h3>Nova kategorija u pripremi</h3>
+        <p class="lede" style="margin:12px auto 24px">Pripremamo fotografije iz ove kategorije. U međuvremenu nas kontaktirajte za uzorke i ponudu.</p>
+        <a class="btn btn--outline" href="../kontakt/index.html">Pošaljite upit <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+  <div class="wrap">
+    <div class="cta-band" data-reveal>
+      <div>
+        <span class="kicker">Sledeći korak</span>
+        <h2>Želite sličan rezultat?</h2>
+        <p>Pošaljite nam dimenzije, tiraž i rok — javićemo se sa konkretnim predlogom.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--light" href="../kontakt/index.html">Zatražite ponudu <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a class="btn btn--outline" href="tel:+38163227674"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> 063 227 674</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Veliki pregled fotografije" hidden>
+  <div class="lightbox__backdrop" data-lightbox-close></div>
+  <button class="lightbox__close" type="button" data-lightbox-close aria-label="Zatvori pregled"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Prethodna fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button>
+  <div class="lightbox__panel">
+    <div class="lightbox__stage"><img data-lightbox-image alt=""></div>
+    <div class="lightbox__caption">
+      <strong data-lightbox-title></strong>
+      <span data-lightbox-meta></span>
+    </div>
+  </div>
+  <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Sledeća fotografija"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button>
+</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="../index.html">
+          <img src="../assets/img/brand/logo.webp" width="44" height="44" alt="" loading="lazy">
+          <span class="brand__type"><b>DEMO</b><span>GROUP</span></span>
+        </a>
+        <p style="margin-top:20px">Štamparija u Šapcu. Knjige, katalozi, fascikle, ambalaža i promotivni materijal — priprema, štampa, dorada i isporuka.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/demogroup.rs/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><path d="M17.5 6.6h.01"/></svg></a>
+          <a href="https://facebook.com/demogroup.rs" target="_blank" rel="noopener" aria-label="Facebook"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7a1.5 1.5 0 0 1 1.5-1.5H17V2.5h-2.5A4.5 4.5 0 0 0 10 7v1.5H7.5V12H10v9.5h4V12h2.5l.5-3.5H14Z"/></svg></a>
+          <a href="mailto:info@demogroup.rs" aria-label="E-pošta"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3>Usluge</h3>
+        <ul><li><a href="../flajeri/index.html">Flajeri i letci</a></li><li><a href="../katalozi-i-casopisi/index.html">Katalozi i časopisi</a></li><li><a href="../knjige-i-monografije/index.html">Knjige i monografije</a></li><li><a href="../kalendari/index.html">Kalendari</a></li><li><a href="../fascikle/index.html">Fascikle</a></li><li><a href="../rokovnici-i-blokovi/index.html">Rokovnici i blokovi</a></li><li><a href="../ambalaza-i-kutije/index.html">Ambalaža i kutije</a></li></ul>
+      </div>
+
+      <div>
+        <h3>&nbsp;</h3>
+        <ul><li><a href="../korporativna-stampa/index.html">Korporativna štampa</a></li><li><a href="../stampa-na-tekstilu/index.html">Štampa na tekstilu</a></li><li><a href="../gravura/index.html">Laserska gravura</a></li><li><a href="../promotivni-proizvodi/index.html">Promotivni proizvodi</a></li><li><a href="../offset-stampa/index.html">Offset štampa</a></li><li><a href="../digitalna-stampa/index.html">Digitalna štampa</a></li>
+          <li><a href="https://demoshop.rs/" target="_blank" rel="noopener">DemoShop katalog</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Kontakt</h3>
+        <ul>
+          <li>Janka Veselinovića 30<br>15000 Šabac, Srbija</li>
+          <li><a href="tel:+381666551104">066 655 1104 <span style="color:#9AA1B0">· Tanja</span></a></li><li><a href="tel:+38163227674">063 227 674 <span style="color:#9AA1B0">· Dejan</span></a></li>
+          <li><a href="mailto:info@demogroup.rs">info@demogroup.rs</a></li>
+          <li>Ponedeljak–petak, 08:00–16:00</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Janka%20Veselinovi%C4%87a%2030%2C%20%C5%A0abac" target="_blank" rel="noopener">Prikaži lokaciju na mapi</a></li>
+        </ul>
+        <h3 style="margin-top:28px">Informacije</h3>
+        <ul>
+          <li><a href="../o-nama/index.html">O nama</a></li>
+          <li><a href="../nasi-radovi/index.html">Naši radovi</a></li>
+          <li><a href="../cesta-pitanja/index.html">Česta pitanja</a></li>
+          <li><a href="../politika-privatnosti/index.html">Politika privatnosti</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span><b>Demo Group DOO</b></span>
+      <span>PIB: <b>106895290</b></span>
+      <span>Matični broj: <b>20701498</b></span>
+      <span>Janka Veselinovića 30, 15000 Šabac</span>
+      <span style="margin-left:auto">© 2026 Demo Group DOO</span>
+    </div>
+  </div>
+</footer>
+
+<nav class="action-bar" aria-label="Brze akcije">
+  <a href="tel:+38163227674"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>Pozovite</a>
+  <a href="mailto:info@demogroup.rs"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>E-pošta</a>
+  <a href="../kontakt/index.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 21h8a2 2 0 0 0 2-2V7l-5-5H8a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2Z"/><path d="M13 2v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>Zatražite ponudu</a>
+</nav>
+
+<script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/gallery.js" defer></script>
 </body>
 </html>

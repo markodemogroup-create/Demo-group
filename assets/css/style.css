@@ -1,0 +1,3902 @@
+/* =============================================================================
+   Demo Group — style.css
+   -----------------------------------------------------------------------------
+   Edit in place. Never append patch layers at the bottom of this file.
+
+     01  Tokens
+     02  Reset & base
+     03  Layout primitives & rhythm
+     04  Motion
+     05  Buttons & links
+     06  Header & navigation
+     07  Mobile drawer & action bar
+     08  Hero
+     09  Cards & grids
+     10  Feature blocks, steps, checklists
+     11  Portfolio & lightbox
+     12  Clients
+     13  FAQ & specification tables
+     14  Forms
+     15  Calendar product page
+     16  Footer
+     17  Responsive
+   ========================================================================== */
+
+
+/* == 01  Tokens ============================================================ */
+
+:root{
+  /* --- colour ------------------------------------------------------------ */
+  --ink:            #12151C;   /* headings, primary text */
+  --ink-2:          #1B2029;   /* dark section field */
+  --ink-3:          #2E3542;   /* hairlines inside dark sections */
+  --paper:          #FFFFFF;
+  --paper-2:        #FBF8F6;   /* warm paper tint */
+  --paper-3:        #F2ECE8;   /* image beds */
+  --crimson:        #C5222A;   /* primary brand / action */
+  --crimson-dk:     #A3161E;
+  --crimson-tint:   #FCEBEC;
+  --muted:          #575D69;   /* body copy on light — 5.9:1 */
+  --muted-dark:     #A9AFBC;   /* body copy on ink — 6.2:1 */
+  --line:           #EAE4E0;
+  --line-2:         #D9D1CB;
+  --ok:             #1C8049;
+  --warn:           #A16207;   /* low-stock amber — 5.0:1 on white */
+  --info:           #1E5C97;   /* announced-arrival blue — 6.0:1 on white */
+
+  /* accent gradient — hero, primary hero button, small details only */
+  --accent-a:       #FF7A18;
+  --accent-b:       #FF4D8D;
+  --accent:         linear-gradient(100deg, var(--accent-a), var(--accent-b));
+
+  /* --- type -------------------------------------------------------------- */
+  --font-display:   "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-body:      "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --t-xs:   12px;   --t-sm:   14px;   --t-base: 16px;   --t-md:   18px;
+  --t-lg:   21px;   --t-xl:   26px;   --t-2xl:  33px;   --t-3xl:  42px;
+  --t-4xl:  53px;   --t-5xl:  67px;   --t-6xl:  84px;
+
+  /* --- spacing (4px base) ------------------------------------------------- */
+  --s-1:  4px;   --s-2:  8px;   --s-3: 12px;  --s-4: 16px;  --s-5: 20px;
+  --s-6: 24px;   --s-8: 32px;   --s-10: 40px; --s-12: 48px; --s-14: 56px;
+  --s-16: 64px;  --s-20: 80px;  --s-24: 96px; --s-32: 128px;
+
+  /* --- radius — three values, no exceptions ------------------------------- */
+  --r-sm:  10px;   /* controls: buttons, inputs, chips */
+  --r-md:  16px;   /* cards, panels, images */
+  --r-lg:  28px;   /* large surfaces: hero media, bands, form card */
+
+  /* --- elevation — three values, no exceptions ---------------------------- */
+  --e-1: 0 1px 2px rgba(18,21,28,.05), 0 2px 6px rgba(18,21,28,.04);
+  --e-2: 0 2px 4px rgba(18,21,28,.04), 0 12px 28px rgba(18,21,28,.07);
+  --e-3: 0 4px 8px rgba(18,21,28,.05), 0 28px 64px rgba(18,21,28,.11);
+
+  /* --- layout ------------------------------------------------------------ */
+  --wrap:      1240px;
+  --gutter:    clamp(20px, 5vw, 64px);
+  --header-h:  78px;
+  --section-y: clamp(72px, 8.5vw, 128px);
+
+  --ease:      cubic-bezier(.22, .68, .26, 1);
+  --ease-out:  cubic-bezier(.16, 1, .3, 1);
+}
+
+
+/* == 02  Reset & base ====================================================== */
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 20px);
+}
+
+body{
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: 1.68;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body.is-locked{ overflow: hidden; }
+
+img, svg, video, iframe{ display: block; max-width: 100%; }
+img{ height: auto; }
+a{ color: inherit; text-decoration: none; }
+button{ font: inherit; color: inherit; }
+ul, ol{ margin: 0; padding: 0; }
+
+h1, h2, h3, h4{
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -.032em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+h1{ font-size: clamp(var(--t-4xl), 5.2vw, var(--t-6xl)); letter-spacing: -.038em; }
+h2{ font-size: clamp(var(--t-3xl), 4vw, var(--t-5xl)); letter-spacing: -.035em; }
+h3{ font-size: var(--t-lg); letter-spacing: -.022em; line-height: 1.24; }
+h4{ font-size: var(--t-base); letter-spacing: -.015em; }
+
+p{ margin: 0 0 1em; text-wrap: pretty; }
+p:last-child{ margin-bottom: 0; }
+
+/* a heading is never flush against the lede beneath it. Scoped to .lede so
+   that headings inside compact components (cards, steps, features) keep the
+   spacing defined by their own component. */
+h1 + .lede, h2 + .lede, h3 + .lede{ margin-top: var(--s-6); }
+
+/* Emphasis in headings carries the brand colour. The accent gradient is
+   reserved for hero headings, the hero button and small details. */
+h1 em, h2 em, h3 em{ font-style: normal; color: var(--crimson); }
+
+.hero h1 em, .page-hero h1 em, .accent-text{
+  /* inline-block so a two-line phrase gets one continuous gradient sweep
+     instead of the gradient restarting on each line */
+  display: inline-block;
+  /* background-clip:text paints glyphs only inside the element's own box; with a
+     tight heading line-height the descenders of g/j/p (and the tails of đ) fell
+     below that box and were cut off. The bottom padding gives the painted text
+     room under the baseline, the negative margin hands it back to the layout, so
+     wrapping and spacing stay exactly as before (bele pozadine batch, 2026-09-20). */
+  padding-bottom: .2em;
+  margin-bottom: -.2em;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@supports not ((background-clip: text) or (-webkit-background-clip: text)){
+  .hero h1 em, .page-hero h1 em, .accent-text{ color: var(--crimson); background: none; }
+}
+
+::selection{ background: var(--crimson); color: #fff; }
+
+:focus-visible{
+  outline: 2px solid var(--crimson);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.skip-link{
+  position: absolute; left: var(--s-4); top: -100px; z-index: 300;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-sm);
+  background: var(--ink); color: #fff; font-weight: 600;
+  transition: top .2s var(--ease);
+}
+.skip-link:focus{ top: var(--s-4); }
+
+.visually-hidden{
+  position: absolute !important; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+
+/* == 03  Layout primitives & rhythm ======================================== */
+
+.wrap{
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.wrap--wide{ max-width: 1400px; padding-inline: clamp(20px, 3.4vw, 48px); }
+
+.section{ padding-block: var(--section-y); }
+.section--tight{ padding-block: clamp(52px, 6vw, 84px); }
+.section--warm{ background: var(--paper-2); }
+.section--dark{ background: var(--ink-2); color: #fff; }
+.section--dark p, .section--dark .lede{ color: var(--muted-dark); }
+.section--dark h1, .section--dark h2, .section--dark h3{ color: #fff; }
+
+/* Section transitions: a hairline between two light sections of the same
+   tint, nothing between contrasting fields — the colour change is the seam. */
+.section + .section:not(.section--warm):not(.section--dark){
+  border-top: 1px solid var(--line);
+}
+.section--warm + .section--warm{ border-top: 1px solid var(--line); }
+
+.lede{
+  color: var(--muted);
+  font-size: var(--t-md);
+  line-height: 1.72;
+  max-width: 58ch;
+}
+
+.kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-4);
+  color: var(--crimson);
+  font: 700 var(--t-xs)/1 var(--font-display);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.kicker::before{
+  content: "";
+  width: 24px; height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.section--dark .kicker{ color: #FF9CB2; }
+
+.section-head{
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  align-items: end;
+  gap: var(--s-6) var(--s-14);
+  margin-bottom: var(--s-14);
+}
+.section-head > :last-child{ padding-bottom: 8px; }
+/* Category pages (kalendari/stoni, /7-lista, /4-lista) carry the page title
+   inside .section-head. It is the document's h1 for semantics and SEO, but it
+   must keep the h2 scale used by every other section head — the visual design
+   is unchanged, only the element name is. Mirrors the h2 rule exactly. */
+.section-head h1{ font-size: clamp(var(--t-3xl), 4vw, var(--t-5xl)); letter-spacing: -.035em; }
+.section-head--center{
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+}
+.section-head--center .lede{ text-align: center; }
+.section-head--center .kicker{ justify-content: center; }
+
+.section-foot{
+  display: flex;
+  justify-content: center;
+  margin-top: var(--s-14);
+}
+
+/* Signature device: printer's crop marks. Applied to a wrapper, because the
+   surfaces they frame clip their own overflow. Used on hero imagery only. */
+.crop{ position: relative; color: var(--crimson); }
+.crop::before, .crop::after{
+  content: "";
+  position: absolute;
+  width: 20px; height: 20px;
+  pointer-events: none;
+  border: 0 solid currentColor;
+  opacity: .5;
+}
+.crop::before{ left: -10px;  top: -10px;    border-width: 1.5px 0 0 1.5px; }
+.crop::after{  right: -10px; bottom: -10px; border-width: 0 1.5px 1.5px 0; }
+
+.pill{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: var(--crimson-tint);
+  color: var(--crimson-dk);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: -.005em;
+}
+.pill .icon{ width: 16px; height: 16px; }
+
+.icon{
+  width: 1.15em; height: 1.15em;
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.breadcrumb{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-8);
+  list-style: none;
+  color: var(--muted);
+  font-size: var(--t-sm);
+}
+.breadcrumb li + li::before{ content: "/"; margin-right: var(--s-2); opacity: .45; }
+.breadcrumb a:hover{ color: var(--crimson); }
+.breadcrumb [aria-current]{ color: var(--ink); font-weight: 600; }
+
+
+/* == 04  Motion ============================================================ */
+/* One device: a short, small rise on first appearance. Nothing loops,
+   nothing parallaxes, nothing moves on scroll after it has settled. */
+
+[data-reveal]{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+}
+[data-reveal].is-in{ opacity: 1; transform: none; }
+[data-reveal-delay="1"]{ transition-delay: .07s; }
+[data-reveal-delay="2"]{ transition-delay: .14s; }
+[data-reveal-delay="3"]{ transition-delay: .21s; }
+
+.no-js [data-reveal]{ opacity: 1; transform: none; }
+
+
+/* == 05  Buttons & links =================================================== */
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  background: var(--crimson);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background .22s var(--ease), border-color .22s var(--ease),
+              box-shadow .22s var(--ease), color .22s var(--ease), filter .22s var(--ease);
+}
+.btn:hover{ background: var(--crimson-dk); box-shadow: var(--e-2); }
+.btn .icon{ width: 18px; height: 18px; transition: transform .22s var(--ease); }
+.btn:hover .icon{ transform: translateX(2px); }
+
+.btn--accent{ background: var(--accent); }
+.btn--accent:hover{ background: var(--accent); filter: brightness(1.05); }
+
+.btn--outline{
+  background: transparent;
+  border-color: var(--line-2);
+  color: var(--ink);
+}
+.btn--outline:hover{
+  background: var(--paper-2);
+  border-color: var(--crimson);
+  color: var(--crimson);
+  box-shadow: none;
+}
+.section--dark .btn--outline,
+.cta-band .btn--outline{ border-color: rgba(255,255,255,.28); color: #fff; }
+.section--dark .btn--outline:hover,
+.cta-band .btn--outline:hover{
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.6);
+  color: #fff;
+}
+
+.btn--light{ background: #fff; color: var(--crimson); }
+.btn--light:hover{ background: #fff; color: var(--crimson-dk); box-shadow: var(--e-2); }
+
+.btn--sm{ min-height: 42px; padding: 9px 16px; font-size: var(--t-sm); }
+.btn--lg{ min-height: 54px; padding: 15px 28px; font-size: var(--t-md); }
+.btn--block{ width: 100%; }
+
+.btn-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.link-arrow{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--crimson);
+  font-weight: 600;
+  font-size: var(--t-sm);
+}
+.link-arrow .icon{ width: 17px; height: 17px; transition: transform .22s var(--ease); }
+.link-arrow:hover .icon{ transform: translateX(3px); }
+
+
+/* == 06  Header & navigation =============================================== */
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,.9);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header__inner{
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  min-height: var(--header-h);
+}
+
+.brand{ display: flex; align-items: center; gap: 11px; flex: none; }
+.brand img{ width: 42px; height: 42px; object-fit: contain; }
+.brand__type{
+  display: grid;
+  line-height: .84;
+  font-family: var(--font-display);
+  color: var(--ink);
+}
+.brand__type b{ font-size: 19px; font-weight: 800; letter-spacing: -.05em; }
+.brand__type span{
+  margin-top: 4px;
+  font-size: 14px; font-weight: 700; letter-spacing: .04em;
+  color: var(--muted);
+}
+
+.nav{ display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.nav > a,
+.nav__trigger{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 13px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -.005em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.nav > a::after,
+.nav__trigger::after{
+  content: "";
+  position: absolute;
+  left: 13px; right: 13px; bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--crimson);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .24s var(--ease);
+}
+.nav > a:hover::after,
+.nav__trigger:hover::after,
+.nav > a[aria-current]::after{ transform: scaleX(1); }
+.nav > a[aria-current]{ font-weight: 600; }
+.nav__trigger .icon{ width: 14px; height: 14px; transition: transform .22s var(--ease); }
+.nav__item[data-open="true"] .nav__trigger .icon{ transform: rotate(180deg); }
+
+.nav__item{ position: relative; }
+
+.nav__panel{
+  position: absolute;
+  left: 50%; top: calc(100% + 12px);
+  z-index: 50;
+  width: min(calc(var(--cols, 4) * 208px + 64px), 92vw);
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility .18s;
+}
+.nav__item[data-open="true"] .nav__panel{ opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+/* the calendar panel now carries four columns (896 px); centred under its trigger it would start off-screen
+   (left −80 px at 1440), so this one panel anchors to the trigger's left edge instead */
+.nav__item--feature .nav__panel{ left: 0; transform: translate(0, 6px); }
+.nav__item--feature[data-open="true"] .nav__panel{ transform: translate(0, 0); }
+/* invisible bridge across the gap, so the panel survives the pointer travelling
+   from the trigger down into it */
+.nav__panel::before{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -16px;
+  height: 16px;
+}
+
+/* KALENDARI 2027 — the seasonal focus. Accented, but deliberately not a button:
+   it must not compete with the "Zatraži ponudu" CTA. */
+.nav__item--feature > .nav__trigger{
+  color: var(--crimson);
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+.nav__item--feature > .nav__trigger::after{
+  content: "";
+  position: absolute;
+  left: 12px; right: 12px; bottom: 4px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--crimson);
+  opacity: .28;
+  transition: opacity .2s var(--ease);
+}
+.nav__item--feature > .nav__trigger:hover::after,
+.nav__item--feature[data-open="true"] > .nav__trigger::after{ opacity: 1; }
+.nav__item--feature > .nav__trigger .icon{ color: var(--crimson); }
+
+/* category headings inside the calendar menu are links */
+.nav__col h4 a{ color: inherit; text-decoration: none; }
+.nav__note, .drawer__note{
+  display: block;
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: var(--t-sm);
+  font-style: italic;
+}
+.nav__col h4 a:hover{ color: var(--crimson); }
+
+.nav__cols{ display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0,1fr)); gap: var(--s-5); }
+.nav__col h4{
+  margin-bottom: var(--s-3);
+  color: var(--crimson);
+  font: 700 var(--t-xs)/1 var(--font-display);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.nav__col a{
+  display: block;
+  padding: 8px 10px;
+  margin-left: -10px;
+  border-radius: var(--r-sm);
+  font-size: var(--t-sm);
+  color: var(--muted);
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.nav__col a:hover{ background: var(--paper-2); color: var(--crimson); }
+.nav__foot{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.header-actions{ display: flex; align-items: center; gap: var(--s-3); flex: none; }
+
+.header-phone{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  font-weight: 700;
+  font-size: var(--t-sm);
+  letter-spacing: -.01em;
+  white-space: nowrap;
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.header-phone:hover{ border-color: var(--crimson); color: var(--crimson); }
+.header-phone .icon{ width: 17px; height: 17px; color: var(--crimson); }
+
+/* Cart control — injected by calendar-cart.js on commerce-relevant pages, so
+   the 30+ duplicated headers never need manual badge upkeep. Same quiet
+   control language as .header-phone; the badge counts UNITS and disappears
+   at zero. Kept one step quieter than the primary nav and the CTA button. */
+.header-cart{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  min-width: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.header-cart:hover{ border-color: var(--crimson); color: var(--crimson); }
+.header-cart .icon{ width: 19px; height: 19px; }
+.header-cart__badge[hidden]{ display: none; }   /* display:grid would defeat [hidden] */
+.header-cart__badge{
+  position: absolute;
+  top: -7px; right: -7px;
+  display: grid;
+  place-items: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--crimson);
+  color: #fff;
+  font: 700 11px/1 var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-toggle{
+  display: none;
+  place-items: center;
+  width: 46px; height: 46px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: #fff;
+  cursor: pointer;
+}
+.nav-toggle span{
+  display: block;
+  width: 18px; height: 2px;
+  margin: 2.5px auto;
+  border-radius: 2px;
+  background: var(--ink);
+}
+
+
+/* == 07  Mobile drawer & action bar ======================================== */
+
+.drawer[hidden]{ display: none; }
+.drawer{ position: fixed; inset: 0; z-index: 200; }
+.drawer__backdrop{
+  position: absolute; inset: 0;
+  background: rgba(12,15,21,.6);
+  backdrop-filter: blur(3px);
+}
+.drawer__panel{
+  position: absolute; right: 0; top: 0;
+  width: min(400px, 90vw);
+  height: 100dvh;
+  overflow-y: auto;
+  padding: var(--s-5) var(--s-5) 128px;
+  background: #fff;
+  box-shadow: -18px 0 56px rgba(0,0,0,.2);
+}
+.drawer__head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+.drawer__head span{
+  color: var(--crimson);
+  font: 700 var(--t-xs)/1 var(--font-display);
+  letter-spacing: .18em;
+}
+.drawer__close{
+  display: grid; place-items: center;
+  width: 46px; height: 46px;
+  border: 0; border-radius: 50%;
+  background: var(--paper-2);
+  cursor: pointer;
+}
+.drawer__close:hover{ background: var(--crimson-tint); color: var(--crimson); }
+.drawer__panel > a,
+.drawer__group > summary{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: 56px;
+  padding: 14px 2px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  cursor: pointer;
+  list-style: none;
+}
+.drawer__group > summary::-webkit-details-marker{ display: none; }
+.drawer__group > summary .icon{ color: var(--crimson); transition: transform .22s var(--ease); }
+.drawer__group[open] > summary .icon{ transform: rotate(180deg); }
+.drawer__sub{ padding: var(--s-2) 0 var(--s-3); }
+.drawer__group--feature > summary{ color: var(--crimson); }
+.drawer__sub a.drawer__cat{
+  margin-top: var(--s-3);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-sm);
+}
+.drawer__sub a.drawer__cat:first-child{ margin-top: 0; }
+
+.drawer__sub a{
+  display: block;
+  min-height: 46px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+.drawer__sub a:hover{ background: var(--paper-2); color: var(--crimson); }
+.drawer__cta{ display: grid; gap: var(--s-3); margin-top: var(--s-6); }
+.drawer__meta{
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--t-sm);
+}
+
+.action-bar{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 90;
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+  padding: 9px max(10px, env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom));
+  background: rgba(255,255,255,.94);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-top: 1px solid var(--line);
+}
+.action-bar a{
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 3px;
+  min-height: 50px;
+  padding: 6px 4px;
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -.005em;
+}
+.action-bar .icon{ width: 19px; height: 19px; }
+.action-bar a:nth-child(1),
+.action-bar a:nth-child(2){ border: 1px solid var(--line); color: var(--ink); }
+.action-bar a:nth-child(3){ background: var(--crimson); color: #fff; }
+
+
+/* == 08  Hero ============================================================== */
+
+.hero{
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(920px 460px at 92% -12%, #FFF0E4 0%, transparent 60%),
+    linear-gradient(180deg, #fff 0%, var(--paper-2) 100%);
+}
+.hero__inner{
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  align-items: center;
+  gap: clamp(36px, 5vw, 80px);
+  padding-block: clamp(48px, 6.5vw, 96px) clamp(56px, 7vw, 104px);
+}
+.hero h1{ margin: var(--s-5) 0 var(--s-6); font-size: clamp(38px, 4.3vw, 62px); }
+.hero .lede{ font-size: clamp(var(--t-base), 1.25vw, var(--t-lg)); max-width: 52ch; }
+.hero__actions{ margin-top: var(--s-10); }
+.hero__promise{
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-6);
+  color: var(--muted);
+  font-size: var(--t-sm);
+}
+.hero__promise .icon{ width: 17px; height: 17px; color: var(--ok); }
+
+.hero__media{
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--paper-3);
+  box-shadow: var(--e-3);
+  aspect-ratio: 5 / 4;
+  color: var(--crimson);   /* crop marks inherit this */
+}
+.hero__media img{ width: 100%; height: 100%; object-fit: cover; }
+.hero__tag{
+  position: absolute;
+  left: var(--s-5); bottom: var(--s-5);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 11px 16px;
+  border-radius: var(--r-sm);
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--e-2);
+  color: var(--ink);
+  font-size: var(--t-sm);
+}
+.hero__tag .icon{ width: 20px; height: 20px; color: var(--crimson); }
+.hero__tag b{ font-family: var(--font-display); letter-spacing: -.015em; }
+.hero__tag small{ display: block; color: var(--muted); font-size: var(--t-xs); }
+
+/* Capability strip — plain facts, not decorative statistics. */
+.hero__facts{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-8);
+  margin: var(--s-10) 0 0;
+  padding: var(--s-6) 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.hero__facts li{
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -.005em;
+}
+.hero__facts .icon{ width: 18px; height: 18px; color: var(--crimson); }
+
+/* Credibility bar — real, verifiable company facts, directly under the hero. */
+.trust-bar{
+  background: var(--ink-2);
+  color: #fff;
+}
+.trust-bar ul{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 1px;
+  list-style: none;
+}
+.trust-bar li{
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-6) var(--s-6) var(--s-6) 0;
+  font-size: var(--t-sm);
+  line-height: 1.45;
+}
+.trust-bar li + li{ padding-left: var(--s-6); border-left: 1px solid var(--ink-3); }
+.trust-bar .icon{ width: 20px; height: 20px; color: #FF9CB2; }
+.trust-bar b{ display: block; font-family: var(--font-display); letter-spacing: -.015em; }
+.trust-bar span{ color: var(--muted-dark); font-size: var(--t-xs); }
+
+/* Inner page hero */
+.page-hero{
+  padding-block: clamp(40px, 5vw, 72px) clamp(48px, 6vw, 88px);
+  background: linear-gradient(172deg, var(--paper-2), #fff 72%);
+  border-bottom: 1px solid var(--line);
+}
+.page-hero h1{ margin-bottom: var(--s-5); }
+.page-hero__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+.page-hero__media{
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--paper-3);
+  box-shadow: var(--e-2);
+  aspect-ratio: 3 / 2;
+}
+.page-hero__media img{ width: 100%; height: 100%; object-fit: contain; padding: var(--s-5); }
+.page-hero__media--cover img{ object-fit: cover; padding: 0; }
+
+
+/* == 09  Cards & grids ===================================================== */
+
+.grid{ display: grid; gap: var(--s-5); }
+.grid--2{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+.grid--3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+.grid--4{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+/* One card component across the whole site. */
+.card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-1);
+  transition: border-color .28s var(--ease), box-shadow .28s var(--ease);
+}
+a.card:hover{ border-color: var(--line-2); box-shadow: var(--e-2); }
+
+.card__media{
+  display: grid;
+  /* The single track is pinned to the frame. Without this the row is sized by
+     the image's own aspect-driven height, so a portrait preview grew taller
+     than the 16/11 frame and overflow:hidden cut the top and bottom off it —
+     the Ikone card was losing 52% of the artwork, Manastiri 40%. Pinning the
+     track lets height:100% resolve, so object-fit does the fitting instead. */
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.card__media img{
+  place-self: stretch;          /* fill the pinned track, then let object-fit fit */
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .55s var(--ease-out);
+}
+a.card:hover .card__media img{ transform: scale(1.035); }
+.card__media--contain img{ object-fit: contain; padding: var(--s-5); }
+a.card:hover .card__media--contain img{ transform: none; }
+
+.card__body{
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  flex: 1;
+  padding: var(--s-6);
+}
+.card__body small{
+  color: var(--crimson);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.card__body h3{ font-size: var(--t-lg); }
+.card__body p{ color: var(--muted); font-size: var(--t-sm); line-height: 1.62; }
+.card__body .link-arrow{ margin-top: auto; padding-top: var(--s-4); }
+
+.card__num{
+  position: absolute;
+  top: var(--s-4); left: var(--s-4);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.95);
+  color: var(--crimson);
+  font: 800 var(--t-xs)/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  box-shadow: var(--e-1);
+}
+
+/* Large split block */
+.split{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: clamp(32px, 4.5vw, 72px);
+  align-items: center;
+}
+.split--start{ align-items: start; }
+
+/* Call-to-action band */
+.cta-band{
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: var(--s-12);
+  padding: clamp(44px, 5.5vw, 76px);
+  border-radius: var(--r-lg);
+  background: var(--ink);
+  color: #fff;
+}
+.cta-band::after{
+  content: "";
+  position: absolute;
+  right: -140px; top: -170px;
+  width: 460px; height: 460px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .16;
+  filter: blur(10px);
+}
+.cta-band > *{ position: relative; z-index: 1; }
+.cta-band h2{ font-size: clamp(var(--t-2xl), 3.4vw, var(--t-4xl)); }
+.cta-band p{ margin-top: var(--s-5); max-width: 54ch; color: var(--muted-dark); }
+.cta-band .btn-row{ flex-direction: column; align-items: stretch; min-width: 260px; }
+.cta-band .kicker{ color: #FF9CB2; }
+
+
+/* == 10  Feature blocks, steps, checklists ================================= */
+
+.feature-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--ink-3);
+  border-radius: var(--r-md);
+  background: var(--ink-3);
+}
+.feature-grid article{
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  padding: var(--s-8);
+  background: var(--ink-2);
+}
+.feature-grid--4{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+.feature-grid .icon{ width: 26px; height: 26px; color: #FF9CB2; }
+.feature-grid h3{ font-size: var(--t-md); color: #fff; }
+.feature-grid p{ margin: 0; color: var(--muted-dark); font-size: var(--t-sm); line-height: 1.6; }
+
+.steps{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: var(--s-8);
+}
+.steps article{ padding-top: var(--s-5); border-top: 2px solid var(--ink); }
+.steps b{
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--crimson-tint);
+  color: var(--crimson);
+  font: 800 var(--t-sm)/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+.steps h3{ margin: var(--s-6) 0 var(--s-2); font-size: var(--t-md); }
+.steps p{ color: var(--muted); font-size: var(--t-sm); line-height: 1.6; }
+
+.checklist{
+  display: grid;
+  margin: var(--s-6) 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.checklist li{
+  position: relative;
+  padding: 14px 8px 14px 34px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+}
+.checklist li::before{
+  content: "";
+  position: absolute;
+  left: 2px; top: 18px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--crimson-tint)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C5222A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
+    center / 11px no-repeat;
+}
+
+.placeholder-note{
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+  color: var(--crimson);
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+.placeholder-note .icon{ width: 15px; height: 15px; }
+
+/* Compact service index: the whole offer as an editorial list — name, one
+   approved line, arrow. On the seasonal homepage this replaces a second wall
+   of image cards; the photography lives on the service pages themselves. */
+.svc-index{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  grid-auto-rows: 1fr;
+  gap: 0 clamp(28px, 4vw, 64px);
+  list-style: none;
+}
+.svc-index a{
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: var(--s-4);
+  height: 100%;
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+.svc-index b{
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--t-base);
+  letter-spacing: -.015em;
+  line-height: 1.3;
+  transition: color .2s var(--ease);
+}
+.svc-index small{
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: var(--t-sm);
+  line-height: 1.45;
+}
+.svc-index .icon{
+  width: 18px; height: 18px;
+  color: var(--line-2);
+  transition: color .2s var(--ease), transform .2s var(--ease);
+}
+.svc-index a:hover b{ color: var(--crimson); }
+.svc-index a:hover .icon{ color: var(--crimson); transform: translateX(3px); }
+
+
+/* == 11  Portfolio & lightbox ============================================== */
+
+.work-toolbar{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+  margin-bottom: var(--s-10);
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid var(--ink-3);
+}
+.work-toolbar__count b{
+  font: 800 var(--t-lg)/1 var(--font-display);
+  letter-spacing: -.025em;
+  font-variant-numeric: tabular-nums;
+}
+.work-toolbar__count span{
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted-dark);
+  font: 500 var(--t-xs)/1 var(--font-body);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.work-filters{ display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.work-filters button{
+  min-height: 40px;
+  padding: 8px 15px;
+  border: 1px solid var(--ink-3);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-dark);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: .2s var(--ease);
+}
+.work-filters button:hover{ color: #fff; border-color: rgba(255,255,255,.5); }
+.work-filters button[aria-pressed="true"]{
+  background: var(--crimson);
+  border-color: var(--crimson);
+  color: #fff;
+  font-weight: 600;
+}
+
+.work-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: var(--s-8) var(--s-5);
+}
+/* fewer than four items: keep the cards at a natural width instead of
+   stretching them across empty columns */
+.work-grid--compact{
+  grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+  justify-content: start;
+}
+.work-card[hidden]{ display: none; }
+
+.work-card__frame{
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: var(--paper-3);
+}
+.work-card__frame img{
+  width: 100%; height: 100%;
+  object-fit: contain;
+  transform: rotate(var(--rotation, 0deg));
+  transition: transform .55s var(--ease-out);
+}
+.work-card:hover .work-card__frame img{
+  transform: rotate(var(--rotation, 0deg)) scale(1.035);
+}
+.work-card__open{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.work-nav{
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.95);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--e-2);
+}
+.work-nav:hover{ background: var(--crimson); color: #fff; }
+.work-nav--prev{ left: 10px; }
+.work-nav--next{ right: 10px; }
+@media (hover: hover) and (pointer: fine){
+  .work-nav{ opacity: 0; transition: opacity .2s var(--ease); }
+  .work-card:hover .work-nav,
+  .work-card:focus-within .work-nav{ opacity: 1; }
+}
+.work-count{
+  position: absolute;
+  left: 50%; bottom: 12px;
+  transform: translateX(-50%);
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(18,21,28,.8);
+  color: #fff;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+.work-card small{
+  display: block;
+  margin-top: var(--s-4);
+  color: var(--muted-dark);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.work-card h3{ margin-top: 6px; font-size: var(--t-md); }
+.section:not(.section--dark) .work-card small{ color: var(--crimson); }
+
+.lightbox[hidden]{ display: none; }
+.lightbox{
+  position: fixed; inset: 0; z-index: 400;
+  display: grid; place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: rgba(10,12,17,.95);
+  backdrop-filter: blur(8px);
+}
+.lightbox__backdrop{ position: absolute; inset: 0; }
+.lightbox__panel{
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  width: min(1120px, 100%);
+  max-height: calc(100dvh - 88px);
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: #14181F;
+}
+.lightbox__stage{
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: var(--s-5);
+  background: var(--paper-3);
+}
+/* calendar viewer: the product bed is pure white (the renders are white-backed,
+   so nothing reads as a gray/beige canvas); the dark overlay, caption and
+   controls stay. The modifier is set only on the calendar product pages, so the
+   portfolio lightbox keeps its paper stage. */
+.lightbox--calendar .lightbox__stage{ background: #fff; }
+.lightbox__stage img{
+  width: auto; height: auto;
+  max-width: 100%;
+  max-height: min(68dvh, 700px);
+  object-fit: contain;
+  transform: rotate(var(--lightbox-rotation, 0deg));
+}
+.lightbox__caption{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  color: #fff;
+}
+.lightbox__caption strong{ font: 800 var(--t-md)/1.25 var(--font-display); letter-spacing: -.02em; }
+.lightbox__caption span{ color: var(--muted-dark); font-size: var(--t-sm); }
+.lightbox__close[hidden],
+.lightbox__nav[hidden]{ display: none; }   /* display:grid would defeat [hidden] */
+.lightbox__nav, .lightbox__close{
+  position: absolute;
+  z-index: 3;
+  display: grid; place-items: center;
+  width: 48px; height: 48px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s var(--ease);
+}
+.lightbox__close:hover, .lightbox__nav:hover{ background: rgba(255,255,255,.22); }
+.lightbox__close{ right: clamp(12px, 3vw, 40px); top: clamp(12px, 3vw, 28px); }
+.lightbox__nav--prev{ left: clamp(6px, 2vw, 26px); top: 50%; transform: translateY(-50%); }
+.lightbox__nav--next{ right: clamp(6px, 2vw, 26px); top: 50%; transform: translateY(-50%); }
+
+
+/* == 12  Clients =========================================================== */
+
+.client-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+  gap: var(--s-3);
+  list-style: none;
+}
+.client-grid li{
+  display: grid;
+  place-items: center;
+  padding: var(--s-6) var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.client-grid li:hover{ border-color: var(--line-2); box-shadow: var(--e-1); }
+.client-grid img{
+  width: 100%;
+  max-width: 118px;
+  height: 54px;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.05);
+  transition: filter .25s var(--ease);
+}
+.client-grid li:hover img{ filter: none; }
+.client-grid[data-collapsed="true"] li:nth-child(n+15){ display: none; }
+
+
+/* == 13  FAQ & specification tables ======================================== */
+
+.faq{ max-width: 880px; }
+.faq details{ border-bottom: 1px solid var(--line); }
+.faq details:first-child{ border-top: 1px solid var(--line); }
+.faq summary{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  padding: var(--s-6) 2px;
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  font-weight: 700;
+  letter-spacing: -.022em;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker{ display: none; }
+.faq summary:hover{ color: var(--crimson); }
+.faq summary .icon{
+  flex: none;
+  width: 32px; height: 32px;
+  padding: 7px;
+  border-radius: 50%;
+  background: var(--crimson-tint);
+  color: var(--crimson);
+  transition: transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+}
+.faq details[open] summary .icon{ transform: rotate(45deg); background: var(--crimson); color: #fff; }
+.faq details > div{ padding: 0 62px var(--s-6) 2px; color: var(--muted); }
+
+.spec{ width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.spec th, .spec td{
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.spec tr:first-child th, .spec tr:first-child td{ border-top: 1px solid var(--line); }
+.spec th{
+  width: 30%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  white-space: nowrap;
+}
+.spec td{ color: var(--muted); line-height: 1.6; }
+
+.info-list{ display: grid; margin: 0; }
+.info-list > div{
+  display: grid;
+  grid-template-columns: 132px minmax(0,1fr);
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-sm);
+}
+.info-list dt{ color: var(--muted); }
+.info-list dd{ margin: 0; font-weight: 500; line-height: 1.55; }
+.info-list dd a:hover{ color: var(--crimson); }
+
+/* Direct-contact cards. Light by default; inverted inside the dark panel. */
+.call-list{ display: grid; gap: var(--s-3); }
+.call-list a{
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 2px var(--s-4);
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  transition: border-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+.call-list a:hover{ border-color: var(--crimson); box-shadow: var(--e-1); }
+.call-list small{ grid-column: 1; color: var(--muted); font-size: var(--t-xs); }
+.call-list strong{
+  grid-column: 1;
+  font: 800 var(--t-lg)/1.25 var(--font-display);
+  letter-spacing: -.028em;
+  font-variant-numeric: tabular-nums;
+}
+.call-list .icon{ grid-column: 2; grid-row: 1 / 3; width: 20px; height: 20px; color: var(--crimson); }
+
+.contact-panel .call-list a{
+  border-color: var(--ink-3);
+  background: rgba(255,255,255,.04);
+}
+.contact-panel .call-list a:hover{ border-color: #FF8DA3; background: rgba(255,255,255,.08); }
+.contact-panel .call-list small{ color: #98A0AF; }
+.contact-panel .call-list .icon{ color: #FF8DA3; }
+
+.map-frame{
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-3);
+}
+.map-frame iframe{ width: 100%; height: 320px; border: 0; }
+
+
+/* == 14  Forms ============================================================= */
+
+.form-card{
+  padding: clamp(26px, 3vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: #fff;
+  box-shadow: var(--e-2);
+}
+.form{ display: grid; gap: var(--s-5); }
+.form__grid{ display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-4); }
+
+.field{ display: grid; gap: 7px; }
+.field > span{ font-size: var(--t-sm); font-weight: 600; letter-spacing: -.005em; }
+.field > span em{ font-style: normal; color: var(--crimson); }
+
+.form input[type="text"],
+.form input[type="tel"],
+.form input[type="email"],
+.form input[type="number"],
+.form select,
+.form textarea{
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;             /* 16px minimum — prevents iOS zoom on focus */
+  line-height: 1.45;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.form textarea{ resize: vertical; min-height: 116px; line-height: 1.6; }
+.form select{
+  appearance: none;
+  padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23575D69' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+}
+.form input:focus, .form select:focus, .form textarea:focus{
+  outline: none;
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(197,34,42,.12);
+}
+.form input::placeholder, .form textarea::placeholder{ color: #9BA1AD; }
+
+.choice{ display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.choice label{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .18s var(--ease), background .18s var(--ease);
+}
+.choice input{ position: absolute; opacity: 0; width: 0; height: 0; }
+.choice label:hover{ border-color: var(--crimson); }
+.choice input:checked + span{ color: var(--crimson); font-weight: 600; }
+.choice label:has(input:checked){ border-color: var(--crimson); background: var(--crimson-tint); }
+.choice input:focus-visible + span{ outline: 2px solid var(--crimson); outline-offset: 5px; border-radius: 3px; }
+
+.file-field{
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0,1fr);
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 72px;
+  padding: 13px 15px;
+  border: 1px dashed var(--line-2);
+  border-radius: var(--r-sm);
+  background: var(--paper-2);
+  cursor: pointer;
+  transition: border-color .18s var(--ease), background .18s var(--ease);
+}
+.file-field:hover{ border-color: var(--crimson); background: var(--crimson-tint); }
+.file-field:focus-within{ border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(197,34,42,.12); }
+.file-field input{ position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.file-field__icon{
+  display: grid; place-items: center;
+  width: 42px; height: 42px;
+  border-radius: var(--r-sm);
+  background: var(--crimson-tint);
+  color: var(--crimson);
+}
+.file-field strong{ display: block; font-size: var(--t-sm); }
+.file-field small{ display: block; color: var(--muted); font-size: var(--t-xs); }
+
+.consent{
+  display: grid;
+  grid-template-columns: 20px minmax(0,1fr);
+  align-items: start;
+  gap: var(--s-3);
+  color: var(--muted);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+}
+.consent input{ width: 19px; height: 19px; margin-top: 2px; accent-color: var(--crimson); }
+.consent a{ color: var(--crimson); text-decoration: underline; text-underline-offset: 2px; }
+
+.form__note{ margin: 0; color: var(--muted); font-size: var(--t-xs); line-height: 1.6; }
+.form__status{ min-height: 20px; margin: 0; color: var(--crimson); font-size: var(--t-sm); }
+.form__foot{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
+.form__promise{
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--muted);
+  font-size: var(--t-sm);
+}
+.form__promise .icon{ width: 17px; height: 17px; color: var(--ok); }
+
+.honeypot{
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important; height: 1px !important;
+  opacity: 0 !important;
+}
+
+.contact-panel{
+  position: relative;
+  overflow: hidden;
+  padding: clamp(26px, 3vw, 44px);
+  border-radius: var(--r-lg);
+  background: var(--ink-2);
+  color: #fff;
+}
+.contact-panel::after{
+  content: "";
+  position: absolute;
+  right: -120px; bottom: -160px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .13;
+  filter: blur(8px);
+}
+.contact-panel > *{ position: relative; z-index: 1; }
+.contact-panel h2, .contact-panel h3{ color: #fff; }
+.contact-panel p{ color: var(--muted-dark); }
+.contact-panel .call-list{ margin: var(--s-8) 0; }
+.contact-panel .info-list > div{ border-color: var(--ink-3); }
+.contact-panel .info-list dt{ color: #98A0AF; }
+.contact-panel .info-list dd a:hover{ color: #FF9CB2; }
+
+
+
+/* == 14b  Calendars 2027 — seasonal blocks ================================= */
+/* Seasonal layer for the 2027 calendar season. Everything here is additive:
+   it composes the existing .split, .grid--3, .card and .btn components and
+   overrides nothing, so removing this block (and the markup that uses it)
+   returns the site to its evergreen state. */
+
+/* --- seasonal hero -------------------------------------------------------- */
+/* The 2027 season owns screen one. The evergreen hero shell (.hero on the
+   homepage, .page-hero on the hub) is re-aimed at the collection: same field,
+   same type, the calendar mockups where the generic photograph used to be.
+   Padding is a step tighter than the evergreen hero so the format cards are
+   reachable without scrolling at 1440x900. */
+.kal-hero .hero__inner{
+  padding-block: clamp(40px, 5vw, 76px) clamp(44px, 5.5vw, 84px);
+}
+.kal-hero__formats{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-8);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+
+/* The season's product photography, composed as two real sheets laid over
+   each other on the desk. Pure CSS composition of approved mockups: the
+   artwork is never cropped, filtered, captioned or drawn over — each frame's
+   aspect ratio comes in via --ar and matches the asset exactly. */
+.kal-stack{
+  position: relative;
+  padding: 0 0 clamp(44px, 4.5vw, 64px) clamp(40px, 4vw, 60px);
+}
+.kal-stack figure{
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+}
+.kal-stack img{
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--ar, 3 / 2);
+  object-fit: contain;   /* approved artwork: contain, never cover */
+}
+.kal-stack__main{ position: relative; z-index: 1; box-shadow: var(--e-3); }
+.kal-stack__aside{
+  position: absolute;
+  left: 0; bottom: 0;
+  z-index: 2;
+  width: min(52%, 320px);
+  box-shadow: var(--e-2);
+}
+
+/* --- lead card ----------------------------------------------------------- */
+/* The three formats (7 lista / 4 lista / stoni) are the primary route into the
+   season, so they sit one step above the collection cards that follow them in
+   the same field. Same component, more air and a larger title — no new
+   visual language. */
+.card--lead .card__body{ gap: var(--s-3); padding: clamp(24px, 2.4vw, 34px); }
+.card--lead .card__body h3{ font-size: clamp(var(--t-xl), 2.2vw, var(--t-2xl)); }
+.card--lead .card__body p{ font-size: var(--t-base); }
+
+/* format-card availability: an honest status line styled as a quiet control,
+   so a category whose collections are still arriving never reads as broken.
+   Copy stays count-free — the pill survives any number of future models. */
+.card__status{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  align-self: flex-start;
+  margin-top: var(--s-2);
+  padding: 5px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.card__status::before{
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--line-2);
+}
+.card__status--live{ color: var(--ok); }
+.card__status--live::before{ background: var(--ok); }
+
+/* --- availability badge --------------------------------------------------- */
+/* Live stock state on catalogue and featured product cards, filled by
+   calendar-inventory.js from assets/data/calendar-inventory.json. The slot
+   ships hidden and empty, so a page with no inventory data renders exactly
+   as it did before the feature existed. Same quiet-control language as
+   .card__status: neutral border, coloured dot and text — never colour alone,
+   the words carry the meaning. */
+.avail[hidden]{ display: none; }   /* the empty slot must not render as a bare pill */
+.avail{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  align-self: flex-start;
+  margin-top: var(--s-2);
+  padding: 5px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.avail::before{
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.avail .icon{ width: 15px; height: 15px; }
+.avail--ok{   color: var(--ok); }
+.avail--low{  color: var(--warn); }
+.avail--soon{ color: var(--info); }
+.avail--soon::before{ display: none; }   /* the truck icon takes the dot's place */
+.avail--out{  color: var(--muted); }
+
+/* retail price on a catalogue card — rendered by calendar-inventory.js only
+   while the product is sellable, directly under the availability badge */
+.card-price{
+  margin-top: var(--s-2);
+  font: 800 var(--t-md)/1.2 var(--font-display);
+  letter-spacing: -.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- pending-collections panel ------------------------------------------ */
+/* Marks the place the collection grid will occupy on /7-lista/ and /4-lista/
+   once real models exist. Deliberately reads as a finished informational
+   block, not as a broken or "under construction" state. */
+.kal-pending{
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-5) var(--s-6);
+  padding: clamp(22px, 2.4vw, 30px) clamp(22px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-1);
+}
+.kal-pending__icon{
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--crimson-tint);
+  color: var(--crimson);
+}
+.kal-pending__icon .icon{ width: 22px; height: 22px; }
+.kal-pending b{
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  letter-spacing: -.02em;
+}
+.kal-pending p{ margin: 0; color: var(--muted); font-size: var(--t-sm); line-height: 1.62; }
+.kal-pending .btn{ white-space: nowrap; }
+/* variant used directly beneath a product gallery, where the thumbnail strip
+   already supplies the separation */
+.kal-pending--tight{ margin-top: var(--s-6); background: var(--paper-2); box-shadow: none; }
+
+/* --- collection catalogue ------------------------------------------------ */
+/* Used by the two category pages, /kalendari/stoni/ and /kalendari/4-lista/.
+   The catalogue is the page, so the hero is one short column — breadcrumb,
+   kicker, h1, lede — and the grid starts near the fold. Everything below
+   composes .wrap, .kicker, .card, .grid and .btn — no second design system.
+   Hero, toolbar and grid all sit on the standard .wrap so their edges align. */
+
+.kal-cat-hero{ padding-block: clamp(26px, 3vw, 40px) clamp(30px, 3.4vw, 46px); }
+/* One step down from a product hero: this page's job is to get out of the way
+   of the grid, so the title sets at 2xl..4xl rather than the 3xl..5xl of
+   .section-head h1. */
+.kal-cat-hero h1{
+  margin-bottom: var(--s-4);
+  font-size: clamp(var(--t-2xl), 3.4vw, var(--t-4xl));
+  letter-spacing: -.035em;
+}
+.kal-cat-hero .lede{ max-width: 60ch; }
+
+/* toolbar: category navigation + model count + inquiry action, on a hairline
+   rule. The chips are links between the category pages, not filters. */
+.kal-bar{
+  border-block: 1px solid var(--line);
+  background: var(--paper-2);
+}
+.kal-bar__inner{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4) var(--s-6);
+  align-items: center;
+  padding-block: var(--s-4);
+}
+.kal-bar__title{
+  display: flex;
+  gap: var(--s-3);
+  align-items: baseline;
+  margin-right: auto;
+}
+.kal-bar__title strong{ font: 800 var(--t-md)/1.2 var(--font-display); letter-spacing: -.02em; }
+.kal-bar__count{ color: var(--muted); font-size: var(--t-sm); }
+
+.kal-chips{ display: flex; flex-wrap: wrap; gap: var(--s-2); }
+a.kal-chip:focus-visible{ outline-offset: 2px; }
+.kal-chip{
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 7px 15px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: #fff;
+  color: var(--muted);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+a.kal-chip:hover{ border-color: var(--ink); color: var(--ink); }
+.kal-chip--on{
+  border-color: var(--crimson);
+  background: var(--crimson-tint);
+  color: var(--crimson-dk);
+}
+
+/* product card: the same .card component, given the room a catalogue needs.
+   The mockups are final artwork of three different native shapes (0.66 for
+   Ikone, 1.6 for the portrait models, 1.33 for Moja Srbija Stoni 2), so the
+   frame is fixed and object-fit does the fitting — nothing is ever cropped or
+   stretched to make a row line up. */
+.card--product .card__media{
+  aspect-ratio: 16 / 11;
+  /* the mockups already carry their own studio margin, so the frame adds only
+     a little more — enough to breathe, not enough to shrink the product */
+  padding: clamp(8px, 1vw, 16px);
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.card--product .card__media img{
+  object-fit: contain;
+  object-position: center;
+  padding: 0;
+}
+.card--product .card__body{ gap: var(--s-2); padding: clamp(18px, 1.8vw, 26px); }
+.card--product .card__body h3{ font-size: var(--t-md); letter-spacing: -.015em; }
+.card--product .card__body .link-arrow{ padding-top: var(--s-5); font-size: var(--t-sm); }
+
+/* format marker — only on the models whose shape differs, where it earns its
+   place by telling the two "Moja Srbija" collections apart */
+.card__tag{
+  position: absolute;
+  top: var(--s-4); right: var(--s-4);
+  z-index: 2;
+  padding: 5px 11px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: rgba(255,255,255,.92);
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+
+/* restrained desktop hover: a small lift, a softer shadow, a hint of scale */
+@media (hover: hover) and (pointer: fine){
+  a.card--product{ transition: transform .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease); }
+  a.card--product:hover{ transform: translateY(-3px); box-shadow: var(--e-3); }
+  a.card--product:hover .card__media img{ transform: scale(1.02); }
+}
+
+/* wall-calendar card (B3, 4 lista): the six wall models are portrait 2:3
+   mockups, and the generic 16/11 bed shrank the physical calendar to a third
+   of the card. This scoped modifier gives them a portrait 3/4 bed with a slim
+   margin so the product dominates — still contained, so hanger, spiral and
+   imprint panel are always complete. Desk cards are untouched; the double
+   class also outranks the phone-width .card--product rule further down. */
+.card--product.card--wall .card__media{
+  aspect-ratio: 3 / 4;
+  padding: clamp(8px, 1vw, 12px);
+}
+.card--product.card--wall .card__body{ gap: var(--s-1); }
+.card--product.card--wall .card__body p{ margin-top: var(--s-1); }
+
+/* closing band — one CTA, on the warm field the form section continues */
+.kal-cta{
+  padding-block: clamp(48px, 5.5vw, 76px);
+  border-top: 1px solid var(--line);
+  background: var(--paper-2);
+}
+.kal-cta__inner{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6) var(--s-10);
+  align-items: center;
+  justify-content: space-between;
+}
+.kal-cta h2{
+  max-width: 22ch;
+  font-size: clamp(var(--t-xl), 2.6vw, var(--t-3xl));
+  letter-spacing: -.03em;
+}
+.kal-cta p{ margin-top: var(--s-3); max-width: 52ch; color: var(--muted); }
+
+
+/* == 15  Calendar product page ============================================= */
+/* Presentation chrome only: the panel foot, contact shadow, perspective and
+   optional wire binding are drawn in CSS. The artwork itself is shown whole —
+   never cropped, recoloured or regenerated. */
+
+.kal-layout{
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) clamp(292px, 22vw, 336px);
+  gap: clamp(28px, 3vw, 48px);
+  align-items: start;
+}
+
+/* --- stage --------------------------------------------------------------- */
+.kal-stage{
+  position: relative;
+  overflow: hidden;
+  padding: clamp(30px, 3.4vw, 52px) clamp(18px, 1.8vw, 28px) clamp(22px, 2.2vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 86% at 50% 2%, #FFFFFF 0%, var(--paper-2) 46%, var(--paper-3) 82%, #EBE3DC 100%);
+}
+.kal-pieces{
+  display: flex;
+  min-width: 0;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(4px, .8vw, 14px);
+  perspective: 1500px;
+}
+
+.kal-piece{
+  --lean: 8deg;         /* half-angle of the tent; 2*sin(8) = 27.8% base depth */
+  --paper: #FBF8F5;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 440px;
+  margin: 0;
+}
+.kal-piece[hidden]{ display: none; }
+.kal-stage[data-single="true"] .kal-piece{ max-width: 470px; }
+
+/* Contact shadow: a tight core where the base meets the surface plus a wide
+   ambient pool. Sits under the whole footprint, not just the front panel. */
+.kal-piece::after{
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 30px;
+  z-index: 0;
+  width: 96%; height: 40px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgba(18,21,28,.34) 0%, rgba(18,21,28,0) 72%),
+    radial-gradient(closest-side, rgba(18,21,28,.15) 0%, rgba(18,21,28,0) 80%);
+  background-size: 56% 44%, 100% 100%;
+  background-position: center 40%, center 50%;
+  background-repeat: no-repeat;
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+.kal-piece__scene{
+  display: block;
+  /* room for the base, which projects below the front panel's layout box */
+  margin-bottom: 48px;
+  perspective: 1150px;
+  perspective-origin: 50% 42%;
+}
+.kal-piece__unit{ display: block; transform-style: preserve-3d; }
+.kal-stage--3d .kal-piece__unit{
+  transform: rotateX(6deg) rotateY(var(--turn, 0deg)) scale(.8);
+}
+
+/* --- front panel: carries the artwork ----------------------------------- */
+.kal-piece__sheet{
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  aspect-ratio: 944 / 1100;
+  transform-style: preserve-3d;
+  transform-origin: top center;
+  cursor: zoom-in;
+}
+.kal-piece__face{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--paper);
+  outline: 1px solid rgba(18,21,28,.10);
+  outline-offset: -1px;
+  /* the block of sheets along the outer edge, plus the panel's own shadow */
+  box-shadow:
+    0 2px 4px rgba(18,21,28,.10),
+    0 14px 26px rgba(18,21,28,.12),
+    calc(var(--stack, 1) * 1.5px) 1.5px 0 -.5px #F7F3F0,
+    calc(var(--stack, 1) * 3px)   3px   0 -.5px #F1EBE6,
+    calc(var(--stack, 1) * 4.5px) 4.5px 0 -1px  #E9E2DB,
+    calc(var(--stack, 1) * 6px)   6px   0 -1px  #DFD7CF,
+    calc(var(--stack, 1) * 7px)   7px   1px -1px rgba(18,21,28,.16);
+}
+.kal-piece__face img{
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .42s var(--ease-out);
+}
+.kal-piece__face img:not([aria-hidden]){ opacity: 1; }
+/* punch holes and the soft light falling across the sheet */
+.kal-piece__face::before{
+  content: "";
+  position: absolute;
+  left: 3%; right: 3%; top: 0;
+  z-index: 2;
+  height: 14px;
+  background-image:
+    radial-gradient(circle at 12px 4px, rgba(18,21,28,.42) 0 2.3px, rgba(18,21,28,0) 2.9px),
+    linear-gradient(180deg, rgba(18,21,28,.16) 0%, rgba(18,21,28,.05) 46%, rgba(18,21,28,0) 100%);
+  background-size: 24px 14px, 100% 100%;
+  background-repeat: repeat-x, no-repeat;
+  pointer-events: none;
+}
+.kal-piece__face::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(104deg,
+      rgba(255,255,255,.16) 0%,
+      rgba(255,255,255,.03) 30%,
+      rgba(255,255,255,0) 56%,
+      rgba(18,21,28,.05) 100%),
+    linear-gradient(180deg,
+      rgba(18,21,28,0) 86%,
+      rgba(18,21,28,.05) 94%,
+      rgba(18,21,28,.11) 100%);
+}
+
+.kal-stage--3d .kal-piece__sheet{ transform: rotateX(var(--lean)); }
+
+/* --- the fold: base flap, then the rear panel back up to the apex -------- */
+.kal-piece__base{
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 27.8%;                       /* 2 * sin(8deg) of the panel height */
+  transform-style: preserve-3d;
+  transform-origin: top center;
+  transform: rotateX(calc(-90deg - var(--lean)));
+  background: linear-gradient(180deg, #A79E96 0%, #C6BDB5 38%, #E2DAD3 100%);
+  box-shadow: 0 1px 0 rgba(18,21,28,.10) inset, 0 0 0 1px rgba(18,21,28,.07) inset;
+}
+.kal-piece__back{
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 360%;                        /* back to full panel height */
+  transform-origin: top center;
+  transform: rotateX(calc(-90deg - var(--lean)));
+  background: linear-gradient(100deg, #D8D0C8 0%, #E7E1DA 45%, #F3EEE9 100%);
+  box-shadow: 0 0 0 1px rgba(18,21,28,.08) inset;
+}
+
+/* Previous flat-panel presentation, still used by every model that has not
+   been switched over to the folded construction. */
+.kal-stage:not(.kal-stage--3d) .kal-piece__scene{ margin-bottom: 0; }
+.kal-stage:not(.kal-stage--3d) .kal-piece__sheet{
+  transform: rotateY(calc(var(--turn, 0deg) * .35));
+  transform-origin: bottom center;
+}
+.kal-stage:not(.kal-stage--3d) .kal-piece__base{ display: none; }
+.kal-stage:not(.kal-stage--3d) .kal-piece__foot{
+  height: 11%;
+  min-height: 26px;
+  border-radius: 0;
+  transform: rotateY(calc(var(--turn, 0deg) * .35)) rotateX(52deg);
+  background: linear-gradient(#CFC6BE 0%, #EFEAE5 14%, #FCFAF8 42%, #FFFFFF 66%, #EDE6E0 100%);
+  clip-path: polygon(2.5% 0, 97.5% 0, 100% 100%, 0 100%);
+  box-shadow: none;
+}
+
+/* the front flap that flares forward onto the desk — the visible stand */
+.kal-piece__foot{
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  z-index: 1;
+  height: 11%;
+  transform-origin: top center;
+  transform: rotateX(calc(46deg - var(--lean)));
+  background:
+    linear-gradient(180deg,
+      rgba(18,21,28,.10) 0%, rgba(18,21,28,.02) 7%,
+      rgba(255,255,255,0) 22%, rgba(255,255,255,0) 62%,
+      rgba(18,21,28,.05) 88%, rgba(18,21,28,.13) 100%),
+    linear-gradient(100deg, #F6F1EC 0%, #FFFFFF 38%, #FCF9F6 72%, #EFE8E1 100%);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 8px 12px rgba(18,21,28,.12);
+}
+
+/* --- white wire binding at the apex ------------------------------------- */
+/* Matte coated white wire: flat white with only enough grey to read as round.
+   No metallic gradient, no glow — just a small contact shadow on the paper. */
+.kal-piece__spiral{
+  position: absolute;
+  left: 2%; right: 2%; top: -13px;
+  z-index: 4;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='20' viewBox='0 0 24 20'%3E%3Cdefs%3E%3ClinearGradient id='m' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFFFFF'/%3E%3Cstop offset='.55' stop-color='%23FBFBFC'/%3E%3Cstop offset='1' stop-color='%23DCDEE2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M6.5 20V10.5a5.5 5.5 0 0 1 11 0V20' fill='none' stroke='%23B4B8BE' stroke-width='5.2' stroke-linecap='round' opacity='.5'/%3E%3Cpath d='M6.5 20V10.5a5.5 5.5 0 0 1 11 0V20' fill='none' stroke='url(%23m)' stroke-width='4.1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  filter: drop-shadow(0 1px 1px rgba(18,21,28,.20));
+  pointer-events: none;
+}
+
+.kal-piece__zoom{
+  position: absolute;
+  right: 10px; bottom: 10px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  color: var(--ink);
+  box-shadow: var(--e-1);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .22s var(--ease), transform .22s var(--ease);
+}
+.kal-piece__zoom .icon{ width: 17px; height: 17px; }
+.kal-piece__sheet:hover .kal-piece__zoom,
+.kal-piece__sheet:focus-visible .kal-piece__zoom{ opacity: 1; transform: none; }
+@media (hover: none){ .kal-piece__zoom{ opacity: 1; transform: none; } }
+
+.kal-piece figcaption{
+  margin-top: var(--s-4);
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.kal-stage__now{
+  margin: var(--s-4) 0 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  text-align: center;
+}
+
+.kal-nav{
+  position: absolute;
+  top: 46%;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 46px; height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255,255,255,.94);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--e-1);
+  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.kal-nav:hover{ background: var(--crimson); border-color: var(--crimson); color: #fff; }
+.kal-nav--prev{ left: clamp(8px, 1.4vw, 18px); }
+.kal-nav--next{ right: clamp(8px, 1.4vw, 18px); }
+
+/* --- rendered product mockup stage ------------------------------------- */
+.kal-stage--shot{
+  /* the product shot carries its own studio background */
+  padding: 0 0 clamp(14px, 1.6vw, 22px);
+  background: #FFFFFF;
+  overflow: hidden;
+}
+.kal-stage--shot .kal-pieces{ display: block; }
+/* Each shot collection is photographed on its own canvas — 2400x1500 for the
+   first set, 1448x1086 for Moja Srbija Stoni 2. The page declares its native
+   ratio in --shot-ar so the frame matches the file instead of letterboxing it;
+   the fallback keeps every existing collection exactly where it was. */
+.kal-shot{
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--shot-ar, 2400 / 1500);
+}
+.kal-shot__img{
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .42s var(--ease-out);
+}
+.kal-shot__img:not([aria-hidden]){ opacity: 1; }
+.kal-shot__zoom{
+  position: absolute;
+  right: 6px; bottom: 6px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  color: var(--ink);
+  box-shadow: var(--e-1);
+  cursor: zoom-in;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .22s var(--ease), transform .22s var(--ease);
+}
+.kal-shot__zoom .icon{ width: 18px; height: 18px; }
+.kal-shot:hover .kal-shot__zoom,
+.kal-shot__zoom:focus-visible{ opacity: 1; transform: none; }
+@media (hover: none){ .kal-shot__zoom{ opacity: 1; transform: none; } }
+.kal-stage--shot .kal-nav{ top: 46%; }
+.kal-stage--shot .kal-stage__now{ margin-top: var(--s-3); }
+
+/* --- thumbnails ---------------------------------------------------------- */
+.kal-thumbs{
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+  padding-bottom: var(--s-3);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 44px), transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 44px), transparent 100%);
+}
+.kal-thumbs:hover, .kal-thumbs:focus-within{ -webkit-mask-image: none; mask-image: none; }
+.kal-thumb{
+  flex: 0 0 auto;
+  width: 116px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  scroll-snap-align: start;
+  text-align: center;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--muted);
+  transition: color .2s var(--ease);
+}
+.kal-thumb__img{
+  display: block;
+  margin-bottom: 8px;
+  padding: 5px;
+  aspect-ratio: 944 / 1100;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: #fff;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.kal-thumb__img img{ width: 100%; height: 100%; object-fit: contain; }
+/* Collections whose thumbnails are rendered mockups rather than flat artwork
+   need a landscape frame, otherwise a 1.6 image letterboxes inside the 0.86
+   portrait box above. Scoped by modifier: the flat-art collections keep the
+   portrait frame and are untouched. --shot-ar carries the collection's own
+   canvas ratio, as on the stage. */
+.kal-thumbs--shot .kal-thumb__img{ aspect-ratio: var(--shot-ar, 2400 / 1500); }
+.kal-thumb:hover{ color: var(--ink); }
+.kal-thumb:hover .kal-thumb__img{ border-color: var(--line-2); }
+.kal-thumb[aria-selected="true"]{ color: var(--crimson); }
+.kal-thumb[aria-selected="true"] .kal-thumb__img{
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 2px rgba(197,34,42,.16);
+}
+
+/* --- information panel --------------------------------------------------- */
+.kal-panel{ position: sticky; top: calc(var(--header-h) + 24px); }
+.kal-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 8px 16px;
+  border: 1px solid rgba(197,34,42,.20);
+  border-radius: 999px;
+  background: var(--crimson-tint);
+  color: var(--crimson-dk);
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.kal-badge .icon{ width: 16px; height: 16px; }
+
+/* The panel column stops growing at 336px (clamp(292px, 22vw, 336px)) while a
+   viewport-scaled title keeps growing, so on wide screens the type outgrew its
+   own column and long names such as "Duh vremena 2027" broke to three lines.
+   The upper bound is now tied to what the 336px column can actually hold: the
+   widest name measures 6.10em up to its last word, so 336 / 6.10 = 55px is the
+   ceiling for a two-line set. --t-4xl (53px) sits just under it.
+   Measured across 1024–3440px: every collection name now sets in at most two
+   lines, and short names (Ikone 2027, Priroda 2027, Manastiri) stay on one.
+   Below 640px this resolves to 42px, exactly as before — no mobile change. */
+.kal-panel h1{
+  margin-top: var(--s-5);
+  font-size: clamp(var(--t-3xl), 3.2vw, var(--t-4xl));
+}
+.kal-panel__tagline{
+  margin-top: var(--s-3);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.kal-panel .lede{ margin-top: var(--s-5); font-size: var(--t-base); }
+.kal-panel__actions{ margin-top: var(--s-8); flex-direction: column; align-items: stretch; }
+.kal-panel .form__promise{ margin-top: var(--s-4); justify-content: center; }
+
+.kal-spec{ margin: var(--s-8) 0 0; }
+.kal-spec > div{
+  display: grid;
+  grid-template-columns: 22px auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+  padding: 14px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-sm);
+}
+.kal-spec > div:first-child{ border-top: 1px solid var(--line); }
+.kal-spec .icon{ width: 19px; height: 19px; color: var(--crimson); }
+.kal-spec dt{ color: var(--muted); white-space: nowrap; }
+.kal-spec dd{ margin: 0; font-weight: 600; text-align: right; }
+/* Informational catalogue price. Deliberately not styled as a shop price:
+   no currency badge, no "add to cart" proximity, and always paired with the
+   note that the real figure comes back with the quote. */
+.kal-price{
+  display: grid;
+  gap: 4px;
+  margin-top: var(--s-8);
+  padding: var(--s-5) var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+}
+.kal-price__label{
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.kal-price__value{
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 800;
+  letter-spacing: -.035em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.kal-price__value--pending{
+  color: var(--crimson);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0;
+}
+.kal-price__note{
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+}
+
+.kal-spec__pending{
+  color: var(--crimson);
+  font-weight: 500 !important;
+  font-size: var(--t-xs);
+  font-style: italic;
+}
+
+/* one quiet line replaces a column of pending rows: unknown values are not
+   rendered at all, and this note stands in for the whole missing group */
+.kal-spec__note{
+  margin: var(--s-4) 0 0;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  line-height: 1.6;
+}
+
+/* --- availability block --------------------------------------------------- */
+/* Product-page counterpart of the .avail card badge: same states, one step
+   richer (announced-arrival date, short note). Filled by calendar-inventory.js
+   from the central JSON; ships hidden, so no data means no block. */
+.kal-avail{
+  margin-top: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--paper-2);
+}
+.kal-avail__status{
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0;
+  font: 700 var(--t-sm)/1.35 var(--font-display);
+  letter-spacing: -.01em;
+}
+.kal-avail__status::before{
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.kal-avail__status .icon{ width: 18px; height: 18px; }
+.kal-avail--ok   .kal-avail__status{ color: var(--ok); }
+.kal-avail--low  .kal-avail__status{ color: var(--warn); }
+.kal-avail--soon .kal-avail__status{ color: var(--info); }
+.kal-avail--soon .kal-avail__status::before{ display: none; }  /* truck instead */
+.kal-avail--out  .kal-avail__status{ color: var(--muted); }
+.kal-avail__meta{
+  margin: var(--s-2) 0 0;
+  color: var(--ink);
+  font-size: var(--t-sm);
+}
+.kal-avail__note{
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  line-height: 1.55;
+}
+
+/* --- retail purchase block ------------------------------------------------ */
+/* Price, quantity and "Dodaj u korpu", filled by calendar-cart.js from the
+   central inventory. Ships hidden: no data, no price, or commerce off means
+   the panel looks exactly like the approved Phase 1 page. The B2B route
+   ("Zatražite ponudu") stays in static HTML right below, so it survives any
+   script failure. */
+.kal-buy{ margin-top: var(--s-5); }
+.kal-buy__price{
+  margin: 0 0 var(--s-4);
+  font: 800 clamp(var(--t-xl), 2vw, var(--t-2xl))/1.1 var(--font-display);
+  letter-spacing: -.025em;
+  font-variant-numeric: tabular-nums;
+}
+.kal-buy__row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: stretch;
+}
+.kal-buy__add{ flex: 1 1 190px; }
+.kal-buy__add:disabled{
+  background: var(--paper-3);
+  color: var(--muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.kal-buy__msg{
+  margin: var(--s-3) 0 0;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  line-height: 1.55;
+}
+.kal-buy__done{
+  margin: var(--s-3) 0 0;
+  color: var(--ok);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+.kal-buy__done .kal-buy__link{
+  margin-left: 4px;
+  color: var(--crimson);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.kal-b2b__note{
+  margin: var(--s-6) 0 var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+/* quantity control — shared by the product page and the cart lines */
+.qty{
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: #fff;
+  overflow: hidden;
+}
+.qty__btn{
+  width: 44px;
+  min-height: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--t-md);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.qty__btn:hover{ background: var(--paper-2); color: var(--crimson); }
+.qty__input{
+  width: 56px;
+  border: 0;
+  border-inline: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: 700 var(--t-base)/1 var(--font-body);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.qty__input::-webkit-outer-spin-button,
+.qty__input::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+.qty__input:focus-visible{ outline: 2px solid var(--crimson); outline-offset: -2px; }
+
+/* --- Product Page V2 (master) --------------------------------------------- */
+/* Next-generation calendar product page, currently applied to Moja Srbija
+   Stoni 2 only. Everything is an additive, scoped layer (.pp-* blocks and
+   .kal-layout--v2 / .kal-panel--v2 modifiers) over the existing calendar.js
+   gallery contract — the other eight collection pages render exactly as
+   before. Nothing is tied to one product: the artwork ratio still arrives
+   via --shot-ar, so portrait, landscape and future 7/4-lista collections can
+   adopt the same markup unchanged. */
+
+/* identity header above the gallery/panel grid — on phones this puts the
+   title before the artwork, ahead of the buying controls */
+.pp-head{ margin: var(--s-2) 0 clamp(24px, 2.6vw, 36px); }
+.pp-head h1{
+  margin: var(--s-3) 0 0;
+  font-size: clamp(var(--t-2xl), 3.4vw, var(--t-4xl));
+  letter-spacing: -.035em;
+}
+.pp-head__meta{ margin: var(--s-3) 0 0; color: var(--muted); font-size: var(--t-base); }
+
+/* showroom left (~62%), buying information right (~38%) */
+.kal-layout--v2{
+  grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+  gap: clamp(28px, 3.5vw, 60px);
+}
+/* the sheet frame steps down from the soft display radius to the crisper
+   card radius, and the month strip gets room to breathe */
+.kal-layout--v2 .kal-stage{ border-radius: var(--r-md); }
+.kal-layout--v2 .kal-thumbs{ margin-top: var(--s-5); }
+.kal-layout--v2 .kal-thumb{ width: 128px; font-size: 13px; }
+
+/* the buying panel becomes one quiet card: availability, price, quantity,
+   the retail action, one operational line, then the B2B route */
+.kal-panel--v2{
+  padding: clamp(20px, 2vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-1);
+}
+.kal-panel--v2 .kal-avail{ margin-top: 0; }
+.kal-panel--v2 .form__promise{ margin-top: var(--s-4); }
+
+/* portrait wall calendars (B3, 4 lista): a 2:3 sheet would run ~1250px tall
+   in the 62% showroom column, so the two columns level out and the frame is
+   capped and centred. The frame still takes the file's own ratio from
+   --shot-ar (object-fit: contain, nothing cropped), so the whole product —
+   hanger, spiral and imprint panel — stays visible. Scoped by modifier: the
+   landscape stoni pages are untouched. */
+.kal-layout--portrait{ grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+.kal-layout--portrait .kal-stage,
+.kal-layout--portrait .kal-thumbs{ max-width: 640px; margin-inline: auto; }
+
+/* known facts and the quiet pending-spec note in one light panel — unknown
+   values are omitted, never faked (§ house policy) */
+.pp-facts{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1px;
+  margin: clamp(28px, 3vw, 44px) 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--line);
+}
+.pp-facts > div{ display: grid; gap: 4px; padding: var(--s-5) var(--s-6); background: var(--paper-2); }
+.pp-facts dt{
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.pp-facts dd{ margin: 0; font: 700 var(--t-base)/1.35 var(--font-display); letter-spacing: -.015em; }
+.pp-facts__note{ margin: var(--s-3) 0 0; color: var(--muted); font-size: var(--t-xs); }
+
+
+/* == 15b  Cart & ordering ================================================== */
+/* /korpa/ — line items left, summary right, the order form below. Composes
+   .wrap, .section, .form and .btn; same print-studio surfaces as the rest of
+   the catalogue. All commerce content is rendered by calendar-cart.js; the
+   static page carries only the empty state and the form shell. */
+
+/* like .drawer/.lightbox: any element that declares its own display AND is
+   shown/hidden via the hidden attribute needs this guard, because an author
+   display rule outweighs the browser's built-in [hidden]{display:none} */
+.cart-layout[hidden]{ display: none; }
+.cart-layout{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(280px, 26vw, 340px);
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.cart-items{ display: grid; gap: var(--s-4); }
+
+.cart-item{
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--s-5);
+  align-items: center;
+  padding: var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-1);
+}
+.cart-item--off{ background: var(--paper-2); box-shadow: none; }
+.cart-item--off .cart-item__name{ color: var(--muted); }
+
+.cart-item__media{
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 72px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: #fff;
+  overflow: hidden;
+}
+.cart-item__media img{ width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+
+.cart-item__name{ margin: 0; font: 800 var(--t-base)/1.3 var(--font-display); letter-spacing: -.015em; }
+.cart-item__name a:hover{ color: var(--crimson); }
+.cart-item__unit{ margin: 4px 0 0; color: var(--muted); font-size: var(--t-sm); }
+.cart-item__msg{ margin: 6px 0 0; color: var(--warn); font-size: var(--t-xs); font-weight: 600; line-height: 1.5; }
+.cart-item--off .cart-item__msg{ color: var(--muted); }
+
+.cart-item__side{
+  display: grid;
+  gap: var(--s-3);
+  justify-items: end;
+}
+.cart-item__subtotal{ margin: 0; font: 800 var(--t-md)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.cart-item__remove{
+  border: 0;
+  padding: 2px 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color .2s var(--ease);
+}
+.cart-item__remove:hover{ color: var(--crimson); }
+
+.cart-summary{
+  position: sticky;
+  top: calc(var(--header-h) + 16px);
+  padding: var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+}
+.cart-summary__title{ margin-bottom: var(--s-4); font-size: var(--t-lg); }
+.cart-summary__row{
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin: 0;
+  padding: var(--s-3) 0;
+  border-top: 1px solid var(--line);
+  font-size: var(--t-sm);
+}
+.cart-summary__row b{ font-variant-numeric: tabular-nums; }
+.cart-summary__row--total{ font-size: var(--t-base); }
+.cart-summary__row--total b{ font: 800 var(--t-xl)/1.1 var(--font-display); letter-spacing: -.02em; }
+.cart-summary__note{ margin: var(--s-4) 0 0; color: var(--muted); font-size: var(--t-xs); line-height: 1.6; }
+
+.cart-notice{
+  margin: 0 0 var(--s-6);
+  padding: var(--s-4) var(--s-5);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: #fff;
+  color: var(--warn);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.cart-empty{
+  padding: clamp(40px, 6vw, 72px) var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+  text-align: center;
+}
+.cart-empty p{ margin: 0 0 var(--s-6); font: 800 var(--t-xl)/1.2 var(--font-display); letter-spacing: -.02em; }
+
+.order-success{
+  padding: clamp(36px, 5vw, 60px) var(--s-6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-1);
+  text-align: center;
+}
+.order-success__preview{
+  display: inline-flex;
+  margin-bottom: var(--s-6);
+  padding: 6px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  color: var(--warn);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.order-success h2{ margin-bottom: var(--s-4); font-size: var(--t-2xl); }
+.order-success__ref{
+  margin: 0 0 var(--s-4);
+  font: 700 var(--t-md)/1.3 var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+.order-success p{ color: var(--muted); font-size: var(--t-sm); }
+.order-success__ref b{ color: var(--ink); }
+
+/* --- mini-cart drawer ----------------------------------------------------- */
+/* Injected by calendar-cart.js and driven by the shared overlay controller,
+   so it locks, traps and restores focus exactly like the navigation drawer.
+   Same surface language: white panel from the right, quiet hairlines, the
+   confirmation in the site's success green — never a banner. */
+.cart-drawer[hidden]{ display: none; }
+.cart-drawer{ position: fixed; inset: 0; z-index: 200; }
+.cart-drawer__backdrop{
+  position: absolute; inset: 0;
+  background: rgba(12,15,21,.44);
+  backdrop-filter: blur(2px);
+}
+.cart-drawer__panel{
+  position: absolute; right: 0; top: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(420px, 92vw);
+  height: 100dvh;
+  background: #fff;
+  box-shadow: -18px 0 56px rgba(0,0,0,.18);
+  animation: cart-drawer-in .3s var(--ease-out);
+}
+@keyframes cart-drawer-in{
+  from{ transform: translateX(28px); opacity: .5; }
+  to{ transform: none; opacity: 1; }
+}
+.cart-drawer__head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-5) var(--s-6);
+  border-bottom: 1px solid var(--line);
+}
+.cart-drawer__head strong{ font: 800 var(--t-md)/1 var(--font-display); letter-spacing: -.02em; }
+.cart-drawer__close{
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.cart-drawer__close:hover{ border-color: var(--crimson); color: var(--crimson); }
+.cart-drawer__close .icon{ width: 16px; height: 16px; }
+
+.cart-drawer__added{
+  margin: var(--s-5) var(--s-6) 0;
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--paper-2);
+}
+.cart-drawer__flag{
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-3);
+  color: var(--ok);
+  font: 700 var(--t-sm)/1.2 var(--font-display);
+}
+.cart-drawer__flag .icon{ width: 17px; height: 17px; }
+.cart-drawer__added .cart-line{ padding-bottom: 0; border-bottom: 0; }
+
+.cart-drawer__list{
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  padding: var(--s-5) var(--s-6);
+}
+.cart-drawer__empty{ margin: var(--s-8) 0; color: var(--muted); text-align: center; }
+
+.cart-line{
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  gap: var(--s-4);
+  align-items: center;
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+.cart-drawer__list .cart-line:last-child{ padding-bottom: 0; border-bottom: 0; }
+.cart-line--off .cart-line__name{ color: var(--muted); }
+.cart-line__media{
+  display: grid;
+  place-items: center;
+  width: 64px; height: 48px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: #fff;
+}
+.cart-line__media img{ width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+.cart-line__name{ margin: 0; font: 700 var(--t-sm)/1.3 var(--font-display); letter-spacing: -.01em; }
+.cart-line__meta{ margin: 2px 0 0; color: var(--muted); font-size: var(--t-xs); }
+.cart-line__msg{ margin: 4px 0 0; color: var(--warn); font-size: var(--t-xs); font-weight: 600; line-height: 1.45; }
+.cart-line--off .cart-line__msg{ color: var(--muted); }
+.cart-line__sub{ margin: 0; font: 800 var(--t-sm)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.cart-line__side{ display: grid; gap: 6px; justify-items: end; }
+
+.cart-drawer__foot{
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-5) var(--s-6) var(--s-6);
+  border-top: 1px solid var(--line);
+}
+.cart-drawer__total{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-sm);
+}
+.cart-drawer__total b{
+  font: 800 var(--t-lg)/1.1 var(--font-display);
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- manual clear --------------------------------------------------------- */
+.cart-clear{ margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--line); }
+.cart-clear__btn{
+  border: 0;
+  padding: 2px 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color .2s var(--ease);
+}
+.cart-clear__btn:hover{ color: var(--crimson); }
+.cart-clear__confirm[hidden]{ display: none; }  /* display:flex would defeat [hidden] */
+.cart-clear__confirm{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+
+/* == 16  Footer ============================================================ */
+
+.site-footer{
+  padding-block: clamp(56px, 6vw, 88px) 0;
+  background: var(--ink);
+  color: #fff;
+}
+.site-footer a{ transition: color .2s var(--ease); }
+.site-footer a:hover{ color: #FF9CB2; }
+.footer-grid{
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr 1.25fr;
+  gap: var(--s-12) var(--s-8);
+}
+.footer-grid h3{
+  margin-bottom: var(--s-5);
+  color: #98A0AF;
+  font: 700 var(--t-xs)/1 var(--font-display);
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.footer-grid ul{ display: grid; gap: 11px; list-style: none; font-size: var(--t-sm); }
+.footer-grid p{ color: var(--muted-dark); font-size: var(--t-sm); }
+.site-footer .brand__type b{ color: #fff; }
+.site-footer .brand__type span{ color: #98A0AF; }
+.footer-social{ display: flex; gap: var(--s-3); margin-top: var(--s-6); }
+.footer-social a{
+  display: grid; place-items: center;
+  width: 42px; height: 42px;
+  border: 1px solid var(--ink-3);
+  border-radius: var(--r-sm);
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+}
+.footer-social a:hover{ border-color: #FF9CB2; background: rgba(255,255,255,.06); }
+.footer-legal{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-8);
+  margin-top: clamp(44px, 5vw, 68px);
+  padding-block: var(--s-6);
+  border-top: 1px solid var(--ink-3);
+  color: #7F8794;
+  font-size: var(--t-xs);
+}
+.footer-legal b{ color: #C3C9D4; font-weight: 600; }
+
+
+/* == 17  Responsive ======================================================== */
+
+/* Header, measured with fonts loaded: logo + full nav + actions need about
+   1230px without the cart control and about 1195px with it (its phone label
+   already yields). Below 1200 the nav therefore collapses into the drawer
+   (see the 1200 block); in the 1201–1360 band the phone number yields to its
+   icon on every page so nothing overflows — above 1360 space returns and the
+   full label comes back. Only header rules live here. */
+@media (min-width: 1201px) and (max-width: 1360px){
+  .header-phone span{ display: none; }
+}
+
+@media (max-width: 1200px){
+  .grid--4{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .work-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .nav__cols{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .nav__panel{ width: min(620px, 90vw); }
+  /* header collapse: the full nav no longer fits, so it moves into the
+     drawer and the hamburger takes over (previously 1080, which left a
+     1081–1230px band where the header overflowed the viewport) */
+  .nav, .header-actions .btn{ display: none; }
+  .nav-toggle{ display: grid; }
+  .header-actions{ margin-left: auto; }
+}
+
+@media (max-width: 1080px){
+  .hero__inner, .page-hero__grid, .split{ grid-template-columns: 1fr; }
+  .hero__media{ aspect-ratio: 16 / 10; }
+  .trust-bar ul{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .trust-bar li:nth-child(odd){ padding-left: 0; border-left: 0; }
+  .trust-bar li:nth-child(n+3){ border-top: 1px solid var(--ink-3); }
+  .steps, .feature-grid, .feature-grid--4{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cta-band{ grid-template-columns: 1fr; gap: var(--s-8); }
+  .footer-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .kal-layout{ grid-template-columns: minmax(0, 1fr); }
+  .kal-panel{ position: static; }
+  .cart-layout{ grid-template-columns: 1fr; }
+  .cart-summary{ position: static; }
+  .section-head{ grid-template-columns: 1fr; align-items: start; margin-bottom: var(--s-10); }
+  .section-head > :last-child{ padding-bottom: 0; }
+}
+
+@media (max-width: 900px){
+  .grid--3, .grid--4{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .work-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .client-grid{ grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .svc-index{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  /* pending panel: icon + text stay paired, the action drops to its own row */
+  .kal-pending{ grid-template-columns: auto minmax(0, 1fr); }
+  .kal-pending .btn{ grid-column: 1 / -1; width: 100%; }
+  /* toolbar: label row first, chips and action underneath it */
+  .kal-bar__title{ flex: 1 0 100%; margin-right: 0; }
+  .kal-chips{ margin-right: auto; }
+  .kal-cta__inner{ display: block; }
+  .kal-cta .btn{ margin-top: var(--s-6); }
+}
+
+@media (max-width: 640px){
+  :root{
+    --header-h: 66px;
+    --section-y: clamp(56px, 13vw, 76px);
+  }
+  body{ padding-bottom: 80px; }        /* clears the sticky action bar */
+  .action-bar{ display: grid; }
+
+  h1{ font-size: clamp(33px, 9vw, 42px); }
+  h2{ font-size: clamp(27px, 7.4vw, 35px); }
+  .section-head h1{ font-size: clamp(27px, 7.4vw, 35px); }  /* keeps the h2 scale on phones */
+  h3{ font-size: var(--t-md); }
+
+  .brand img{ width: 36px; height: 36px; }
+  .brand__type b{ font-size: 17px; }
+  .brand__type span{ font-size: 12.5px; }
+  .header-phone{ padding: 9px 12px; }
+  .header-phone span{ display: none; }
+
+  .hero__inner{ padding-block: var(--s-10) var(--s-12); gap: var(--s-8); }
+  .hero h1{ margin: var(--s-4) 0 var(--s-5); }
+  .hero__actions{ margin-top: var(--s-8); }
+  .hero__actions .btn{ width: 100%; }
+  /* seasonal hero on phones: the stacked mockups pull their offsets in and
+     the format chips ride the shared horizontal-scroll chip row */
+  .kal-stack{ padding: 0 0 32px 22px; }
+  .kal-stack__aside{ width: 54%; }
+  .kal-hero__formats{ margin-top: var(--s-6); padding-top: var(--s-5); }
+  .svc-index{ grid-template-columns: 1fr; }
+  /* Product Page V2 on phones: facts stack, the identity header tightens */
+  .pp-facts{ grid-template-columns: 1fr; }
+  .pp-head{ margin-bottom: var(--s-5); }
+  /* mini-cart drawer on phones: near-full width, slightly tighter frame */
+  .cart-drawer__panel{ width: min(92vw, 400px); }
+  .cart-drawer__head, .cart-drawer__list, .cart-drawer__foot{ padding-inline: var(--s-5); }
+  .cart-drawer__added{ margin-inline: var(--s-5); }
+  /* cart lines on phones: image + text in the first row, controls underneath */
+  .cart-item{ grid-template-columns: auto minmax(0, 1fr); gap: var(--s-4); }
+  .cart-item__media{ width: 72px; height: 56px; }
+  .cart-item__side{
+    grid-column: 1 / -1;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    justify-items: start;
+    align-items: center;
+  }
+  .kal-buy__add{ flex-basis: 100%; }
+  /* phones keep the four strongest featured collections; the full set is one
+     tap away behind "Pogledajte sve kalendare 2027" */
+  .kal-featured .card--product:nth-child(n+5){ display: none; }
+  .kal-cta .btn{ width: 100%; }
+  /* the mockup gets more of the phone screen, the padding gives it less */
+  .card--product .card__media{ aspect-ratio: 16 / 10; padding: var(--s-4); }
+  /* Toolbar stays two short rows: title + count on the left with the inquiry
+     button on the right, then the chip strip underneath, scrolling sideways
+     instead of wrapping so the page itself never overflows. The strip keeps a
+     little vertical room so a focused chip's ring is not clipped. */
+  .kal-bar__inner{ gap: var(--s-3) var(--s-4); }
+  .kal-bar__title{ flex: 1 1 0%; flex-wrap: wrap; row-gap: 0; margin-right: auto; }
+  .kal-bar__inner > .btn{ flex: 0 0 auto; }
+  .kal-chips{
+    order: 3;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin-block: -6px;
+    padding-block: 6px;
+    overflow-x: auto;
+    scroll-padding-inline: var(--s-2);
+    scrollbar-width: none;
+  }
+  .kal-chips::-webkit-scrollbar{ display: none; }
+  .hero__facts{ gap: var(--s-3); margin-top: var(--s-8); padding-top: var(--s-5); }
+  .hero__facts li{ width: 100%; }
+  .hero__media{ aspect-ratio: 4 / 3; }
+  .hero__tag{ left: var(--s-3); bottom: var(--s-3); padding: 9px 13px; }
+
+  .trust-bar ul{ grid-template-columns: 1fr; }
+  .trust-bar li{ padding: var(--s-4) 0; }
+  .trust-bar li + li{ padding-left: 0; border-left: 0; border-top: 1px solid var(--ink-3); }
+
+  .grid--2, .grid--3, .grid--4{ grid-template-columns: 1fr; }
+  .work-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--s-6) var(--s-3); }
+  .work-grid--compact{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .work-card small{ margin-top: var(--s-3); font-size: 10px; }
+  .work-card h3{ font-size: var(--t-sm); }
+  .steps, .feature-grid, .form__grid{ grid-template-columns: 1fr; }
+  .steps{ gap: var(--s-6); }
+  .client-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .client-grid[data-collapsed="true"] li:nth-child(n+9){ display: none; }
+
+  .info-list > div{ grid-template-columns: 1fr; gap: 4px; }
+  .faq summary{ gap: var(--s-4); font-size: var(--t-base); }
+  .faq summary .icon{ width: 28px; height: 28px; }
+  .faq details > div{ padding-right: var(--s-5); }
+  .cta-band{ padding: var(--s-10) var(--s-6); }
+  .cta-band .btn-row{ min-width: 0; width: 100%; }
+  .section-foot{ margin-top: var(--s-10); }
+  .section-foot .btn{ width: 100%; }
+  .lightbox__caption{ flex-direction: column; align-items: flex-start; gap: 2px; }
+  .footer-grid{ grid-template-columns: 1fr; gap: var(--s-10); }
+  .kal-stage{ padding: var(--s-6) var(--s-4) var(--s-5); border-radius: var(--r-md); }
+  .kal-pieces{ gap: var(--s-2); }
+  .kal-nav{ width: 40px; height: 40px; top: auto; bottom: 8px; }
+  .kal-nav--prev{ left: 10px; }
+  .kal-nav--next{ right: 10px; }
+  .kal-piece__zoom{
+  position: absolute;
+  right: 10px; bottom: 10px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  color: var(--ink);
+  box-shadow: var(--e-1);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .22s var(--ease), transform .22s var(--ease);
+}
+.kal-piece__zoom .icon{ width: 17px; height: 17px; }
+.kal-piece__sheet:hover .kal-piece__zoom,
+.kal-piece__sheet:focus-visible .kal-piece__zoom{ opacity: 1; transform: none; }
+@media (hover: none){ .kal-piece__zoom{ opacity: 1; transform: none; } }
+
+.kal-piece figcaption{ margin-top: var(--s-3); font-size: 10px; letter-spacing: .06em; }
+  .kal-thumb{ width: 88px; }
+  .kal-spec > div{ grid-template-columns: 20px minmax(0,1fr); row-gap: 2px; }
+  .kal-spec dd{ grid-column: 2; text-align: left; }
+  .footer-legal{ gap: var(--s-2); }
+  .crop::before, .crop::after{ display: none; }
+}
+
+/* Category grids. Wall (/kalendari/4-lista/, six portrait cards) and desk
+   (/kalendari/stoni/, nine cards) share one rhythm: three across on desktop —
+   two and three complete rows respectively — then two across on tablets and
+   one on narrow phones. Scoped to the two modifiers; each format keeps its
+   own card media bed (3/4 for --wall, 16/11 for the desk mockups). */
+.kal-cat-grid.kal-cat-grid--wall,
+.kal-cat-grid.kal-cat-grid--desk{
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: clamp(18px, 2.2vw, 30px);
+}
+@media (max-width: 1099px){
+  .kal-cat-grid.kal-cat-grid--wall,
+  .kal-cat-grid.kal-cat-grid--desk{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 479px){
+  .kal-cat-grid.kal-cat-grid--desk{ grid-template-columns: 1fr; }
+  .kal-cat-grid.kal-cat-grid--wall{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+  .kal-cat-grid--wall .card--wall .card__body{ padding: 14px 14px 16px; }
+  .kal-cat-grid--wall .card--wall .card__body h3{ font-size: 17px; }
+  .kal-cat-grid--wall .card--wall .card__body .link-arrow{ padding-top: var(--s-3); }
+}
+/* the four related wall models on a wall product page: four across on
+   desktop, then 2+2 rather than 3+1, and one column on narrow phones */
+@media (max-width: 1200px){
+  .grid--4.kal-related--wall{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 479px){
+  .grid--4.kal-related--wall{ grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  [data-reveal]{ opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after{
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print{
+  .site-header, .action-bar, .drawer, .lightbox, .btn, .form{ display: none !important; }
+  body{ padding: 0; }
+  [data-reveal]{ opacity: 1; transform: none; }
+}
+
+/* == 18  Category search, theme filter and sorting (Batch 4) ============== */
+/* One compact form above the catalogue grid on /kalendari/stoni/ and
+   /kalendari/4-lista/, revealed by calendar-filters.js after it initialises
+   (it ships with the hidden attribute, so no dead controls without JS). The
+   fields mirror the inquiry form's controls: same border, radius, 16px text,
+   44px touch height. Search takes the most room; on phones everything stacks. */
+.kal-filter{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+  align-items: end;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+/* the form ships with the hidden attribute and calendar-filters.js reveals it after it initialises;
+   display:flex above would otherwise beat the browser's [hidden] rule, so keep it hidden explicitly */
+.kal-filter[hidden]{ display: none; }
+/* the two wrappers are grouping only; their children sit in the one flex row */
+.kal-filter__fields{ display: contents; }
+.kal-filter__foot{ display: contents; }
+.kal-filter__reset{ order: 1; }
+.kal-filter__status{ order: 2; flex: 1 0 100%; }
+.kal-filter .field{ flex: 1 1 200px; min-width: 0; }
+.kal-filter .kal-filter__search{ flex: 3 1 300px; }
+.kal-filter input[type="search"],
+.kal-filter select{
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.4;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.kal-filter select{
+  appearance: none;
+  padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23575D69' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+}
+.kal-filter input[type="search"]:focus,
+.kal-filter select:focus{
+  outline: none;
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(197,34,42,.12);
+}
+.kal-filter input::placeholder{ color: #9BA1AD; }
+.kal-filter .btn{ flex: 0 0 auto; min-height: 44px; padding-block: 10px; }
+.kal-filter__status{ margin: 0; color: var(--muted); font-size: var(--t-sm); }
+.kal-filter__empty{
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+  color: var(--muted);
+  line-height: 1.6;
+}
+.kal-filter__empty strong{ display: block; margin-bottom: var(--s-1); color: var(--ink); }
+/* a filtered-out card leaves the grid entirely (the .card rule sets display) */
+.kal-cat-grid > .card[hidden]{ display: none; }
+@media (max-width: 640px){
+  .kal-filter .field{ flex-basis: 100%; }
+}
+
+/* == 19  Category chips on narrow phones (Batch 6) =========================
+   Below 420px the four chips (about 354px) no longer fit the toolbar row, so
+   the strip wraps instead of scrolling sideways. Placed after the 640px rule so
+   its flex-wrap: nowrap / overflow-x: auto cannot win by source order. */
+@media (max-width: 420px){
+  .kal-chips{
+    flex-wrap: wrap;
+    gap: 6px;
+    overflow: visible;
+    margin-block: 0;
+    padding-block: 0;
+    scroll-padding-inline: 0;
+  }
+  .kal-chip{ padding: 7px 10px; }
+  /* five chips since the business category: the first chip shortens to "Svi" so the row still fits one line */
+  .kal-chip__long{ display: none; }
+}
+@media (max-width: 380px){
+  .kal-chips{ gap: 5px; }
+  .kal-chip{ padding: 7px 9px; }
+}
+
+/* == 20  Calendar inquiry: form before the contact panel (Batch 9) ========
+   The form-card now precedes the contact panel in the DOM, so single-column
+   screens (the .split breakpoint at 1080px) read and tab heading → form →
+   contact. Desktop keeps the approved two-column look by explicit placement. */
+@media (min-width: 1081px){
+  .kal-upit__split > .contact-panel{ grid-column: 1; grid-row: 1; }
+  .kal-upit__split > .form-card{ grid-column: 2; grid-row: 1; }
+}
+/* == 21  Homepage 2027 — hero V2, category cards, imprint callout, motion (Hero V2 batch) ==
+   Everything here is scoped to body.home-2027 or a .home-* block, so no other
+   page picks it up. The hero shows the three owner-approved seven-sheet covers
+   as separate, individually linked products on a white scene (the sources are
+   white-backed, so nothing reads as a tile); each is a cropped, resized
+   homepage-only derivative of the approved cover, never re-drawn. */
+.home-hero--v2{ background: #fff; }
+.home-hero--v2 .hero__inner{
+  grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+  align-items: center;
+  gap: clamp(16px, 2vw, 32px);
+  padding-block: clamp(28px, 3.6vw, 52px) clamp(32px, 4vw, 60px);
+}
+.home-hero__copy .kicker{ letter-spacing: .14em; }
+.home-hero--v2 h1{
+  margin: var(--s-4) 0 var(--s-5);
+  font-size: clamp(32px, 3.1vw, 44px);
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.home-hero--v2 .lede{ max-width: 46ch; }
+.home-hero--v2 .hero__actions{ margin-top: var(--s-7); }
+.home-hero__secondary{ padding-block: 15px; }
+
+/* the scene: three products on one shelf, centre one step larger */
+.home-hero__scene{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(10px, 1.3vw, 20px);
+  margin: 0;
+  padding: 6px 0 0;
+  list-style: none;
+}
+.home-hero__item{ min-width: 0; }
+.home-hero__product{
+  display: block;
+  border-radius: 6px;
+  outline-offset: 6px;
+}
+.home-hero__product img{
+  display: block;
+  width: 100%; height: auto;
+  aspect-ratio: 1850 / 2960;     /* the derivative's own ratio: space is reserved before the file arrives */
+  object-fit: contain;
+}
+.home-hero__product:focus-visible{ outline: 3px solid var(--crimson); outline-offset: 6px; }
+
+/* entrance: centre first, sides follow (≈110–120 ms apart); modest rise and a
+   very small scale; settles in about 1.05 s. The wrapper animates, the link
+   inside carries hover/focus transforms, so the two never fight.
+   Gated on REAL image readiness (Hero V2 corrections, 2026-09-16): the default
+   is the finished static arrangement — nothing is hidden without JavaScript,
+   under reduced motion, in old browsers or if the module fails. The inline head
+   snippet adds html.home-hero-wait only when motion is allowed; from then on a
+   wrapper stays hidden until home-motion.js marks it .is-in (its own entrance,
+   started only once its image has pixels; .is-staggered = the approved
+   centre → left → right group) or .is-shown (bounded fallback / failed image:
+   visible at once, no motion). The failsafe animation reveals every wrapper
+   after 3 s even if the script never runs, so nothing can stay hidden. */
+@keyframes home-hero-in{ from{ opacity: 0; transform: translateY(26px) scale(.965); } to{ opacity: 1; transform: none; } }
+@keyframes home-hero-failsafe{ from{ opacity: 0; } to{ opacity: 1; } }
+@keyframes home-rise{ from{ opacity: 0; transform: translateY(12px); } to{ opacity: 1; transform: none; } }
+html.home-hero-wait .home-hero__item{ animation: home-hero-failsafe .01s linear 3s both; }
+html.home-hero-wait .home-hero__item.is-in{ animation: home-hero-in .7s var(--ease-out) both; }
+html.home-hero-wait .home-hero__item--center.is-in.is-staggered{ animation-delay: .08s; }
+html.home-hero-wait .home-hero__item--left.is-in.is-staggered{ animation-delay: .2s; }
+html.home-hero-wait .home-hero__item--right.is-in.is-staggered{ animation-delay: .32s; }
+html.home-hero-wait .home-hero__item.is-shown{ animation: none; opacity: 1; transform: none; }
+.home-hero__copy > *{ animation: home-rise .35s var(--ease-out) both; }
+.home-hero__copy > :nth-child(2){ animation-delay: .04s; }
+.home-hero__copy > :nth-child(3){ animation-delay: .08s; }
+.home-hero__copy > :nth-child(4){ animation-delay: .12s; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference){
+  .home-hero__product{ transition: transform .28s var(--ease); }
+  .home-hero__product:hover, .home-hero__product:focus-visible{ transform: translateY(-4px); }
+}
+
+/* the three ways in: one square, contained media bed so a portrait wall
+   calendar and a landscape desk calendar sit at the same visual weight */
+.home-types .card__media{ aspect-ratio: 1 / 1; padding: clamp(14px, 1.6vw, 22px); }
+.home-types .card__media img{ padding: 0; }
+.home-types .card__body h3{ font-size: clamp(var(--t-lg), 1.6vw, var(--t-xl)); }
+
+/* imprint callout: an HTML outline drawn over the blank lower panel of one
+   approved B3 mockup — the artwork file itself is untouched and no text sits
+   on the printed sheet; the label lives in the caption below the frame */
+/* two faithful imprint examples (approved originals + Demo Group imprint composed on the print panel):
+   a restrained pair on desktop — the portrait wall model beside the landscape desk model, heights matched by the
+   1:2 column split (2:3 and 4:3 frames end at the same height) — and a clean stack on phones. No overlay, no motion. */
+.home-imprint__pair{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(20px, 2.6vw, 32px); align-items: end; }
+.home-imprint{ margin: 0; }
+.home-imprint__frame img{ display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; }
+.home-imprint--wall .home-imprint__frame img{ aspect-ratio: 2 / 3; }
+.home-imprint--desk .home-imprint__frame img{ aspect-ratio: 4 / 3; }
+.home-imprint figcaption{ margin-top: var(--s-3); color: var(--ink); font-size: var(--t-sm); font-weight: 600; }
+.home-imprint__note{ margin: var(--s-5) 0 0; color: var(--muted); font-size: var(--t-xs); }
+#logotip .section-foot{ margin-top: clamp(28px, 3.4vw, 40px); }
+@media (max-width: 900px){
+  .home-imprint__pair{ grid-template-columns: 1fr; gap: var(--s-8); }
+  .home-imprint--wall .home-imprint__frame{ max-width: 360px; }
+}
+/* type cards: one quiet link to the hub comparison */
+.home-types__compare{ margin: var(--s-6) 0 0; font-size: var(--t-sm); }
+/* inquiry forms: preparation help beside the optional attachment */
+.form__note--priprema{ color: var(--ink); font-size: var(--t-sm); line-height: 1.55; }
+/* hub comparison: a compact semantic table on desktop, labelled rows on phones (no horizontal scroll) */
+.kal-compare-section .section-head{ margin-bottom: clamp(20px, 2.6vw, 32px); }
+.kal-compare{ width: 100%; border-collapse: collapse; font-size: var(--t-sm); line-height: 1.5; }
+.kal-compare th, .kal-compare td{ padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.kal-compare thead th{ color: var(--muted); font: 700 var(--t-xs)/1.3 var(--font-body); letter-spacing: .08em; text-transform: uppercase; border-bottom: 2px solid var(--ink); }
+.kal-compare tbody th{ font: 700 var(--t-base)/1.35 var(--font-display); letter-spacing: -.015em; white-space: nowrap; }
+.kal-compare td a{ color: var(--crimson); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.kal-compare td a:focus-visible{ outline: 2px solid var(--crimson); outline-offset: 2px; }
+@media (max-width: 760px){
+  .kal-compare thead{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .kal-compare, .kal-compare tbody, .kal-compare tr, .kal-compare th, .kal-compare td{ display: block; }
+  .kal-compare tr{ padding: var(--s-4) 0 var(--s-5); border-bottom: 1px solid var(--line); }
+  .kal-compare tbody th{ padding: 0 0 var(--s-2); border: 0; white-space: normal; }
+  .kal-compare td{ display: grid; grid-template-columns: minmax(0, 11ch) minmax(0, 1fr); gap: var(--s-3); padding: 5px 0; border: 0; }
+  .kal-compare td::before{ content: attr(data-label); color: var(--muted); font-size: var(--t-xs); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding-top: 2px; }
+}
+
+/* three steps to an offer: the existing .steps device, three across */
+.home-steps .steps{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+.home-steps .section-foot{ margin-top: clamp(32px, 4vw, 48px); }
+
+/* below-fold sections: visible by default. home-motion.js marks only the
+   sections that start below the fold as pending (hidden while <html> carries
+   home-motion) and gives each a single short rise when it enters view. */
+html.home-motion [data-home-reveal].is-pending{ opacity: 0; transform: translateY(12px); }
+html.home-motion [data-home-reveal].is-in{ animation: home-rise .45s var(--ease-out) both; }
+
+/* cards lift a touch on hover-capable pointers only; keyboard focus is shown
+   by the ring and never depends on movement */
+@media (hover: hover) and (prefers-reduced-motion: no-preference){
+  body.home-2027 a.card{ transition: border-color .28s var(--ease), box-shadow .28s var(--ease), transform .28s var(--ease); }
+  body.home-2027 a.card:hover{ transform: translateY(-3px); box-shadow: var(--e-2); }
+}
+body.home-2027 a.card:focus-visible{ outline: 3px solid var(--crimson); outline-offset: 4px; }
+
+@media (max-width: 1200px){
+  .home-hero--v2 .hero__inner{ grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); }
+}
+@media (max-width: 1080px){
+  .home-hero--v2 .hero__inner{ grid-template-columns: 1fr; gap: clamp(20px, 3vw, 32px); padding-block: clamp(24px, 3vw, 40px) clamp(28px, 3.5vw, 44px); }
+  .home-hero__scene{ max-width: 720px; margin-inline: auto; }
+  .home-steps .steps{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 640px){
+  /* phones: heading, copy, one prominent CTA, a compact secondary action,
+     then the three products high in the first screen */
+  .home-hero--v2 .hero__inner{ padding-block: 18px 26px; gap: 16px; }
+  .home-hero--v2 h1{ margin: 10px 0 12px; font-size: clamp(29px, 8.2vw, 36px); }
+  .home-hero--v2 .lede{ font-size: var(--t-base); }
+  .home-hero--v2 .hero__actions{ margin-top: 16px; gap: 10px 14px; align-items: center; }
+  .home-hero--v2 .hero__actions .btn--accent{ width: 100%; }
+  .home-hero--v2 .hero__actions .home-hero__secondary{ width: auto; min-height: 44px; padding: 10px 18px; font-size: var(--t-sm); }
+  .home-hero__scene{ gap: 10px; padding-top: 2px; }
+  html.home-hero-wait .home-hero__item.is-in{ animation-duration: .55s; }
+  html.home-hero-wait .home-hero__item--left.is-in.is-staggered{ animation-delay: .16s; }
+  html.home-hero-wait .home-hero__item--right.is-in.is-staggered{ animation-delay: .26s; }
+  html.home-motion [data-home-reveal].is-pending{ transform: translateY(8px); }
+  .home-steps .steps{ grid-template-columns: 1fr; }
+  .home-imprint--wall .home-imprint__frame{ max-width: 320px; }   /* the portrait example only; the desk example spans the column */
+}
+@media (prefers-reduced-motion: reduce){
+  .home-hero__copy > *, .home-hero__item, html.home-motion [data-home-reveal].is-in{ animation: none; }
+  /* a live switch to reduced motion shows the gated wrappers at once, mid-sequence or not */
+  html.home-hero-wait .home-hero__item, html.home-hero-wait .home-hero__item.is-in{ animation: none; opacity: 1; transform: none; }
+  html.home-motion [data-home-reveal].is-pending{ opacity: 1; transform: none; }
+  .home-hero__product, .home-hero__product:hover{ transition: none; transform: none; }
+}
+
+
+/* == 22  Calendar product page V3 — tighter top, bounded stage, clearer selection and decision panel ==
+   Scoped to .kal-pp-section / .pp-head--v3 / .kal-layout--v3 / .kal-panel--v3 on the 28
+   calendar product pages. The gallery DOM contract, --shot-ar, layers, zoom sources
+   and calendar.js are untouched: only the display box is sized. */
+.kal-pp-section{ padding-block: clamp(20px, 2.6vw, 36px) clamp(44px, 5vw, 72px); }
+.kal-pp-section .breadcrumb{ margin-bottom: var(--s-4); }
+.pp-head--v3{ margin: 0 0 clamp(14px, 1.6vw, 22px); }
+.pp-head--v3 h1{ margin-top: 6px; font-size: clamp(var(--t-2xl), 2.9vw, 42px); }
+.pp-head--v3 .pp-head__meta{ margin-top: 6px; font-size: var(--t-sm); }
+
+/* one white surface: stage and strip belong together */
+.kal-layout--v3 .kal-stage{
+  padding: clamp(14px, 1.6vw, 22px) clamp(14px, 1.6vw, 22px) clamp(12px, 1.4vw, 18px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #fff;
+  box-shadow: var(--e-1);
+}
+.kal-layout--v3 .kal-stage--shot{ background: #fff; }
+.kal-layout--v3 .kal-thumbs{ margin-top: var(--s-3); padding: 4px 4px var(--s-3); }
+/* B3 portrait scenes (18 seven- and four-sheet pages): a bounded stage (≈ 530 px
+   tall at 1440×900, calendar + hanger + imprint panel in the first screen) in a
+   BALANCED two-column row — the row is capped instead of letting the decision
+   panel swallow the rest of the 1300 px wide container (Hero V2 corrections,
+   2026-09-16). Above 1080 px the whole product block (breadcrumb, title, row,
+   description, specification table) shares the same narrower, centred column,
+   so the title and the details stay aligned with the row; browsers without
+   :has() keep the capped row left-aligned under the title. Phones (single
+   column), desk-calendar pages and every native scene ratio are untouched. */
+.kal-layout--v3.kal-layout--portrait{
+  --pp-row: 980px;
+  --pp-stage: 400px;
+  grid-template-columns: minmax(0, var(--pp-stage)) minmax(0, 1fr);
+  gap: clamp(28px, 3.6vw, 52px);
+  max-width: var(--pp-row);
+}
+.kal-layout--v3.kal-layout--portrait .kal-stage,
+.kal-layout--v3.kal-layout--portrait .kal-thumbs{ max-width: var(--pp-stage); }
+@media (min-width: 1081px){
+  .kal-pp-section:has(.kal-layout--v3.kal-layout--portrait) > .wrap{ max-width: calc(980px + 2 * clamp(20px, 3.4vw, 48px)); }
+}
+/* current sheet: brand-tinted label pill; selected thumbnail: outline + tint */
+.kal-layout--v3 .kal-stage__now{
+  width: max-content; max-width: 100%;
+  margin: var(--s-3) auto 0;
+  padding: 6px 14px;
+  border: 1px solid rgba(197,34,42,.22);
+  border-radius: 999px;
+  background: var(--crimson-tint);
+  color: var(--crimson-dk);
+  font-size: var(--t-sm);
+}
+.kal-layout--v3 .kal-thumb__img{ padding: 4px; }
+.kal-layout--v3 .kal-thumb[aria-selected="true"] .kal-thumb__img{
+  border-color: var(--crimson);
+  background: var(--crimson-tint);
+  box-shadow: 0 0 0 3px rgba(197,34,42,.18);
+}
+.kal-layout--v3 .kal-thumb[aria-selected="true"]{ color: var(--crimson-dk); }
+.kal-layout--v3 .kal-thumb:focus-visible{ outline: 3px solid var(--crimson); outline-offset: 2px; border-radius: var(--r-sm); }
+/* zoom control discoverable at rest: pill with a visible caption, ≥ 44 px */
+.kal-layout--v3 .kal-shot__zoom{
+  right: 8px; bottom: 8px;
+  width: auto; min-width: 44px; height: 44px;
+  padding: 0 14px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.96);
+  box-shadow: var(--e-1);
+  font: 600 13px/1 var(--font-body);
+  opacity: 1; transform: none;
+}
+.kal-layout--v3 .kal-shot__zoom::after{ content: "Uvećaj"; margin-left: 8px; }
+.kal-layout--v3 .kal-shot__zoom:hover, .kal-layout--v3 .kal-shot__zoom:focus-visible{ border-color: var(--crimson); color: var(--crimson-dk); }
+.kal-layout--v3 .kal-nav{ background: rgba(255,255,255,.96); border: 1px solid var(--line); box-shadow: var(--e-1); }
+
+/* decision panel */
+.kal-panel--v3{ border-top: 3px solid var(--crimson); box-shadow: var(--e-1); }
+.kal-panel__title{ margin: 0 0 var(--s-2); font-size: var(--t-lg); letter-spacing: -.02em; }
+.kal-panel__lead{ margin: 0 0 var(--s-4); color: var(--muted); font-size: var(--t-base); line-height: 1.6; }
+.kal-facts{
+  display: grid; gap: 10px;
+  margin: 0 0 var(--s-4); padding: var(--s-4) 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  list-style: none;
+}
+.kal-facts li{ display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 12px; align-items: center; }
+.kal-facts .icon{ width: 20px; height: 20px; color: var(--crimson); }
+.kal-facts small{ display: block; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.kal-facts b{ display: block; font-size: var(--t-sm); font-weight: 600; letter-spacing: -.005em; }
+.kal-panel__code{ margin: 0; color: var(--muted); font-size: var(--t-sm); }
+.kal-panel__code b{ color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.kal-panel--v3 .kal-buy + .kal-facts, .kal-panel--v3 .kal-avail + .kal-facts{ margin-top: var(--s-5); }
+.kal-panel--v3 .kal-b2b__note{ margin-top: var(--s-4); }
+.kal-panel--v3 .kal-panel__actions{ margin-top: var(--s-5); }
+/* one short entrance for the top presentation; content is visible without it */
+@keyframes pp-in{ from{ opacity: 0; transform: translateY(8px); } to{ opacity: 1; transform: none; } }
+.pp-head--v3, .kal-layout--v3 > div:first-child{ animation: pp-in .4s var(--ease-out) both; }
+.kal-layout--v3 .kal-panel--v3{ animation: pp-in .4s var(--ease-out) .08s both; }
+@media (max-width: 1080px){
+  .kal-layout--v3.kal-layout--portrait{ grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px){
+  .kal-layout--v3.kal-layout--portrait .kal-stage, .kal-layout--v3.kal-layout--portrait .kal-thumbs{ max-width: none; }
+  /* the "Uvećaj" control keeps its 44 × 44 px minimum on phones too (the former
+     40 px override contradicted the requested target size and was removed) */
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-head--v3, .kal-layout--v3 > div:first-child, .kal-layout--v3 .kal-panel--v3{ animation: none; }
+}
+
+/* == 23  Bele pozadine i završne UX dorade (2026-09-20) ==
+   Homepage benefit strip (three items), compact category intro and the
+   collapsible mobile "Filteri" group, product-page inquiry model line. */
+.trust-bar--3 ul{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+@media (max-width: 900px){
+  .trust-bar--3 ul{ grid-template-columns: 1fr; }
+  .trust-bar--3 li{ padding-left: 0; border-left: 0; }
+  .trust-bar--3 li + li{ border-top: 1px solid var(--ink-3); }
+}
+/* product inquiry: the chosen model replaces the all-services dropdown */
+.kal-form__model-value{ margin: 0; padding: 11px 14px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--paper-2); color: var(--ink); font-size: var(--t-sm); line-height: 1.45; }
+.kal-form__model-value b{ font-weight: 700; }
+/* category filters: desktop keeps every control in one row; the toggle exists only on small screens */
+.kal-filter__toggle{ display: none; }
+.kal-filter__more{ display: contents; }
+@media (max-width: 640px){
+  /* phones: one H1, breadcrumb kept, decorative kicker and the toolbar's repeated title dropped;
+     the model count and the category chips stay */
+  .kal-cat-hero{ padding-block: 16px 14px; }
+  .kal-cat-hero .breadcrumb{ margin-bottom: 10px; }
+  .kal-cat-hero .kicker{ display: none; }
+  .kal-cat-hero h1{ margin-bottom: 6px; font-size: min(var(--t-2xl), 8.2vw); }   /* one line for "Kalendari 4 lista 2027." down to 360px */
+  .kal-cat-hero .lede{ font-size: var(--t-base); line-height: 1.45; }
+  .kal-bar__inner{ padding-block: 8px; }
+  .kal-bar__title strong{ display: none; }
+  .kal-bar__count{ color: var(--ink-2); font-weight: 600; }
+  .kal-bar__inner > .btn{ display: none; }            /* the sticky contact bar already offers the inquiry on phones */
+  /* filter: search + Filteri on one line, folded theme/sorting, then result count with reset beside it */
+  .kal-filter{ gap: 10px; margin-bottom: 14px; }
+  .kal-filter .kal-filter__search{ flex: 1 1 0; }
+  .kal-filter__foot{ display: flex; flex: 1 0 100%; gap: 10px; align-items: center; justify-content: space-between; }
+  .kal-filter__reset{ order: 0; flex: 0 0 auto; }
+  .kal-filter__status{ order: 0; flex: 1 1 auto; }
+  /* the search label stays for assistive tech; on phones the placeholder carries it visually */
+  .kal-filter__search > span{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+  /* inside a category grid the card's type kicker repeats the page; the name leads */
+  .kal-cat-section .kal-cat-grid .card__body small{ display: none; }
+  .kal-cat-grid .card--product .card__media{ padding: 10px; }
+  .kal-filter__toggle{
+    display: inline-flex; align-items: center; gap: 8px;
+    flex: 0 0 auto; align-self: end; min-height: 44px; padding: 10px 14px;
+    border: 1px solid var(--line-2); border-radius: var(--r-sm);
+    background: #fff; color: var(--ink);
+    font: 600 var(--t-sm)/1.2 var(--font-body); cursor: pointer;
+  }
+  .kal-filter__toggle .icon{ width: 18px; height: 18px; }
+  .kal-filter__toggle[aria-expanded="true"]{ border-color: var(--crimson); color: var(--crimson-dk); }
+  .kal-filter__toggle b{ display: none; min-width: 20px; padding: 2px 6px; border-radius: 999px; background: var(--crimson); color: #fff; font-size: 11px; line-height: 1.3; text-align: center; }
+  .kal-filter__toggle:not([data-active="0"]) b{ display: inline-block; }
+  .kal-filter__more{ display: flex; flex-wrap: wrap; gap: 10px; flex: 1 0 100%; }
+  .kal-filter__more[hidden]{ display: none; }
+  .kal-filter__more .field{ flex: 1 1 140px; }
+  .section--tight.kal-cat-section{ padding-top: 14px; }
+}
+
+/* == 25  Trodelni kalendari — dorade (2026-09-21, veče) ====================
+   (1) First category chip reads "Svikalendari": .kal-chip is inline-flex, so
+   "Svi" and the span become two flex items and the span's leading space is
+   dropped as leading white space. A word-space margin on the long part
+   restores it; ≤ 420 px the span is display:none, so no stray gap on phones.
+   (2) Business category: four models as 2 + 2 (triptychs first row, 12-sheet
+   models second, SKU order kept). The grid is capped so each card keeps about
+   the width of a three-across card instead of stretching over the container;
+   below 1100 px the shared wall grid is already two columns and the cap only
+   keeps the row from growing wider than 780 px. Other categories untouched. */
+.kal-chip__long{ margin-inline-start: .28em; }
+.kal-cat-grid.kal-cat-grid--wall.kal-cat-grid--poslovni{ max-width: 780px; margin-inline: auto; }
+@media (min-width: 1100px){
+  .kal-cat-grid.kal-cat-grid--wall.kal-cat-grid--poslovni{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+/* == 26  Kupovni tok — fioka sa četiri grupe kalendara (2026-09-21, noć) ====
+   The mobile drawer's calendar section is four native <details> subgroups
+   (7 lista, 4 lista, Stoni, Poslovni). The <summary> only toggles; the
+   category page is a separate, clearly labelled first link inside the group.
+   Same type scale and spacing as the existing drawer rows; the chevron
+   mirrors the top-level group. Keyboard: summary is natively focusable and
+   toggles with Enter/Space; the drawer's focus trap already lists summary. */
+.drawer__subgroup{ border-top: 1px solid var(--line); }
+.drawer__subgroup > summary{
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  min-height: 50px; padding: 12px 14px;
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-family: var(--font-display); font-weight: 700; font-size: var(--t-sm); letter-spacing: -.01em;
+  cursor: pointer; list-style: none;
+}
+.drawer__subgroup > summary::-webkit-details-marker{ display: none; }
+.drawer__subgroup > summary:hover{ background: var(--paper-2); }
+.drawer__subgroup > summary:focus-visible{ outline: 3px solid var(--crimson); outline-offset: -3px; }
+.drawer__subgroup > summary .icon{ flex: 0 0 auto; width: 18px; height: 18px; color: var(--crimson); transition: transform .22s var(--ease); }
+.drawer__subgroup[open] > summary .icon{ transform: rotate(180deg); }
+.drawer__subsub{ padding: 0 0 var(--s-3) 10px; }
+.drawer__sub .drawer__subsub a.drawer__cat{ display: flex; align-items: center; gap: 8px; margin-top: 0; color: var(--crimson); }
+.drawer__sub .drawer__subsub a.drawer__cat .icon{ width: 16px; height: 16px; }
+@media (prefers-reduced-motion: reduce){ .drawer__subgroup > summary .icon{ transition: none; } }
+
+/* == 27  Katalog svih kalendara /kalendari/ (2026-09-21, noć) ===============
+   One grid mixes portrait wall mockups (2:3), desk mockups (4:3) and business
+   sheets (3:4). A square, contained media bed keeps every row level and every
+   calendar complete (object-fit: contain; nothing cropped or stretched). The
+   type label under the image stays visible on phones too — four collections
+   share the name "Priroda 2027" and only the label tells them apart. */
+.kal-cat-grid--all .card--product .card__media,
+.kal-cat-grid--all .card--product.card--wall .card__media{ aspect-ratio: 1 / 1; padding: clamp(8px, 1vw, 14px); }
+.kal-cat-section .kal-cat-grid--all .card__body small{ display: block; }
+@media (max-width: 640px){
+  .kal-cat-section .kal-cat-grid--all .card__body small{ display: block; font-size: 10px; letter-spacing: .06em; }
+}
+
+/* == 28  Katalog 2027, nazivi po katalogu, korpa i dorade (2026-09-23) =======
+   (1) DemoShop directly after the seasonal menu: ONE link with two lines
+       (name + descriptor), same type scale as the other items, no fill.
+   (2) Catalog PDF block beside the /kalendari/ title (row on desktop, stacked
+       on phones); the same links live in the calendar menu foot, the drawer
+       and under the home type cards.
+   (3) Compact desktop top of the all-calendar page: shorter hero, the filter
+       status sits in the control row, tighter gaps — cards are unchanged.
+   (4) Small functional text raised to ≥ 11.5 px, bottom action bar 12 px,
+       consent box 22 px inside a ≥ 44 px label, breadcrumb links padded.
+   (5) Service pages: the inquiry form precedes the contact panel in DOM order;
+       desktop keeps the panel on the left by explicit grid placement.
+   (6) Cart: line items with SKU/variant, quantity messages, summary rows,
+       order form notes and states. */
+.nav > a.nav__shop{ flex-direction: column; align-items: flex-start; gap: 1px; padding: 6px 13px; line-height: 1.15; }
+.nav__shop-name{ font-weight: 600; }
+.nav__shop-sub{ font-size: 11.5px; font-weight: 500; letter-spacing: .01em; color: var(--muted); }
+.nav > a.nav__shop:hover .nav__shop-sub{ color: var(--crimson); }
+.drawer__sub a.drawer__pdf{ display: flex; align-items: center; gap: 8px; }
+.drawer__sub a.drawer__pdf .icon{ flex: 0 0 auto; width: 16px; height: 16px; }
+
+.kal-cat-hero__row{ display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-6) var(--s-8); }
+.kal-cat-hero__copy{ flex: 1 1 auto; min-width: 0; }
+.kal-cat-hero--hub .lede{ margin-bottom: 0; }
+.kal-pdf{
+  display: grid; grid-template-columns: auto minmax(0,1fr); column-gap: var(--s-4); row-gap: var(--s-3); align-items: center;
+  flex: 0 0 auto; max-width: 440px; padding: var(--s-4) var(--s-5);
+  border: 1px solid var(--line); border-radius: var(--r-md); background: var(--paper-2);
+}
+.kal-pdf__icon{ grid-row: 1 / span 2; width: 30px; height: 30px; color: var(--crimson); }
+.kal-pdf__body{ display: grid; gap: 2px; }
+.kal-pdf__body strong{ font: 800 var(--t-base)/1.25 var(--font-display); letter-spacing: -.01em; color: var(--ink); }
+.kal-pdf__body span{ color: var(--muted); font-size: var(--t-xs); line-height: 1.4; }
+.kal-pdf__actions{ grid-column: 2; display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.home-types__links{ display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); }
+@media (max-width: 900px){
+  .kal-cat-hero__row{ flex-direction: column; align-items: stretch; }
+  .kal-pdf{ max-width: none; }
+}
+@media (min-width: 641px){
+  .kal-cat-hero--hub{ padding-block: 20px 18px; }
+  .kal-cat-hero--hub .breadcrumb{ margin-bottom: var(--s-3); }
+  .kal-cat-hero--hub h1{ margin-bottom: 6px; font-size: clamp(var(--t-2xl), 3vw, var(--t-3xl)); }
+  .kal-cat-hero--hub .lede{ font-size: var(--t-base); }
+  .kal-cat-section.section--tight{ padding-top: 22px; }
+  .kal-cat-section .kal-filter{ margin-bottom: 20px; }
+  .kal-cat-section .kal-filter__status{ flex: 1 1 150px; order: 2; min-width: 0; padding-bottom: 12px; }   /* basis measured so the status shares the control row at 1240 px wrap */
+  .kal-cat-section .kal-filter .kal-filter__search{ flex: 2 1 240px; }
+}
+@media (max-width: 640px){
+  .kal-cat-hero--hub .lede{ display: none; }                /* the PDF block and the count line say it */
+  .kal-pdf{ padding: var(--s-3) var(--s-4); }
+  .kal-pdf__actions .btn{ flex: 1 1 auto; justify-content: center; }
+  .kal-cat-section .kal-cat-grid--all .card__body small{ font-size: 11.5px; }
+  .work-card small{ font-size: 11.5px; }
+}
+.kal-piece figcaption{ font-size: 11.5px; }
+.action-bar a{ font-size: 12px; }
+.consent{ grid-template-columns: 22px minmax(0,1fr); min-height: 44px; }
+.consent input{ width: 22px; height: 22px; margin-top: 0; }
+.breadcrumb a{ display: inline-block; padding: 5px 0; margin: -5px 0; }
+@media (min-width: 1081px){
+  .split--start > .contact-panel{ grid-column: 1; grid-row: 1; }
+  .split--start > .form-card{ grid-column: 2; grid-row: 1; }
+}
+
+/* -- 28b  Korpa: stavke sa šifrom i porodicom, poruke o količini, pregled porudžbine, stanja slanja -- */
+.cart-item__meta{ margin: 3px 0 0; color: var(--muted); font-size: var(--t-xs); line-height: 1.45; }
+.cart-item__msgs:empty{ display: none; }
+.cart-item__inquiry, .cart-line__inquiry{
+  display: inline-block; margin-top: 6px;
+  color: var(--crimson); font-size: var(--t-xs); font-weight: 700;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.cart-item__subtotal{ display: grid; justify-items: end; gap: 3px; }
+.cart-item__subtotal small{ font: 600 10.5px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.cart-summary__row--muted b{ font-weight: 600; color: var(--muted); }
+.cart-summary__pay{
+  margin: var(--s-4) 0 0; padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: #fff;
+  color: var(--muted); font-size: var(--t-xs); line-height: 1.55;
+}
+.cart-summary__pay b{ color: var(--ink); }
+.cart-summary__go{ margin-top: var(--s-4); }
+.cart-summary__back{
+  display: block; margin-top: var(--s-3); text-align: center;
+  color: var(--muted); font-size: var(--t-sm); font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.cart-summary__back:hover{ color: var(--crimson); }
+.cart-summary__ask{ margin: var(--s-4) 0 0; color: var(--muted); font-size: var(--t-xs); line-height: 1.5; }
+.cart-summary__ask a{ color: var(--crimson); text-decoration: underline; text-underline-offset: 2px; }
+.cart-drawer__note{ margin: 0 0 var(--s-2); color: var(--muted); font-size: var(--t-xs); line-height: 1.45; }
+.kal-buy__price small{ margin-left: 6px; font: 500 var(--t-xs)/1 var(--font-body); color: var(--muted); }
+.consent--option{ margin-bottom: var(--s-4); }
+.form__status--error{ color: var(--crimson-dk); font-weight: 600; }
+.order-success__preview[hidden]{ display: none; }
+.order-success .btn-row{ justify-content: center; margin-top: var(--s-5); }
+@media (max-width: 640px){
+  .cart-item__side{ grid-template-columns: auto minmax(0,1fr) auto; column-gap: var(--s-3); }
+  .cart-item__subtotal{ justify-items: end; }
+}
+
+/* -- 28c  Zaglavlje: dvolinijski DemoShop traži ≈ 34 px više od stare stavke; nav padding 13 → 11 px, telefonski
+   broj ustupa mesto ikoni do 1439 px (kao ranije 1201–1360), a ispod 1280 px meni ide u fioku (ranije 1200) -- */
+.nav > a, .nav__trigger{ padding-inline: 11px; }
+.nav > a::after, .nav__trigger::after{ left: 11px; right: 11px; }
+.nav > a.nav__shop{ padding: 6px 10px; }
+@media (min-width: 1201px) and (max-width: 1439px){ .header-phone span{ display: none; } }
+@media (min-width: 1201px) and (max-width: 1279px){
+  .nav, .header-actions .btn{ display: none; }
+  .nav-toggle{ display: grid; }
+  .header-actions{ margin-left: auto; }
+}
+
+/* == 29  Nezavisni pregled v8 — korpa (R1–R3) i kompaktan vrh na telefonu (R4) (2026-09-24) ======
+   (1) Cart while a request is pending: every cart control is disabled (calendar-cart.js) and the
+       layout is dimmed; lines that were not part of the sent order stay visible under the confirmation.
+   (2) /kalendari/ on phones: the PDF block collapses to one compact row — icon, the title as the
+       main link (new tab), "38 strana · 9,1 MB" and a small "Preuzmite PDF" link — so the first two
+       wall cards show their names above the sticky action bar at 390 × 844 and 360 × 740. Desktop is
+       unchanged (two buttons); the mobile-only links are display:none there and vice versa, so a
+       screen reader never meets the same target twice in one block.
+   (3) Cart page: shorter intro and a smaller gap before the first line item on phones. */
+.kal-pdf__title-link, .kal-pdf__dl{ display: none; }
+.kal-pdf__body strong > span{ font: inherit; color: inherit; }
+.kal-pdf__line{ display: flex; flex-wrap: wrap; gap: 0 10px; align-items: baseline; }
+.cart-layout--sending{ opacity: .72; transition: opacity .2s; }
+.cart-layout--sending .qty__btn:disabled, .cart-layout--sending .cart-item__remove:disabled,
+.cart-layout--sending .cart-clear__btn:disabled{ cursor: progress; }
+@media (max-width: 640px){
+  .kal-pdf{ grid-template-columns: auto minmax(0,1fr); column-gap: 10px; row-gap: 0; padding: 9px 12px; }
+  .kal-pdf__icon{ width: 24px; height: 24px; }
+  .kal-pdf__title-text, .kal-pdf__actions, .kal-pdf__more{ display: none; }
+  .kal-pdf__body{ gap: 1px; }
+  .kal-pdf__body strong{ font-size: var(--t-sm); }
+  .kal-pdf__title-link{ display: inline-block; padding: 4px 0; margin: -4px 0; color: var(--ink); text-decoration: none; }
+  .kal-pdf__title-link:hover, .kal-pdf__title-link:focus-visible{ color: var(--crimson); text-decoration: underline; text-underline-offset: 3px; }
+  .kal-pdf__dl{ display: inline-block; padding: 7px 0; margin: -7px 0; color: var(--crimson); font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  [data-cart-page] .section-head{ margin-bottom: var(--s-5); }
+}
+/* 29b  phones, /kalendari/: the hero → PDF gap and the card body top are tightened, and while nothing
+   narrows the catalogue the "Prikazano: 32 od 32 / Poništi filtere" row folds — the count is already in the
+   bar and a reset has nothing to reset. The status stays a live region (visually hidden), the reset button
+   returns as soon as a chip, search, theme, format or sorting is active. Measured: at 360 × 740 the second
+   wall card's name would otherwise end 52 px below the sticky action bar. */
+@media (max-width: 640px){
+  .kal-cat-hero__row{ gap: 12px; }
+  .kal-cat-grid--all .card--product .card__body{ padding-top: 10px; }
+  .kal-filter[data-kal-state="default"] .kal-filter__foot{ display: contents; }
+  .kal-filter[data-kal-state="default"] .kal-filter__reset{ display: none; }
+  .kal-filter[data-kal-state="default"] .kal-filter__status{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+}
+/* 29c  the cart notice receives focus when a submission is stopped (calendar-cart.js revealNotice) */
+.cart-notice:focus{ outline: 2px solid var(--crimson); outline-offset: 4px; }
+.cart-notice:focus:not(:focus-visible){ outline: none; }
+
+/* == 30  Odobrene cene (EUR bez PDV-a), poručivanje uz potvrdu, cenovnik PDF (2026-09-24) ================
+   Price basis next to every amount; the confirmation sentence under the product price; card price with
+   its basis; the hub PDF row now carries two download links (catalogue, price list) on phones. */
+.kal-buy__basis{ margin: 6px 0 0; color: var(--muted); font-size: var(--t-xs); line-height: 1.45; }
+.card-price small{ font: 500 11.5px/1 var(--font-body); color: var(--muted); margin-left: 4px; }
+.kal-avail--ok .kal-avail__note{ margin-top: 4px; }
+@media (max-width: 640px){
+  .kal-pdf__line{ row-gap: 2px; }
+}
+/* 30b  phones: the size line of the PDF block stays for assistive tech only, so the two download links share one row
+   and the block keeps its 2026-09-24 height budget (second wall card name above the sticky bar at 360 × 740) */
+@media (max-width: 640px){
+  .kal-pdf #kal-pdf-desc{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .kal-pdf__line{ gap: 0 14px; }
+}
+
+/* == 31  Odobrene UX dopune pre objave (2026-09-24, veče) ==========================================
+   (1) Cart thumbnails show the WHOLE approved calendar image (portrait card 2:3, landscape desk mockups)
+       — a 3:4 white box with contain sizing, never a crop; the image is a link to the product page.
+   (2) "Nazad na izbor kalendara": discreet arrow link above the product heading (calendar-back.js
+       retargets it to the originating listing with its filters and position).
+   (3) The confirmation sentence appears once on a product page (availability panel only). */
+.cart-item__media{ width: 84px; height: 112px; padding: 0; }
+.cart-item__media img{ box-sizing: border-box; width: 100%; height: 100%; object-fit: contain; object-position: center; padding: 3px; display: block; }
+a.cart-item__media{ text-decoration: none; }
+a.cart-item__media:focus-visible{ outline: 2px solid var(--crimson); outline-offset: 2px; }
+.cart-line__media{ width: 60px; height: 80px; }
+.cart-line__media img{ box-sizing: border-box; width: 100%; height: 100%; object-fit: contain; object-position: center; padding: 2px; display: block; }
+a.cart-line__media:focus-visible{ outline: 2px solid var(--crimson); outline-offset: 2px; }
+.kal-back{
+  display: inline-flex; align-items: center; gap: 6px; margin: 0 0 10px;
+  color: var(--muted); font-size: var(--t-sm); font-weight: 600; text-decoration: none; line-height: 1.2;
+  padding: 4px 0; border-radius: 4px;
+}
+.kal-back .icon{ width: 16px; height: 16px; flex: 0 0 auto; }
+.kal-back:hover{ color: var(--crimson); text-decoration: underline; text-underline-offset: 3px; }
+.kal-back:focus-visible{ outline: 2px solid var(--crimson); outline-offset: 3px; color: var(--crimson); }
+@media (max-width: 640px){
+  .cart-item__media{ width: 72px; height: 96px; }
+  .kal-back{ margin-bottom: 8px; }
+}
+/* 31b  the thumbnail frame must be a block with a definite height: as a grid container the image row
+   auto-sized to the picture's own aspect ratio, so height:100% resolved to ~120 px inside a 112 px frame and the
+   bottom (imprint area) was clipped — exactly the crop the owner saw */
+.cart-item__media, .cart-line__media{ display: block; }

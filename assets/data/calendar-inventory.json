@@ -1,0 +1,622 @@
+{
+  "_sta_je_ovo": "CENTRALNO STANJE ZALIHA I CENA KALENDARA. Ovo je jedini fajl koji se menja kada se menja magacin ili cena. Uputstvo: DEMO-GROUP-2027/TOOLS/CALENDAR-INVENTORY-README.md",
+  "_upozorenje": "CENE su iz odobrenog dokumenta „CENOVNIK KALENDARI 2027“ (EUR, bez PDV-a 20 %, plative u dinarima; potvrda vlasnika 24. 9. 2026) — polje price je iznos po komadu u evrima, identičan cenovniku. ZALIHE nisu vođene (stock: null): režim orderMode \"confirmation\" — svi modeli su „Dostupno za poručivanje“, količinu i rok isporuke potvrđuje Demo Group posle prijema porudžbine. Kada se uvedu stvarne zalihe: uneti stock/arrivalDate i postaviti orderMode na \"stock\". Uputstvo: DEMO-GROUP-2027/TOOLS/CALENDAR-INVENTORY-README.md",
+  "config": {
+    "lowStockThreshold": 10,
+    "commercePreview": true,
+    "orderMode": "confirmation",
+    "currency": "EUR",
+    "priceBasis": "bez PDV-a",
+    "priceListVersion": "Cenovnik kalendara 2027 (EUR bez PDV-a 20 %, plativo u dinarima; dostava besplatna za kupovine preko 12.000 RSD; uštampavanje nije u cenovniku)"
+  },
+  "products": {
+    "ikone-7-lista": {
+      "type": "zidni",
+      "name": "Ikone",
+      "sku": "400001",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/ikone-7-lista/index.html",
+      "image": "assets/img/kalendari/ikone-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "IKONE 7 listova"
+      }
+    },
+    "priroda-7-lista": {
+      "type": "zidni",
+      "name": "Miris prirode",
+      "sku": "400002",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/priroda-7-lista/index.html",
+      "image": "assets/img/kalendari/priroda-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "PRIRODA 7 listova"
+      }
+    },
+    "manastiri-7-lista": {
+      "type": "zidni",
+      "name": "Manastiri",
+      "sku": "400008",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/manastiri-7-lista/index.html",
+      "image": "assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "MANASTIRI 7 listova"
+      }
+    },
+    "moja-srbija-7-lista": {
+      "type": "zidni",
+      "name": "Moja Srbija",
+      "sku": "400003",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/moja-srbija-7-lista/index.html",
+      "image": "assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "MOJA SRBIJA 7 listova"
+      }
+    },
+    "duh-vremena-7-lista": {
+      "type": "zidni",
+      "name": "Duh vremena",
+      "sku": "400005",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/duh-vremena-7-lista/index.html",
+      "image": "assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "DUH VREMENA 7 listova"
+      }
+    },
+    "stara-srbija-7-lista": {
+      "type": "zidni",
+      "name": "Stara Srbija",
+      "sku": "400007",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/stara-srbija-7-lista/index.html",
+      "image": "assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "STARA SRBIJA 7 listova"
+      }
+    },
+    "duh-srbije-7-lista": {
+      "type": "zidni",
+      "name": "Duh Srbije",
+      "sku": "400006",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/duh-srbije-7-lista/index.html",
+      "image": "assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "DUH SRBIJE 7 listova"
+      }
+    },
+    "vojvodina-7-lista": {
+      "type": "zidni",
+      "name": "Vojvodina",
+      "sku": "400004",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/vojvodina-7-lista/index.html",
+      "image": "assets/img/kalendari/vojvodina-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "VOJVODINA 7 listova"
+      }
+    },
+    "vreme-lova-7-lista": {
+      "type": "zidni",
+      "name": "Vreme lova",
+      "sku": "400011",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/vreme-lova-7-lista/index.html",
+      "image": "assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "VREME LOVA 7 listova"
+      }
+    },
+    "drugari-7-lista": {
+      "type": "zidni",
+      "name": "Moji ljubimci",
+      "sku": "400012",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/drugari-7-lista/index.html",
+      "image": "assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "MOJI LJUBIMCI 7 listova"
+      }
+    },
+    "cvece-7-lista": {
+      "type": "zidni",
+      "name": "Cveće",
+      "sku": "400010",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/cvece-7-lista/index.html",
+      "image": "assets/img/kalendari/cvece-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "CVEĆE 7 listova"
+      }
+    },
+    "automobili-7-lista": {
+      "type": "zidni",
+      "name": "Automobili",
+      "sku": "400013",
+      "variant": "Zidni kalendar B3 · 7 lista · 33 × 56 cm",
+      "url": "kalendari/automobili-7-lista/index.html",
+      "image": "assets/img/kalendari/automobili-7-lista/web-2027/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 7 listova",
+        "row": "AUTOMOBILI 7 listova"
+      }
+    },
+    "priroda-trodelni": {
+      "type": "poslovni",
+      "name": "Trodelni kalendar Priroda 2027",
+      "sku": "400019",
+      "variant": "Poslovni trodelni kalendar · 31 × 59 cm (bez pokazivača)",
+      "url": "kalendari/priroda-trodelni/index.html",
+      "image": "assets/img/kalendari/priroda-trodelni/web-2027-trodelni-v2/thumb/01.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 1.15,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni poslovni kalendari",
+        "row": "TRODELNI PRIRODA (bez pokazivača)"
+      }
+    },
+    "verski-trodelni": {
+      "type": "poslovni",
+      "name": "Trodelni kalendar Verski 2027",
+      "sku": "400020",
+      "variant": "Poslovni trodelni kalendar · 31 × 59 cm (bez pokazivača)",
+      "url": "kalendari/verski-trodelni/index.html",
+      "image": "assets/img/kalendari/verski-trodelni/web-2027-trodelni-v2/thumb/01.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 1.15,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni poslovni kalendari",
+        "row": "TRODELNI VERSKI (bez pokazivača)"
+      }
+    },
+    "priroda-12-lista": {
+      "type": "poslovni",
+      "name": "Priroda 2027",
+      "sku": "400056",
+      "variant": "Poslovni kalendar · 12 listova · 30 × 57 cm",
+      "url": "kalendari/priroda-12-lista/index.html",
+      "image": "assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni poslovni kalendari",
+        "row": "POSLOVNA PRIRODA 12 lista"
+      }
+    },
+    "verski-12-lista": {
+      "type": "poslovni",
+      "name": "Verski 2027",
+      "sku": "400055",
+      "variant": "Poslovni kalendar · 12 listova · 30 × 57 cm",
+      "url": "kalendari/verski-12-lista/index.html",
+      "image": "assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.97,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni poslovni kalendari",
+        "row": "POSLOVNI VERSKI 12 lista"
+      }
+    },
+    "ikone-4-lista": {
+      "type": "zidni",
+      "name": "Ikone",
+      "sku": "400040",
+      "variant": "Zidni kalendar B3 · 4 lista (kukica) · 33 × 56 cm",
+      "url": "kalendari/ikone-4-lista/index.html",
+      "image": "assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.68,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 4 lista kukica",
+        "row": "IKONE 4 lista (kukica)"
+      }
+    },
+    "priroda-4-lista": {
+      "type": "zidni",
+      "name": "Priroda",
+      "sku": "400041",
+      "variant": "Zidni kalendar B3 · 4 lista (kukica) · 33 × 56 cm",
+      "url": "kalendari/priroda-4-lista/index.html",
+      "image": "assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.68,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 4 lista kukica",
+        "row": "PRIRODA 4 lista (kukica)"
+      }
+    },
+    "moja-srbija-4-lista": {
+      "type": "zidni",
+      "name": "Moja Srbija",
+      "sku": "400060",
+      "variant": "Zidni kalendar B3 · 4 lista (kukica) · 33 × 56 cm",
+      "url": "kalendari/moja-srbija-4-lista/index.html",
+      "image": "assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.68,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 4 lista kukica",
+        "row": "MOJA SRBIJA 4 lista (kukica)"
+      }
+    },
+    "stara-srbija-4-lista": {
+      "type": "zidni",
+      "name": "Stara Srbija",
+      "sku": "400061",
+      "variant": "Zidni kalendar B3 · 4 lista (kukica) · 33 × 56 cm",
+      "url": "kalendari/stara-srbija-4-lista/index.html",
+      "image": "assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.68,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 4 lista kukica",
+        "row": "STARA SRBIJA 4 lista (kukica)"
+      }
+    },
+    "duh-srbije-4-lista": {
+      "type": "zidni",
+      "name": "Duh Srbije",
+      "sku": "400043",
+      "variant": "Zidni kalendar B3 · 4 lista (kukica) · 33 × 56 cm",
+      "url": "kalendari/duh-srbije-4-lista/index.html",
+      "image": "assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.68,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 4 lista kukica",
+        "row": "DUH SRBIJE 4 lista (kukica)"
+      }
+    },
+    "manastiri-4-lista": {
+      "type": "zidni",
+      "name": "Manastiri",
+      "sku": "400044",
+      "variant": "Zidni kalendar B3 · 4 lista (kukica) · 33 × 56 cm",
+      "url": "kalendari/manastiri-4-lista/index.html",
+      "image": "assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.68,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 1,
+        "table": "Zidni kalendari B3 4 lista kukica",
+        "row": "MANASTIRI 4 lista (kukica)"
+      }
+    },
+    "ikone-stoni-2": {
+      "type": "stoni",
+      "name": "Ikone II 2027",
+      "sku": "400064",
+      "variant": "Stoni kalendar · položeni · 23 × 16 cm",
+      "url": "kalendari/ikone-stoni-2/index.html",
+      "image": "assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.95,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni poslovni kalendari 23x16",
+        "row": "IKONE II"
+      }
+    },
+    "priroda-stoni-2": {
+      "type": "stoni",
+      "name": "Priroda II 2027",
+      "sku": "400050",
+      "variant": "Stoni kalendar · položeni · 23 × 16 cm",
+      "url": "kalendari/priroda-stoni-2/index.html",
+      "image": "assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.95,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni poslovni kalendari 23x16",
+        "row": "PRIRODA II"
+      }
+    },
+    "moja-srbija-stoni-2": {
+      "type": "stoni",
+      "name": "Moja Srbija II 2027",
+      "sku": "400052",
+      "variant": "Stoni kalendar · položeni · 23 × 16 cm",
+      "url": "kalendari/moja-srbija-stoni-2/index.html",
+      "image": "assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.95,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni poslovni kalendari 23x16",
+        "row": "MOJA SRBIJA II"
+      }
+    },
+    "ikone": {
+      "type": "stoni",
+      "name": "Ikone 2027",
+      "sku": "400029",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/ikone/index.html",
+      "image": "assets/img/kalendari/ikone/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "IKONE 14X21"
+      }
+    },
+    "priroda": {
+      "type": "stoni",
+      "name": "Miris prirode 2027",
+      "sku": "400028",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/priroda/index.html",
+      "image": "assets/img/kalendari/priroda/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "PRIRODA 14X21"
+      }
+    },
+    "moja-srbija": {
+      "type": "stoni",
+      "name": "Moja Srbija 2027",
+      "sku": "400030",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/moja-srbija/index.html",
+      "image": "assets/img/kalendari/moja-srbija/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "MOJA SRBIJA 14X21"
+      }
+    },
+    "manastiri": {
+      "type": "stoni",
+      "name": "Manastiri 2027",
+      "sku": "400033",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/manastiri/index.html",
+      "image": "assets/img/kalendari/manastiri/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "MANASTIRI 14X21"
+      }
+    },
+    "stara-srbija": {
+      "type": "stoni",
+      "name": "Stara Srbija 2027",
+      "sku": "400080",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/stara-srbija/index.html",
+      "image": "assets/img/kalendari/stara-srbija/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "STARA SRBIJA 14X21"
+      }
+    },
+    "duh-srbije": {
+      "type": "stoni",
+      "name": "Duh Srbije 2027",
+      "sku": "400032",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/duh-srbije/index.html",
+      "image": "assets/img/kalendari/duh-srbije/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "DUH SRBIJE 14X21"
+      }
+    },
+    "duh-vremena": {
+      "type": "stoni",
+      "name": "Duh vremena 2027",
+      "sku": "400031",
+      "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
+      "url": "kalendari/duh-vremena/index.html",
+      "image": "assets/img/kalendari/duh-vremena/web-2027/mockup/card.webp",
+      "stock": null,
+      "arrivalDate": null,
+      "manualStatus": null,
+      "note": null,
+      "price": 0.77,
+      "commerceEnabled": true,
+      "priceList": {
+        "page": 2,
+        "table": "Stoni kalendari 14x21",
+        "row": "DUH VREMENA 14X21"
+      }
+    }
+  }
+}
