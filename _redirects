@@ -1,0 +1,83 @@
+# Cloudflare Pages — trajna preusmerenja starih adresa prodavnice (2026-09-25, pripremljeno lokalno, NIJE objavljeno).
+# Pravilo: stara adresa se preusmerava SAMO kada nova strana ima istu šifru i isti tip proizvoda (ili je stara kategorija
+# istog tipa). Sve ostalo — nepoznate adrese, šifre koje više ne postoje, drugi tip — ostaje prava 404 (404.html).
+# Isti naziv modela nije dovoljan. Prvo pravilo koje se poklopi važi. Provereno u lokalnom Cloudflare Pages okruženju
+# (wrangler pages dev, zajedno sa functions/_middleware.js): QA KATEGORIJE-GOOGLE_20260925-2106, cf-redirects-test.js.
+#
+# Poznate adrese iz Google indeksa (site:demogroup.rs, 25. 9. 2026):
+#   /shop-2/poslovni-stoni-13-listova/400-064-stoni-poslovni-kalendar-ikone-22x16/    400 064 stoni 23 × 16  → Ikone II (400 064)
+#   /shop-2/poslovni-stoni-13-listova/400-050-stoni-poslovni-kalendar-priroda-22x16/  400 050 stoni 23 × 16  → Priroda II (400 050)
+#   /shop-2/zidni-kalendar-7-listova/400-005-zidni-duh-vremena-b3-7-listova/          400 005 zidni B3 7     → Duh vremena (400 005)
+#   /product-category/zidni-4b3-zaglavlje-u-vrhu/ i /shop-2/zidni-4b3-zaglavlje-u-vrhu/400-090-…  — BEZ preusmerenja:
+#     šifre 400 090 / 091 / 093 (zaglavlje u vrhu) ne postoje u ponudi 2027; današnji kalendari sa 4 lista su druge šifre
+#     (400 040–044, 400 060–061) sa prostorom za uštampavanje u dnu lista → drugi tip, ostaje 404.
+#
+# Stare adrese proizvoda imaju oblik /shop-2/<kategorija>/<šifra>-<naziv>/. Za dve stare kategorije čiji je tip potvrđen
+# indeksiranim adresama, model se preusmerava po šifri (sa ili bez završne kose crte); šifra iz drugog tipa → 404.
+
+# stare strane kategorija istog tipa i početna strana prodavnice (statička pravila — ispred pravila sa *)
+/product-category/zidni-kalendar-7-listova/  /kalendari/7-lista/  301
+/product-category/zidni-kalendar-7-listova  /kalendari/7-lista/  301
+/product-category/poslovni-stoni-13-listova/  /kalendari/stoni/  301
+/product-category/poslovni-stoni-13-listova  /kalendari/stoni/  301
+/shop-2/  /kalendari/  301
+/shop-2  /kalendari/  301
+
+# dopuna 25. 9. 2026. (predlog, iz Search Console-a): stare strane kategorija istog tipa
+/product-category/stoni-kalendar-13-listova/  /kalendari/stoni/  301
+/product-category/stoni-kalendar-13-listova  /kalendari/stoni/  301
+/product-category/zidni-4b3-kukica/  /kalendari/4-lista/  301
+/product-category/zidni-4b3-kukica  /kalendari/4-lista/  301
+/product-category/zidni-trodelni/  /kalendari/poslovni/  301
+/product-category/zidni-trodelni  /kalendari/poslovni/  301
+/product-category/zidni-poslovni-12-listova-a3/  /kalendari/poslovni/  301
+/product-category/zidni-poslovni-12-listova-a3  /kalendari/poslovni/  301
+/product-category/zidni-kalendar-7-listova/page/1/  /kalendari/7-lista/  301
+/product-category/zidni-kalendar-7-listova/page/2/  /kalendari/7-lista/  301
+/kalendar/  /kalendari/  301
+/kalendar  /kalendari/  301
+
+# zidni B3 kalendari sa 7 listova (stara kategorija zidni-kalendar-7-listova) — 12 šifara iz ponude 2027
+/shop-2/zidni-kalendar-7-listova/400-001-*  /kalendari/ikone-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-002-*  /kalendari/priroda-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-003-*  /kalendari/moja-srbija-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-004-*  /kalendari/vojvodina-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-005-*  /kalendari/duh-vremena-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-006-*  /kalendari/duh-srbije-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-007-*  /kalendari/stara-srbija-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-008-*  /kalendari/manastiri-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-010-*  /kalendari/cvece-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-011-*  /kalendari/vreme-lova-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-012-*  /kalendari/drugari-7-lista/  301
+/shop-2/zidni-kalendar-7-listova/400-013-*  /kalendari/automobili-7-lista/  301
+
+# položeni stoni kalendari 23 × 16 cm (stara kategorija poslovni-stoni-13-listova) — 3 šifre iz ponude 2027
+/shop-2/poslovni-stoni-13-listova/400-064-*  /kalendari/ikone-stoni-2/  301
+/shop-2/poslovni-stoni-13-listova/400-050-*  /kalendari/priroda-stoni-2/  301
+/shop-2/poslovni-stoni-13-listova/400-052-*  /kalendari/moja-srbija-stoni-2/  301
+
+# dopuna 25. 9. 2026. (predlog): strane liste stare prodavnice = katalog svih kalendara
+/shop-2/page/*  /kalendari/  301
+
+# uspravni stoni kalendari 14 × 21 cm (stara kategorija stoni-kalendar-13-listova) — 7 šifara iz ponude 2027
+/shop-2/stoni-kalendar-13-listova/400-029-*  /kalendari/ikone/  301
+/shop-2/stoni-kalendar-13-listova/400-028-*  /kalendari/priroda/  301
+/shop-2/stoni-kalendar-13-listova/400-030-*  /kalendari/moja-srbija/  301
+/shop-2/stoni-kalendar-13-listova/400-031-*  /kalendari/duh-vremena/  301
+/shop-2/stoni-kalendar-13-listova/400-032-*  /kalendari/duh-srbije/  301
+/shop-2/stoni-kalendar-13-listova/400-033-*  /kalendari/manastiri/  301
+/shop-2/stoni-kalendar-13-listova/400-080-*  /kalendari/stara-srbija/  301
+
+# zidni B3 kalendari sa 4 lista i kukicom (stara kategorija zidni-4b3-kukica) — 6 šifara iz ponude 2027
+/shop-2/zidni-4b3-kukica/400-040-*  /kalendari/ikone-4-lista/  301
+/shop-2/zidni-4b3-kukica/400-041-*  /kalendari/priroda-4-lista/  301
+/shop-2/zidni-4b3-kukica/400-043-*  /kalendari/duh-srbije-4-lista/  301
+/shop-2/zidni-4b3-kukica/400-044-*  /kalendari/manastiri-4-lista/  301
+/shop-2/zidni-4b3-kukica/400-060-*  /kalendari/moja-srbija-4-lista/  301
+/shop-2/zidni-4b3-kukica/400-061-*  /kalendari/stara-srbija-4-lista/  301
+
+# trodelni kalendari (stara kategorija zidni-trodelni) i poslovni sa 12 listova (stara kategorija zidni-poslovni-12-listova-a3)
+/shop-2/zidni-trodelni/400-019-*  /kalendari/priroda-trodelni/  301
+/shop-2/zidni-trodelni/400-020-*  /kalendari/verski-trodelni/  301
+/shop-2/zidni-poslovni-12-listova-a3/400-055-*  /kalendari/verski-12-lista/  301
+/shop-2/zidni-poslovni-12-listova-a3/400-056-*  /kalendari/priroda-12-lista/  301

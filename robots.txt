@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /hvala/
 
 Sitemap: https://demogroup.rs/sitemap.xml

@@ -240,7 +240,7 @@
     },
     "priroda-trodelni": {
       "type": "poslovni",
-      "name": "Trodelni kalendar Priroda 2027",
+      "name": "Trodelni kalendar Priroda",
       "sku": "400019",
       "variant": "Poslovni trodelni kalendar · 31 × 59 cm (bez pokazivača)",
       "url": "kalendari/priroda-trodelni/index.html",
@@ -259,7 +259,7 @@
     },
     "verski-trodelni": {
       "type": "poslovni",
-      "name": "Trodelni kalendar Verski 2027",
+      "name": "Trodelni kalendar Verski",
       "sku": "400020",
       "variant": "Poslovni trodelni kalendar · 31 × 59 cm (bez pokazivača)",
       "url": "kalendari/verski-trodelni/index.html",
@@ -278,7 +278,7 @@
     },
     "priroda-12-lista": {
       "type": "poslovni",
-      "name": "Priroda 2027",
+      "name": "Priroda",
       "sku": "400056",
       "variant": "Poslovni kalendar · 12 listova · 30 × 57 cm",
       "url": "kalendari/priroda-12-lista/index.html",
@@ -297,7 +297,7 @@
     },
     "verski-12-lista": {
       "type": "poslovni",
-      "name": "Verski 2027",
+      "name": "Verski",
       "sku": "400055",
       "variant": "Poslovni kalendar · 12 listova · 30 × 57 cm",
       "url": "kalendari/verski-12-lista/index.html",
@@ -430,7 +430,7 @@
     },
     "ikone-stoni-2": {
       "type": "stoni",
-      "name": "Ikone II 2027",
+      "name": "Ikone II",
       "sku": "400064",
       "variant": "Stoni kalendar · položeni · 23 × 16 cm",
       "url": "kalendari/ikone-stoni-2/index.html",
@@ -449,7 +449,7 @@
     },
     "priroda-stoni-2": {
       "type": "stoni",
-      "name": "Priroda II 2027",
+      "name": "Priroda II",
       "sku": "400050",
       "variant": "Stoni kalendar · položeni · 23 × 16 cm",
       "url": "kalendari/priroda-stoni-2/index.html",
@@ -468,7 +468,7 @@
     },
     "moja-srbija-stoni-2": {
       "type": "stoni",
-      "name": "Moja Srbija II 2027",
+      "name": "Moja Srbija II",
       "sku": "400052",
       "variant": "Stoni kalendar · položeni · 23 × 16 cm",
       "url": "kalendari/moja-srbija-stoni-2/index.html",
@@ -487,7 +487,7 @@
     },
     "ikone": {
       "type": "stoni",
-      "name": "Ikone 2027",
+      "name": "Ikone",
       "sku": "400029",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/ikone/index.html",
@@ -506,7 +506,7 @@
     },
     "priroda": {
       "type": "stoni",
-      "name": "Miris prirode 2027",
+      "name": "Miris prirode",
       "sku": "400028",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/priroda/index.html",
@@ -525,7 +525,7 @@
     },
     "moja-srbija": {
       "type": "stoni",
-      "name": "Moja Srbija 2027",
+      "name": "Moja Srbija",
       "sku": "400030",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/moja-srbija/index.html",
@@ -544,7 +544,7 @@
     },
     "manastiri": {
       "type": "stoni",
-      "name": "Manastiri 2027",
+      "name": "Manastiri",
       "sku": "400033",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/manastiri/index.html",
@@ -563,7 +563,7 @@
     },
     "stara-srbija": {
       "type": "stoni",
-      "name": "Stara Srbija 2027",
+      "name": "Stara Srbija",
       "sku": "400080",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/stara-srbija/index.html",
@@ -582,7 +582,7 @@
     },
     "duh-srbije": {
       "type": "stoni",
-      "name": "Duh Srbije 2027",
+      "name": "Duh Srbije",
       "sku": "400032",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/duh-srbije/index.html",
@@ -601,7 +601,7 @@
     },
     "duh-vremena": {
       "type": "stoni",
-      "name": "Duh vremena 2027",
+      "name": "Duh vremena",
       "sku": "400031",
       "variant": "Stoni kalendar · uspravni · 14 × 21 cm",
       "url": "kalendari/duh-vremena/index.html",

@@ -3291,7 +3291,8 @@ a.kal-chip:hover{ border-color: var(--ink); color: var(--ink); }
 }
 @media (max-width: 380px){
   .kal-chips{ gap: 5px; }
-  .kal-chip{ padding: 7px 9px; }
+  /* 2026-09-25: chip "7 listova" (was "7 lista") — 7px keeps the five chips on one row at 360px (310 of 320px) */
+  .kal-chip{ padding: 7px 7px; }
 }
 
 /* == 20  Calendar inquiry: form before the contact panel (Batch 9) ========
@@ -3900,3 +3901,75 @@ a.cart-line__media:focus-visible{ outline: 2px solid var(--crimson); outline-off
    auto-sized to the picture's own aspect ratio, so height:100% resolved to ~120 px inside a 112 px frame and the
    bottom (imprint area) was clipped — exactly the crop the owner saw */
 .cart-item__media, .cart-line__media{ display: block; }
+
+/* == 32  Dorade 2026-09-25 — cena bez uštampavanja, lično preuzimanje, hero PDF (telefon), meni, šifre na karticama ==========
+   (2) product page: one short note right under the price, above quantity and "Dodaj u korpu" (calendar-cart.js).
+   (4) order form: pickup / delivery choice precedes the address group; the group is hidden (and its inputs disabled)
+       for "Lično u Šapcu" — a class with display:grid would otherwise beat [hidden].
+   (7) home hero on phones only: two compact download links under the actions; desktop hero unchanged.
+   (8) mobile menu: tidy toggle (bars grouped and centred, same 44 px square as its neighbours), readable sub-links with
+       a hierarchy guide, discreet entrance that honours reduced motion, contained scrolling on short screens.
+   (10) main navigation: 14 → 15 px; horizontal item padding 11 → 10 px so the 1280–1439 band keeps its layout.
+   (11) product cards: the exact article code directly under the model name. */
+.kal-buy__note{ margin: -8px 0 var(--s-4); color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.45; }
+
+.form fieldset.field{ min-inline-size: 0; margin: 0; padding: 0; border: 0; }
+.form fieldset.field > legend{ margin-bottom: 7px; padding: 0; font-size: var(--t-sm); font-weight: 600; letter-spacing: -.005em; }
+.order-delivery[hidden]{ display: none; }
+.order-delivery__address{ grid-column: 1 / -1; }
+
+.home-hero__pdf{ display: none; }
+@media (max-width: 640px){
+  .home-hero__pdf{ display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 10px 0 0; }
+  .home-hero__pdf a{
+    display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 2px;
+    color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: underline; text-decoration-color: var(--line-2);
+    text-underline-offset: 4px; text-decoration-thickness: 1px;
+  }
+  .home-hero__pdf a .icon{ width: 17px; height: 17px; flex: 0 0 auto; color: var(--crimson); }
+  .home-hero__pdf a:hover{ color: var(--crimson); text-decoration-color: currentColor; }
+  .home-hero__pdf a:focus-visible{ outline: 2px solid var(--crimson); outline-offset: 2px; border-radius: 4px; }
+}
+
+.nav > a, .nav__trigger{ font-size: 15px; padding-inline: 10px; }
+.nav > a::after, .nav__trigger::after{ left: 10px; right: 10px; }
+.nav > a.nav__shop{ padding: 6px 10px; }
+.nav__shop-sub{ font-size: 12px; }
+
+.nav-toggle{ width: 44px; height: 44px; align-content: center; justify-content: center; gap: 4px; }
+.nav-toggle span{ width: 18px; margin: 0; }
+.nav-toggle:hover{ border-color: var(--crimson); }
+.nav-toggle:focus-visible{ outline: 3px solid var(--crimson); outline-offset: 2px; }
+@media (max-width: 1279px){
+  .header-phone, .header-cart{ min-height: 44px; min-width: 44px; }
+}
+.drawer__panel{ overscroll-behavior: contain; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
+.drawer__head{ position: sticky; top: calc(-1 * var(--s-5)); z-index: 1; margin: calc(-1 * var(--s-5)) calc(-1 * var(--s-5)) 0; padding: var(--s-4) var(--s-5); background: #fff; }
+.drawer__head span{ font-size: 13px; }
+.drawer__close{ width: 44px; height: 44px; }
+.drawer__panel > a, .drawer__group > summary{ min-height: 54px; padding-block: 13px; }
+.drawer__sub a{ min-height: 44px; padding: 11px 12px; color: var(--ink); font-size: 15px; line-height: 1.4; }
+.drawer__sub > a:first-child{ font-weight: 700; }
+.drawer__subgroup > summary{ min-height: 48px; font-size: 15px; }
+.drawer__subsub{ margin: 0 0 var(--s-2) 12px; padding: 0 0 0 6px; border-left: 2px solid var(--line); }
+.drawer__subsub a{ color: #3A404C; }
+.drawer__panel a:focus-visible, .drawer__group > summary:focus-visible{ outline: 3px solid var(--crimson); outline-offset: -3px; border-radius: var(--r-sm); }
+.drawer__panel > a[href^="https://demoshop"]{ color: var(--ink); }
+@keyframes drawer-panel-in{ from{ transform: translateX(28px); opacity: .4; } to{ transform: none; opacity: 1; } }
+@keyframes drawer-fade-in{ from{ opacity: 0; } to{ opacity: 1; } }
+.drawer:not([hidden]) .drawer__panel{ animation: drawer-panel-in .24s var(--ease-out) both; }
+.drawer:not([hidden]) .drawer__backdrop{ animation: drawer-fade-in .2s ease-out both; }
+@media (prefers-reduced-motion: reduce){
+  .drawer:not([hidden]) .drawer__panel, .drawer:not([hidden]) .drawer__backdrop{ animation: none; }
+}
+
+.card__body .card__sku, .card--product.card--wall .card__body .card__sku{
+  margin: -2px 0 0; color: var(--ink); font-size: 13px; font-weight: 500; line-height: 1.35; letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+.drawer__sub a.drawer__pdf{ display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: center; }
+.drawer__sub a.drawer__pdf .drawer__size{ grid-column: 1; grid-row: 2; margin-top: 1px; color: var(--muted); font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+.drawer__sub a.drawer__pdf .icon{ grid-column: 2; grid-row: 1 / span 2; }
+/* (1) home steps: the catalogue first, the inquiry beside it — spaced on desktop, stacked full width on phones */
+.home-steps .section-foot.home-steps__foot{ display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); }
+@media (max-width: 640px){ .home-steps__foot .btn{ flex: 1 1 100%; } }

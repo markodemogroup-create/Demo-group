@@ -581,6 +581,8 @@
       var unit = el("small", null, " po komadu · " + inv.priceBasis(data));
       priceRow.appendChild(unit);
       box.appendChild(priceRow);
+      /* the list price never includes the imprint — said right beside the price, above the purchase controls */
+      box.appendChild(el("p", "kal-buy__note", "Cena kalendara bez uštampavanja. Uštampavanje se obračunava prema dogovoru."));
       /* the confirmation sentence is shown once per page — in the availability panel above (calendar-inventory.js) */
 
       if (inv.orderable(data, entry)) {
@@ -1008,6 +1010,7 @@
     out.push("Iznos robe: " + money(view.totalPara) + " (" + inv.currency(lastData) + ", " + inv.priceBasis(lastData) + " 20 %, plativo u dinarima; bez uštampavanja i dostave)");
     out.push("Uštampavanje logotipa: " + fieldValue("Uštampavanje"));
     out.push("Preuzimanje: " + (fieldValue("Način preuzimanja") || "nije navedeno"));
+    if (isDelivery()) out.push("Adresa za dostavu: " + [fieldValue("Adresa"), [fieldValue("Poštanski broj"), fieldValue("Grad")].filter(Boolean).join(" ")].filter(Boolean).join(", "));
     out.push("");
     out.push("Iznosi su izračunati na sajtu prema Cenovniku kalendara 2027 u trenutku porudžbine (u evrima, bez PDV-a) i zahtevaju proveru pre izdavanja računa; iznos u dinarima, PDV, uštampavanje i dostava obračunavaju se na računu. Bez online plaćanja — " + inv.confirmNote);
     return out.join("\n");
@@ -1063,10 +1066,12 @@
     }
     var email = form.querySelector('[name="_replyto"]');
     if (email && email.value && email.checkValidity && !email.checkValidity()) { formStatus("E-adresa nije ispravna.", "error"); email.focus(); return false; }
-    if (fieldValue("Način preuzimanja") === "Dostava na adresu") {
-      var addr = form.querySelector('[name="Adresa"]'), city = form.querySelector('[name="Grad"]');
-      if (addr && !addr.value.trim()) { formStatus("Za dostavu unesite adresu.", "error"); addr.focus(); return false; }
+    if (isDelivery()) {
+      /* same order as on screen: city, postal code, street address */
+      var city = form.querySelector('[name="Grad"]'), zip = form.querySelector('[name="Poštanski broj"]'), addr = form.querySelector('[name="Adresa"]');
       if (city && !city.value.trim()) { formStatus("Za dostavu unesite grad.", "error"); city.focus(); return false; }
+      if (zip && !/^\d{5}$/.test(zip.value.replace(/\s+/g, ""))) { formStatus(zip.value.trim() ? "Poštanski broj ima pet cifara (npr. 15000)." : "Za dostavu unesite poštanski broj.", "error"); zip.focus(); return false; }
+      if (addr && !addr.value.trim()) { formStatus("Za dostavu unesite adresu (ulicu i broj).", "error"); addr.focus(); return false; }
     }
     var consent = form.querySelector('.consent input[type="checkbox"][required]');   /* the imprint option is a .consent-styled checkbox too, but optional */
     if (consent && !consent.checked) { formStatus("Potrebna je saglasnost za obradu podataka.", "error"); consent.focus(); return false; }
@@ -1120,11 +1125,35 @@
     var fields = form.querySelectorAll("input, textarea, select");
     Array.prototype.forEach.call(fields, function (f) {
       if (!f.name || f.type === "submit" || f.type === "button" || f.type === "file") return;
+      if (f.disabled) return;                    /* e.g. the address fields while pickup in Šabac is chosen */
       if (f.type === "radio") { if (f.checked) data[f.name] = f.value; return; }
       if (f.type === "checkbox") { if (f.name) data[f.name] = f.checked ? "Da" : "Ne"; return; }
       data[f.name] = f.value;
     });
     return data;
+  }
+
+  /* --- pickup or delivery ------------------------------------------------------ */
+  /* "Lično u Šapcu" needs no address: the city / postal code / address group is hidden AND its inputs disabled —
+     a disabled field is neither validated nor submitted (AJAX payload and the classic POST fallback alike), so it can
+     never block the order or appear as a delivery address. The typed values stay in the inputs: switching back to
+     "Dostava na adresu" shows them again, now required. */
+  var deliveryBox = form ? form.querySelector("[data-delivery-fields]") : null;
+  function isDelivery() { return !!form && fieldValue("Način preuzimanja") === "Dostava na adresu"; }
+  function syncDelivery() {
+    if (!deliveryBox) return;
+    var on = isDelivery();
+    deliveryBox.hidden = !on;
+    Array.prototype.forEach.call(deliveryBox.querySelectorAll("input, select, textarea"), function (f) {
+      f.disabled = !on;
+      f.required = on;
+    });
+  }
+  if (form && deliveryBox) {
+    Array.prototype.forEach.call(form.querySelectorAll('input[name="Način preuzimanja"]'), function (r) {
+      r.addEventListener("change", syncDelivery);
+    });
+    syncDelivery();
   }
 
   if (form) {
@@ -1178,6 +1207,9 @@
           return;
         }
         lastData = data;
+        /* the form stays editable while the stock check is pending (e.g. pickup → delivery with an empty address,
+           a cleared phone): validate again what will actually be sent — nothing invalid leaves this page */
+        if (!validateForm()) { setSending(false); return; }
         var snapshot = view.rows.filter(function (r) { return r.available; }).map(function (r) { return { id: r.id, quantity: r.quantity }; });
         var now = new Date();
         var ref = orderRef(now);
