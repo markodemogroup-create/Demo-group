@@ -3973,3 +3973,17 @@ a.cart-line__media:focus-visible{ outline: 2px solid var(--crimson); outline-off
 /* (1) home steps: the catalogue first, the inquiry beside it — spaced on desktop, stacked full width on phones */
 .home-steps .section-foot.home-steps__foot{ display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); }
 @media (max-width: 640px){ .home-steps__foot .btn{ flex: 1 1 100%; } }
+
+/* == 33  Cene isključivo bez PDV-a, oznaka uz svaki iznos + slika „O nama“ (2026-09-26) ==============
+   The price basis ("bez PDV-a") stays readable next to every amount, also on phones; the About hero shows
+   the whole visual in its natural 3:2 proportions (no crop, no padding). */
+.card-price small{ text-transform: none; letter-spacing: 0; white-space: nowrap; }   /* never "PDV-" | "a" */
+/* the phone rule that hides the type kicker in category grids (.kal-cat-grid .card__body small) must not hide the
+   price basis next to the card price */
+.kal-cat-section .kal-cat-grid .card__body .card-price small{ display: inline; font-size: 11.5px; letter-spacing: 0; text-transform: none; }
+.cart-line__sub{ text-align: right; }
+.cart-line__sub small{ display: block; margin-top: 3px; font: 500 11px/1.2 var(--font-body); color: var(--muted); }
+.cart-summary__row--total{ align-items: center; }
+.cart-summary__row b, .cart-drawer__total b{ white-space: nowrap; }
+.page-hero__media--natural{ aspect-ratio: auto; }
+.page-hero__media--natural img{ display: block; height: auto; object-fit: contain; padding: 0; }

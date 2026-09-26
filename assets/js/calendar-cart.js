@@ -35,6 +35,10 @@
    to RSD, never adds tax and never prices imprint or delivery — those are
    settled on the invoice. Order mode "confirmation": every model is orderable
    with unknown stock; quantity and delivery date are confirmed after receipt.
+   Owner decision 2026-09-26 (final): the whole site shows ONLY net EUR prices;
+   every amount carries the basis wording ("bez PDV-a") — unit prices, line
+   amounts, the one amount of goods and the order e-mail fields. No gross price,
+   no separate VAT line.
 
    Consistency rules (independent review 2026-09-24, R1–R3):
    - evaluate() is a pure comparison of the stored cart against CURRENT data; it
@@ -111,6 +115,8 @@
   /* money: integer minor units (cents) everywhere, formatted only for display */
   function toPara(amount) { return Math.round(Number(amount) * 100); }
   function money(para) { return inv.formatMoney(para / 100); }
+  /* an amount with its basis, e.g. "0,77 EUR bez PDV-a" — no amount is shown without it */
+  function net(para, data) { return money(para) + " " + inv.priceBasis(data); }
   /* input sanity limit for a quantity field — NOT a stock figure: larger runs go through the inquiry form */
   var QTY_LIMIT = 100000;
   function fmtInt(n) { try { return new Intl.NumberFormat("sr-RS").format(n); } catch (e) { return String(n); } }
@@ -350,7 +356,7 @@
         if (row.wanted && entry.url) row.inquiry = { qty: row.wanted, href: rootUrl + entry.url + "?kolicina=" + row.wanted + "#upit" };
         if (typeof l.lastPrice === "number" && toPara(l.lastPrice) !== row.pricePara) {
           row.priceChanged = { fromPara: toPara(l.lastPrice), toPara: row.pricePara };
-          row.notes.push("Cena je ažurirana: ranije " + money(row.priceChanged.fromPara) + ", sada " + money(row.pricePara) + " po komadu.");
+          row.notes.push("Cena je ažurirana: ranije " + net(row.priceChanged.fromPara, data) + ", sada " + net(row.pricePara, data) + " po komadu.");
         }
         row.subtotalPara = row.pricePara * row.quantity;
         out.units += row.quantity;
@@ -437,6 +443,13 @@
     return drawerEl;
   }
 
+  /* a line amount with its basis right under the figure */
+  function lineSub(para, data) {
+    var p = el("p", "cart-line__sub", money(para) + " ");
+    p.appendChild(el("small", null, inv.priceBasis(data)));
+    return p;
+  }
+
   /* whole calendar image (contain, never cropped) — a link to the product page when the entry has one */
   function drawerThumb(entry) {
     var linked = !!(entry && entry.url);
@@ -480,9 +493,9 @@
       var body = el("div", null);
       body.appendChild(el("p", "cart-line__name", nameOf(addedRow)));
       body.appendChild(el("p", "cart-line__meta",
-        addedRow.quantity + " kom × " + money(addedRow.pricePara)));
+        addedRow.quantity + " kom × " + net(addedRow.pricePara, data)));
       line.appendChild(body);
-      line.appendChild(el("p", "cart-line__sub", money(addedRow.subtotalPara)));
+      line.appendChild(lineSub(addedRow.subtotalPara, data));
       addedBox.appendChild(line);
       addedBox.hidden = false;
     } else {
@@ -504,7 +517,7 @@
       if (variantOf(row)) body.appendChild(el("p", "cart-line__meta", variantOf(row) + (skuOf(row) ? " · šifra " + skuOf(row) : "")));
       if (row.available) {
         body.appendChild(el("p", "cart-line__meta",
-          row.quantity + " kom × " + money(row.pricePara)));
+          row.quantity + " kom × " + net(row.pricePara, data)));
       }
       row.notes.concat(row.messages).forEach(function (m) {
         body.appendChild(el("p", "cart-line__msg", m));
@@ -513,7 +526,7 @@
       line.appendChild(body);
 
       var side = el("div", "cart-line__side");
-      if (row.available) side.appendChild(el("p", "cart-line__sub", money(row.subtotalPara)));
+      if (row.available) side.appendChild(lineSub(row.subtotalPara, data));
       var remove = el("button", "cart-item__remove", "Ukloni");
       remove.type = "button";
       remove.setAttribute("aria-label", "Ukloni " + nameText + " iz korpe");
@@ -531,10 +544,11 @@
     foot.textContent = "";
     if (view.rows.length) {
       var total = el("p", "cart-drawer__total");
-      total.appendChild(el("span", null, "Iznos robe"));
+      total.appendChild(el("span", null, "Iznos robe " + inv.priceBasis(data)));
+      total.appendChild(document.createTextNode(" "));   /* read as "label amount", not "PDV-a0,77" */
       total.appendChild(el("b", null, money(view.totalPara)));
       foot.appendChild(total);
-      foot.appendChild(el("p", "cart-drawer__note", "Cene " + inv.priceBasis(data) + ". Bez online plaćanja — porudžbinu šaljete iz korpe. " + inv.confirmNote));
+      foot.appendChild(el("p", "cart-drawer__note", "Cene " + inv.priceBasis(data) + ". Uštampavanje i dostava nisu uključeni. Bez online plaćanja — porudžbinu šaljete iz korpe. " + inv.confirmNote));
 
       var view_ = el("a", "btn btn--block", "Pogledajte korpu");
       view_.href = rootUrl + "korpa/index.html";
@@ -835,7 +849,7 @@
       });
       side.appendChild(ref.qty.root);
       var sub = el("p", "cart-item__subtotal");
-      sub.appendChild(el("small", null, "Ukupno za stavku"));
+      sub.appendChild(el("small", null, "Stavka " + inv.priceBasis(lastData)));
       ref.sub = el("b", null, money(row.subtotalPara));
       sub.appendChild(ref.sub);
       side.appendChild(sub);
@@ -908,18 +922,15 @@
       r1.appendChild(el("b", null, view.units + " " + komad(view.units)));
       summaryEl.appendChild(r1);
       var basis = inv.priceBasis(data);
-      var r2 = el("p", "cart-summary__row");
-      r2.appendChild(el("span", null, "Iznos robe (" + basis + ")"));
-      r2.appendChild(el("b", null, money(view.totalPara)));
-      summaryEl.appendChild(r2);
-      var r3 = el("p", "cart-summary__row cart-summary__row--muted");
-      r3.appendChild(el("span", null, "PDV, uštampavanje i dostava"));
-      r3.appendChild(el("b", null, "na računu"));
-      summaryEl.appendChild(r3);
-      var r4 = el("p", "cart-summary__row cart-summary__row--total");
-      r4.appendChild(el("span", null, "Ukupno za potvrdu (" + basis + ")"));
-      r4.appendChild(el("b", null, money(view.totalPara)));
-      summaryEl.appendChild(r4);
+      /* only the net amount of goods (owner decision 2026-09-26); imprint and delivery are said to be outside it */
+      [["Uštampavanje i dostava", "nisu uključeni", "cart-summary__row cart-summary__row--muted"],
+       ["Iznos robe " + basis, money(view.totalPara), "cart-summary__row cart-summary__row--total"]].forEach(function (t) {
+        var r = el("p", t[2]);
+        r.appendChild(el("span", null, t[0]));
+        r.appendChild(document.createTextNode(" "));
+        r.appendChild(el("b", null, t[1]));
+        summaryEl.appendChild(r);
+      });
       summaryEl.appendChild(el("p", "cart-summary__note",
         "Cene su iz Cenovnika kalendara 2027: u evrima, " + basis + " (PDV 20 %), plative u dinarima — iznos u dinarima i PDV obračunavaju se na računu. " +
         "Uštampavanje logotipa i dostava nisu uključeni; za iznose kupovine preko 12.000 dinara troškove dostave snosi Demo Group. Iznos nije račun."));
@@ -997,7 +1008,7 @@
   function orderLines(view) {
     return view.rows.filter(function (r) { return r.available; }).map(function (row, i) {
       return (i + 1) + ". " + nameOf(row) + (variantOf(row) ? " — " + variantOf(row) : "") + (skuOf(row) ? " — šifra " + skuOf(row) : "") +
-             " — " + row.quantity + " kom × " + money(row.pricePara) + " = " + money(row.subtotalPara) +
+             " — " + row.quantity + " kom × " + net(row.pricePara, lastData) + " = " + net(row.subtotalPara, lastData) +
              (row.wanted ? " (traženo " + row.wanted + " kom — potreban upit za veći tiraž)" : "");
     });
   }
@@ -1007,7 +1018,7 @@
     out = out.concat(orderLines(view));
     out.push("");
     out.push("Ukupno komada: " + view.units);
-    out.push("Iznos robe: " + money(view.totalPara) + " (" + inv.currency(lastData) + ", " + inv.priceBasis(lastData) + " 20 %, plativo u dinarima; bez uštampavanja i dostave)");
+    out.push("Iznos robe " + inv.priceBasis(lastData) + ": " + money(view.totalPara) + " (plativo u dinarima; bez uštampavanja i dostave)");
     out.push("Uštampavanje logotipa: " + fieldValue("Uštampavanje"));
     out.push("Preuzimanje: " + (fieldValue("Način preuzimanja") || "nije navedeno"));
     if (isDelivery()) out.push("Adresa za dostavu: " + [fieldValue("Adresa"), [fieldValue("Poštanski broj"), fieldValue("Grad")].filter(Boolean).join(" ")].filter(Boolean).join(", "));
@@ -1020,7 +1031,7 @@
     var set = function (name, value) { var f = form.querySelector('[name="' + name + '"]'); if (f) f.value = value; };
     set("Broj porudžbine", ref);
     set("Porudžbina", orderText(view, ref, now));
-    set("Iznos robe", money(view.totalPara));
+    set("Iznos robe bez PDV-a", money(view.totalPara));
     set("Broj komada", String(view.units));
     set("Valuta", inv.currency(lastData));
     set("Osnova cene", "Cenovnik kalendara 2027 — " + inv.currency(lastData) + ", " + inv.priceBasis(lastData) + " (PDV 20 %), plativo u dinarima; bez uštampavanja i dostave");
@@ -1196,12 +1207,12 @@
             /* the stored lastPrice was already advanced by the other tab, so evaluate() has no note — write it
                from THIS tab's displayed price so the customer sees old → new */
             view.rows.forEach(function (r) { var c = null; confirmed.forEach(function (x) { if (x.id === r.id) c = x; });
-              if (r.available && c && c.pricePara !== null && c.pricePara !== r.pricePara) noteMemory[r.id] = ["Cena je ažurirana: ranije " + money(c.pricePara) + ", sada " + money(r.pricePara) + " po komadu."]; });
+              if (r.available && c && c.pricePara !== null && c.pricePara !== r.pricePara) noteMemory[r.id] = ["Cena je ažurirana: ranije " + net(c.pricePara, data) + ", sada " + net(r.pricePara, data) + " po komadu."]; });
           }
           render(data);
-          notice("Podaci u korpi su se u međuvremenu promenili (cena ili dostupnost). Proverite novi iznos — " +
-                 money(view.totalPara) + " — pa pošaljite porudžbinu ponovo.");
-          formStatus("Porudžbina nije poslata: iznos je promenjen na " + money(view.totalPara) +
+          notice("Podaci u korpi su se u međuvremenu promenili (cena ili dostupnost). Proverite novi iznos robe — " +
+                 net(view.totalPara, data) + " — pa pošaljite porudžbinu ponovo.");
+          formStatus("Porudžbina nije poslata: iznos robe je promenjen na " + net(view.totalPara, data) +
                      " — proverite korpu iznad, pa pošaljite ponovo.", "error");
           revealNotice();
           return;
