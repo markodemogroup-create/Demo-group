@@ -37,8 +37,52 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Početna","item":"https://demogroup.rs/"},{"@type":"ListItem","position":2,"name":"Kalendari 2027"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Štampa kalendara","serviceType":"Štampa kalendara","provider":{"@id":"https://demogroup.rs/#organization"},"areaServed":{"@type":"Country","name":"Srbija"},"url":"https://demogroup.rs/kalendari/","description":"Svi kalendari 2027 na jednom mestu — 32 modela: zidni sa 7 listova i 4 lista, stoni i poslovni. Cene, katalog i cenovnik u PDF-u, porudžbina preko korpe."}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kako se poručuju kalendari?","acceptedAnswer":{"@type":"Answer","text":"Izaberite model i količinu, dodajte kalendar u korpu i pošaljite porudžbinu — bez online plaćanja. Cene su iz Cenovnika kalendara 2027: u evrima, bez PDV-a (20 %), plative u dinarima, bez uštampavanja. Po prijemu porudžbine potvrđujemo količinu, rok isporuke i konačan obračun. Upit pošaljite ako vam treba pomoć pri izboru, imate poseban zahtev ili želite ponudu za uštampavanje; pripremu za uštampavanje šaljemo vam na odobrenje pre štampe."}},{"@type":"Question","name":"Kada treba naručiti kalendare?","acceptedAnswer":{"@type":"Answer","text":"Kalendari se pripremaju sezonski i tiraži se planiraju unapred. Javite nam se na vreme kako bismo uskladili rok izrade sa vašim planom podele."}},{"@type":"Question","name":"Možemo li dobiti kalendare sa svojim predlistom ili logotipom?","acceptedAnswer":{"@type":"Answer","text":"Možete. Logotip i podatke firme uštampavamo u predviđenom prostoru — na donjem delu zidnih i stonih modela, odnosno u gornjem delu poslovnih kalendara; tačne dimenzije prostora za uštampavanje navedene su uz svaki model. Sopstveni predlist ili poseban raspored radimo na upit za kolekcije koje imaju predlist. Gotova priprema nije uslov — možemo je pripremiti za vas i poslati vam je na odobrenje pre štampe."}},{"@type":"Question","name":"Koje formate kalendara radite za 2027?","acceptedAnswer":{"@type":"Answer","text":"Kalendare sa sedam listova, kalendare sa četiri lista, poslovne kalendare (sa 12 listova i trodelne) i stone kalendare. Svaki model ima svoju stranu sa listovima, cenom, dugmetom „Dodaj u korpu“ i formularom za upit."}}]}</script>
+
+  <style>html.kal-restoring body{visibility:hidden}</style>
+  <script>
+  /* Establish restoration before the first paint. No customer data is stored. */
+  // A stalled deferred request must not hide usable HTML indefinitely.
+  // This deadline only abandons restoration; normal restoration has no delay.
+  var dgKalRevealDeadline = setTimeout(function () {
+    if (!document.documentElement.classList.contains("kal-restoring")) return;
+    window.dgKalRestoreAbandoned = true;
+    delete window.dgKalRestore;
+    try { sessionStorage.removeItem("dgKalBackRestore"); history.scrollRestoration = "manual"; } catch (e) {}
+    document.documentElement.classList.remove("kal-restoring");
+  }, 1000);
+  document.addEventListener("DOMContentLoaded", function () {
+    requestAnimationFrame(function () {
+      try {
+        var target = window.dgKalRestore;
+        if (target && !window.dgKalRestoreAbandoned && !location.hash) window.scrollTo({ top: target.y, left: 0, behavior: "instant" });
+      } finally {
+        clearTimeout(dgKalRevealDeadline);
+        document.documentElement.classList.remove("kal-restoring");
+        delete window.dgKalRestore;
+      }
+    });
+  }, { once: true });
+  (function () {
+    try {
+      var url = location.pathname + location.search, target = null;
+      var nav = performance.getEntriesByType("navigation")[0];
+      var saved = history.state && history.state.dgKalScroll;
+      if (saved && saved.url === url && nav && /^(reload|back_forward)$/.test(nav.type)) target = saved;
+      var stamp = Number(sessionStorage.getItem("dgKalBackRestore"));
+      if (!target && stamp && Date.now() - stamp >= 0 && Date.now() - stamp <= 60000) {
+        var back = JSON.parse(sessionStorage.getItem("dgKalBack") || "null");
+        if (back && back.url === url) target = back;
+      }
+      if (target && !location.hash && typeof target.y === "number" && isFinite(target.y) && target.y >= 0) {
+        window.dgKalRestore = { url: url, y: target.y };
+        document.documentElement.style.scrollBehavior = "auto";
+        document.documentElement.classList.add("kal-restoring");
+      }
+    } catch (e) {}
+  })();
+  </script>
 </head>
-<body>
+<body class="calendar-hub">
 <a class="skip-link" href="#main">Preskoči na sadržaj</a>
 <header class="site-header">
   <div class="wrap site-header__inner">
@@ -160,9 +204,9 @@
 
   <section class="section section--tight kal-cat-section">
     <div class="wrap">
-      <form class="kal-filter" data-kal-filter data-kal-catalog="#kal-katalog" aria-label="Pretraga i filteri svih kalendara (naziv, vrsta, tema, sortiranje)" autocomplete="off" hidden>
+      <form class="kal-filter" data-kal-filter data-kal-catalog="#kal-katalog" aria-label="Pretraga i filteri svih kalendara (naziv ili šifra, vrsta, tema, sortiranje)" autocomplete="off" hidden>
         <div class="kal-filter__fields">
-          <label class="field kal-filter__search"><span>Pretraga po nazivu</span><input type="search" name="q" placeholder="Naziv kalendara" autocomplete="off" spellcheck="false"></label>
+          <label class="field kal-filter__search"><span>Pretraga po nazivu ili šifri</span><input type="search" name="q" placeholder="Naziv ili šifra" autocomplete="off" spellcheck="false"></label>
           <button class="kal-filter__toggle" type="button" aria-expanded="true" aria-controls="kal-filter-more" data-kal-more-toggle data-active="0"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/></svg> Filteri <b data-kal-active-count aria-label="aktivnih filtera">0</b></button>
           <div class="kal-filter__more" id="kal-filter-more" data-kal-more>
             <label class="field"><span>Tema</span><select name="tema"><option value="" selected>Sve teme</option><option value="orthodox">Pravoslavni motivi</option><option value="nature">Priroda i pejzaži</option><option value="tradition">Tradicija i selo</option><option value="auto">Automobili</option><option value="flowers">Cveće</option><option value="animals">Životinje i lov</option></select></label>
@@ -175,10 +219,10 @@
         </div>
       </form>
       <div class="grid kal-cat-grid kal-cat-grid--wall kal-cat-grid--all" id="kal-katalog" data-kal-catalog data-kal-year="2027"><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="orthodox" href="../kalendari/ikone-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/ikone-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/ikone-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/ikone-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/ikone-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Ikone — zidni kalendar B3, 7 lista"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Ikone</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;001</p>
           <p>Pravoslavne ikone i crkveni kalendar</p>
@@ -186,10 +230,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-alias="Priroda" data-kal-type="7" data-kal-theme="nature" href="../kalendari/priroda-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/priroda-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/priroda-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/priroda-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/priroda-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Miris prirode — zidni kalendar B3, 7 lista"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Miris prirode</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;002</p>
           <p>Pejzaži prirode kroz godišnja doba</p>
@@ -197,10 +241,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="nature" href="../kalendari/moja-srbija-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/moja-srbija-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Moja Srbija — zidni kalendar B3, 7 lista"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Moja Srbija</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;003</p>
           <p>Predeli Srbije kroz godišnja doba</p>
@@ -208,10 +252,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="nature" href="../kalendari/vojvodina-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/vojvodina-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/vojvodina-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/vojvodina-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/vojvodina-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/vojvodina-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/vojvodina-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Vojvodina — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Vojvodina</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;004</p>
           <p>Ravnica, salaši i vetrenjače Vojvodine</p>
@@ -219,10 +263,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="tradition" href="../kalendari/duh-vremena-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/duh-vremena-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Duh vremena — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Duh vremena</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;005</p>
           <p>Etno motivi i srpski običaji kroz godinu</p>
@@ -230,10 +274,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="tradition" href="../kalendari/duh-srbije-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/duh-srbije-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Duh Srbije — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Duh Srbije</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;006</p>
           <p>Slikarski motivi seoskih predela Srbije</p>
@@ -241,10 +285,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="tradition" href="../kalendari/stara-srbija-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/stara-srbija-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Stara Srbija — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Stara Srbija</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;007</p>
           <p>Staro srpsko selo i tradicionalni motivi</p>
@@ -252,10 +296,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="orthodox" href="../kalendari/manastiri-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/manastiri-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Manastiri — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Manastiri</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;008</p>
           <p>Fotografije pravoslavnih manastira</p>
@@ -263,10 +307,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="flowers" href="../kalendari/cvece-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/cvece-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/cvece-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/cvece-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/cvece-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/cvece-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/cvece-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Cveće — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Cveće</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;010</p>
           <p>Raskošni buketi i cvetni aranžmani</p>
@@ -274,10 +318,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="animals" href="../kalendari/vreme-lova-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/vreme-lova-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Vreme lova — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Vreme lova</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;011</p>
           <p>Divljač i lovački motivi kroz sezone</p>
@@ -285,10 +329,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-alias="Drugari" data-kal-type="7" data-kal-theme="animals" href="../kalendari/drugari-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white.webp" srcset="../assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white-400.webp 400w, ../assets/img/kalendari/drugari-7-lista/web-2027-r20260921/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Moji ljubimci — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Moji ljubimci</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;012</p>
           <p>Kućni ljubimci u veselim prizorima</p>
@@ -296,10 +340,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="7" data-kal-theme="auto" href="../kalendari/automobili-7-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/automobili-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/automobili-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/automobili-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/automobili-7-lista/web-2027/card-white.webp" srcset="../assets/img/kalendari/automobili-7-lista/web-2027/card-white-400.webp 400w, ../assets/img/kalendari/automobili-7-lista/web-2027/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Automobili — zidni kalendar B3, 7 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 7 lista · 33 × 56 cm</small>
+          <small>7 listova · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Automobili</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;013</p>
           <p>Savremeni automobili poznatih marki</p>
@@ -307,10 +351,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="4" data-kal-theme="tradition" href="../kalendari/duh-srbije-4-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/duh-srbije-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Duh Srbije — zidni kalendar B3, 4 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 4 lista · 33 × 56 cm</small>
+          <small>4 lista · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Duh Srbije</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;043</p>
           <p>Slikarski motivi seoskih predela Srbije</p>
@@ -318,10 +362,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="4" data-kal-theme="orthodox" href="../kalendari/ikone-4-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/ikone-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Ikone — zidni kalendar B3, 4 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 4 lista · 33 × 56 cm</small>
+          <small>4 lista · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Ikone</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;040</p>
           <p>Pravoslavne ikone i crkveni kalendar</p>
@@ -329,10 +373,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="4" data-kal-theme="orthodox" href="../kalendari/manastiri-4-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/manastiri-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Manastiri — zidni kalendar B3, 4 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 4 lista · 33 × 56 cm</small>
+          <small>4 lista · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Manastiri</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;044</p>
           <p>Fotografije pravoslavnih manastira</p>
@@ -340,10 +384,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="4" data-kal-theme="nature" href="../kalendari/moja-srbija-4-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/moja-srbija-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Moja Srbija — zidni kalendar B3, 4 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 4 lista · 33 × 56 cm</small>
+          <small>4 lista · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Moja Srbija</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;060</p>
           <p>Pejzaži i tradicionalna arhitektura</p>
@@ -351,10 +395,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="4" data-kal-theme="nature" href="../kalendari/priroda-4-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/priroda-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Priroda — zidni kalendar B3, 4 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 4 lista · 33 × 56 cm</small>
+          <small>4 lista · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Priroda</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;041</p>
           <p>Motivi prirode kroz godišnja doba</p>
@@ -362,10 +406,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="4" data-kal-theme="tradition" href="../kalendari/stara-srbija-4-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white.webp" srcset="../assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white-400.webp 400w, ../assets/img/kalendari/stara-srbija-4-lista/web-2027/mockup/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Stara Srbija — zidni kalendar B3, 4 lista" loading="lazy"></span>
         <span class="card__body">
-          <small>Zidni · 4 lista · 33 × 56 cm</small>
+          <small>4 lista · <span class="calendar-dimensions">33 × 56 cm</span></small>
           <h3>Stara Srbija</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;061</p>
           <p>Seoski pejzaži i tradicionalni motivi</p>
@@ -373,10 +417,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-type="stoni" data-kal-theme="orthodox" data-kal-format="uspravni" href="../kalendari/ikone/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/ikone/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/ikone/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/ikone/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/ikone/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Ikone — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Ikone</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;029</p>
           <p>Pravoslavni kalendar</p>
@@ -384,10 +428,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-type="stoni" data-kal-theme="nature" data-kal-format="uspravni" href="../kalendari/moja-srbija/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/moja-srbija/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/moja-srbija/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/moja-srbija/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/moja-srbija/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Moja Srbija — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Moja Srbija</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;030</p>
           <p>Fotografije prirode Srbije</p>
@@ -395,10 +439,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-type="stoni" data-kal-theme="tradition" data-kal-format="uspravni" href="../kalendari/stara-srbija/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/stara-srbija/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/stara-srbija/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/stara-srbija/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/stara-srbija/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/stara-srbija/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/stara-srbija/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Stara Srbija — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Stara Srbija</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;080</p>
           <p>Fotografije starog srpskog sela</p>
@@ -406,10 +450,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-type="stoni" data-kal-theme="tradition" data-kal-format="uspravni" href="../kalendari/duh-srbije/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-srbije/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/duh-srbije/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/duh-srbije/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-srbije/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/duh-srbije/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/duh-srbije/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Duh Srbije — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Duh Srbije</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;032</p>
           <p>Ilustracije srpskog sela</p>
@@ -417,10 +461,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-type="stoni" data-kal-theme="tradition" data-kal-format="uspravni" href="../kalendari/duh-vremena/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-vremena/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/duh-vremena/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/duh-vremena/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/duh-vremena/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/duh-vremena/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/duh-vremena/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Duh vremena — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Duh vremena</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;031</p>
           <p>Motivi narodne tradicije</p>
@@ -428,10 +472,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-type="stoni" data-kal-theme="orthodox" data-kal-format="uspravni" href="../kalendari/manastiri/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/manastiri/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/manastiri/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/manastiri/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/manastiri/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/manastiri/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/manastiri/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Manastiri — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Manastiri</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;033</p>
           <p>Pravoslavni manastiri</p>
@@ -439,10 +483,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-alias="Priroda" data-kal-type="stoni" data-kal-theme="nature" data-kal-format="uspravni" href="../kalendari/priroda/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/priroda/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/priroda/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/priroda/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/priroda/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="480" alt="Miris prirode — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · uspravni · 14 × 21 cm</small>
+          <small>Stoni, uspravni · <span class="calendar-dimensions">14 × 21 cm</span></small>
           <h3>Miris prirode</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;028</p>
           <p>Fotografije prirode</p>
@@ -450,10 +494,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-alias="Stoni 2 Stoni II" data-kal-type="stoni" data-kal-theme="orthodox" data-kal-format="polozeni" href="../kalendari/ikone-stoni-2/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/ikone-stoni-2/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="400" alt="Ikone II — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · položeni · 23 × 16 cm</small>
+          <small>Stoni, položeni · <span class="calendar-dimensions">23 × 16 cm</span></small>
           <h3>Ikone II</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;064</p>
           <p>Pravoslavni kalendar, položeni format</p>
@@ -461,10 +505,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-alias="Stoni 2 Stoni II" data-kal-type="stoni" data-kal-theme="nature" data-kal-format="polozeni" href="../kalendari/moja-srbija-stoni-2/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/moja-srbija-stoni-2/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="400" alt="Moja Srbija II — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · položeni · 23 × 16 cm</small>
+          <small>Stoni, položeni · <span class="calendar-dimensions">23 × 16 cm</span></small>
           <h3>Moja Srbija II</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;052</p>
           <p>Fotografije srpskih predela, položeni format</p>
@@ -472,10 +516,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product" data-kal-alias="Stoni 2 Stoni II" data-kal-type="stoni" data-kal-theme="nature" data-kal-format="polozeni" href="../kalendari/priroda-stoni-2/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card.webp" srcset="../assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card-400.webp 400w, ../assets/img/kalendari/priroda-stoni-2/web-2027/mockup/card.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="400" alt="Priroda II — stoni kalendar 2027" loading="lazy"></span>
         <span class="card__body">
-          <small>Stoni · položeni · 23 × 16 cm</small>
+          <small>Stoni, položeni · <span class="calendar-dimensions">23 × 16 cm</span></small>
           <h3>Priroda II</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;050</p>
           <p>Fotografije prirode, položeni format</p>
@@ -486,7 +530,7 @@
         <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-trodelni/web-2027-trodelni-v2/thumb/01.webp"
           width="450" height="600" alt="Trodelni kalendar Priroda — januar, šifra 400019" loading="lazy"></span>
         <span class="card__body">
-          <small>Poslovni · trodelni · 31 × 59 cm</small>
+          <small>Trodelni · <span class="calendar-dimensions">31 × 59 cm</span></small>
           <h3>Trodelni kalendar Priroda</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;019</p>
           <p>Fotografije prirode, tri meseca na zidu</p>
@@ -497,7 +541,7 @@
         <span class="card__media card__media--contain"><img src="../assets/img/kalendari/verski-trodelni/web-2027-trodelni-v2/thumb/01.webp"
           width="450" height="600" alt="Trodelni kalendar Verski — januar, šifra 400020" loading="lazy"></span>
         <span class="card__body">
-          <small>Poslovni · trodelni · 31 × 59 cm</small>
+          <small>Trodelni · <span class="calendar-dimensions">31 × 59 cm</span></small>
           <h3>Trodelni kalendar Verski</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;020</p>
           <p>Pravoslavni motivi, tri meseca na zidu</p>
@@ -505,10 +549,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="poslovni" data-kal-theme="orthodox" href="../kalendari/verski-12-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white.webp" srcset="../assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white-400.webp 400w, ../assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white.webp" srcset="../assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white-400.webp 400w, ../assets/img/kalendari/verski-12-lista/web-2027-poslovni-v4/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Verski — poslovni kalendar, 12 listova, januar" loading="lazy"></span>
         <span class="card__body">
-          <small>Poslovni · 12 listova · 30 × 57 cm</small>
+          <small>12 listova · <span class="calendar-dimensions">30 × 57 cm</span></small>
           <h3>Verski</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;055</p>
           <p>Pravoslavni motivi i tromesečni pregled</p>
@@ -516,10 +560,10 @@
           <span class="link-arrow">Pogledaj kalendar <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
         </span>
       </a><a class="card card--product card--wall" data-kal-type="poslovni" data-kal-theme="nature" href="../kalendari/priroda-12-lista/index.html">
-        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white.webp" srcset="../assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white-400.webp 400w, ../assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white.webp 640w" sizes="(max-width: 479px) 46vw, (max-width: 640px) 92vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 390px"
+        <span class="card__media card__media--contain"><img src="../assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white.webp" srcset="../assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white-400.webp 400w, ../assets/img/kalendari/priroda-12-lista/web-2027-poslovni-v4/card-white.webp 640w" sizes="(max-width: 360px) calc(100vw - 58px), (max-width: 479px) calc(50vw - 45px), (max-width: 1099px) calc(44vw - 22px), (max-width: 1279px) calc(33vw - 70px), 330px"
           width="640" height="960" alt="Priroda — poslovni kalendar, 12 listova, januar" loading="lazy"></span>
         <span class="card__body">
-          <small>Poslovni · 12 listova · 30 × 57 cm</small>
+          <small>12 listova · <span class="calendar-dimensions">30 × 57 cm</span></small>
           <h3>Priroda</h3>
           <p class="card__sku">Šifra artikla: 400&nbsp;056</p>
           <p>Fotografije prirode i mesečni pregled</p>
@@ -558,12 +602,12 @@
       <div class="split split--start">
         <div>
           <span class="kicker">Kalendari za firme</span>
-          <h2>Reklama koja ostaje<br><em>na stolu cele godine.</em></h2>
-          <p class="lede">Kalendar stoji na vidnom mestu kod klijenta tokom cele godine — na radnom stolu, recepciji ili pultu. Zato se najčešće poručuje kao poslovni poklon i deo godišnjeg promotivnog materijala firme.</p>
+          <h2>Reklama koja ostaje<br><em>u vidokrugu cele godine.</em></h2>
+          <p class="lede">Zidni kalendar na zidu ili stoni kalendar na radnom stolu, recepciji ili pultu drži vašu poruku na vidnom mestu tokom cele godine. Zato se najčešće poručuje kao poslovni poklon i deo godišnjeg promotivnog materijala firme.</p>
         </div>
         <div>
           <ul class="checklist">
-            <li><b>Sopstveni predlist ili logotip</b> — na upit, uz vašu pripremu</li>
+            <li><b>Sopstveni predlist ili logotip</b> — na upit; gotova priprema nije obavezna. Pomažemo u izradi i šaljemo je na odobrenje pre štampe</li>
             <li><b>Gotove kolekcije ili vaš dizajn</b> — štampu i doradu vodimo mi</li>
             <li><b>Tiraž po dogovoru</b> — količine i rokovi se planiraju sezonski</li>
             <li><b>Isporuka širom Srbije</b> — uz pažljivo pakovanje</li>
@@ -600,7 +644,7 @@
         <p class="lede">Unesite podatke koje znate. Ako nešto ne znate, ostavite prazno — predložićemo rešenje.</p>
       </div>
       <div class="split split--start kal-upit__split">
-        <div class="form-card"><form class="form" id="upit-form" action="https://formsubmit.co/info@demogroup.rs" method="POST" enctype="multipart/form-data">
+        <div class="form-card"><form data-cart-inquiry class="form" id="upit-form" action="https://formsubmit.co/info@demogroup.rs" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="_subject" value="Upit: Kalendari">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_next" value="https://demogroup.rs/hvala/">
@@ -771,9 +815,9 @@
 
 <script src="../assets/js/site.js" defer></script>
 <script src="../assets/js/calendar-filters.js" defer></script>
-<script src="../assets/js/calendar-back.js" defer></script>
 <script src="../assets/js/calendar-inventory.js" defer></script>
 <script src="../assets/js/calendar-cart.js" defer></script>
 <script src="../assets/js/calendar-inquiry.js" defer></script>
+<script src="../assets/js/calendar-back.js" defer></script>
 </body>
 </html>

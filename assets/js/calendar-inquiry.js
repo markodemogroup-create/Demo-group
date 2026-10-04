@@ -38,7 +38,12 @@
   var navEntry = null;
   try { navEntry = performance.getEntriesByType("navigation")[0] || null; } catch (e) { navEntry = null; }
   if (navEntry && navEntry.type === "back_forward") { state("idle:history"); return; }
-  if (!window.matchMedia("(max-width: 1080px)").matches) { state("idle:two-column"); return; }
+  /* 2026-10-04: all widths (was ≤ 1080 px). On desktop the price block can also
+     grow the column above #upit (Trodelni Priroda @1366: section ended 149 px
+     low). The native fragment scroll runs instant while this coordinates, so the
+     browser can hold the section in place as blocks render; smooth is restored. */
+  var root = document.documentElement, prevBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
 
   var form = section.querySelector("form");
   var done = false, raf = 0, fallbackTimer = 0;
@@ -79,6 +84,7 @@
     window.removeEventListener("pagehide", onHide);
     if (raf) { window.cancelAnimationFrame(raf); raf = 0; }
     if (fallbackTimer) { window.clearTimeout(fallbackTimer); fallbackTimer = 0; }
+    if (root.style.scrollBehavior === "auto") root.style.scrollBehavior = prevBehavior;
   }
   function cancel(reason) {
     if (done) return;

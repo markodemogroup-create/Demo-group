@@ -154,8 +154,26 @@
     try { qty = new URLSearchParams(window.location.search).get("kolicina"); } catch (e) { qty = null; }
     if (!qty || !/^\d{1,6}$/.test(qty)) return;
     var field = document.querySelector('form.form input[name="Količina ili tiraž"]');
-    if (field && !field.value) field.value = qty;
+    if (field && !field.value) {
+      field.value = qty;
+      field.dataset.kalAutoQuantity = qty;
+    }
   })();
+
+  /* Product quote links retain the selected run; model and SKU stay in the
+     product form's existing hidden fields. Never submits the inquiry. */
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href="#upit"]');
+    var quantity = document.querySelector("[data-commerce] .qty__input");
+    var field = document.querySelector('#upit input[name="Količina ili tiraž"]');
+    if (!link || !quantity || !field || !quantity.checkValidity() || !/^\d+$/.test(quantity.value)) return;
+    // Stock-limit inquiry links already carry their explicitly requested run.
+    if (link.classList.contains("kal-buy__link")) return;
+    // Refresh only our own prefill; a manually edited inquiry is a customer draft.
+    if (field.value && field.value !== field.dataset.kalAutoQuantity) return;
+    field.value = quantity.value;
+    field.dataset.kalAutoQuantity = quantity.value;
+  });
 
   /* -- 5. Forms ------------------------------------------------------------ */
   var MAX_BYTES = 10 * 1024 * 1024;

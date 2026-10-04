@@ -117,6 +117,7 @@
   function writeUrl(state) {
     try {
       var u = new URLSearchParams();
+      if (new URLSearchParams(location.search).get("upit") === "korpa") u.set("upit", "korpa");
       PARAMS.forEach(function (k) { if (state[k]) u.set(k, state[k]); });
       var qs = u.toString();
       var next = window.location.pathname + (qs ? "?" + qs : "") + window.location.hash;
@@ -190,7 +191,9 @@
       var h = card.querySelector("h3");
       var name = h ? h.textContent.replace(/\s+/g, " ").trim() : "";
       var alias = card.dataset.kalAlias || "";
-      var hayTokens = tokens(name + " " + year + " " + alias);
+      var skuEl = card.querySelector(".card__sku");
+      var sku = skuEl ? skuEl.textContent.replace(/\D/g, "") : "";
+      var hayTokens = tokens(name + " " + year + " " + alias + " " + sku);
       return {
         el: card,
         index: i,
@@ -229,11 +232,11 @@
         c.classList.toggle("kal-chip--on", on);
         if (on) c.setAttribute("aria-current", "page"); else c.removeAttribute("aria-current");
       });
-      if (countEl) countEl.textContent = (typeId ? items.filter(function (it) { return it.type === typeId; }).length : total) + " modela za 2027.";
+      if (countEl) countEl.textContent = "Ceo katalog: " + total + " modela" + (year ? " · " + year + "." : ".");
     }
 
     function apply(persist) {
-      var queryTokens = tokens(q.value);
+      var queryTokens = tokens(normalize(q.value).replace(/\b(\d{3}) (\d{3})\b/g, "$1$2"));
       var themeId = theme.value;
       var formatId = format ? format.value : "";
       var order = items.slice();
@@ -252,11 +255,16 @@
       });
       var active = (formatId ? 1 : 0) + (themeId ? 1 : 0) + (sort.value ? 1 : 0);
       var detail = "";
-      if (typeId) { var chip = chipFor(typeId); detail += " · Vrsta: " + (chip ? chip.textContent.replace(/\s+/g, " ").trim() : typeId); }
+      var categoryTotal = typeId ? items.filter(function (item) { return item.type === typeId; }).length : total;
+      var scope = typeChips.length ? " u celom katalogu" : " na ovoj stranici";
+      if (typeId) {
+        var chip = chipFor(typeId);
+        scope = " u kategoriji „" + (chip ? chip.textContent.replace(/\s+/g, " ").trim() : typeId) + "“";
+      }
       if (formatId) detail += " · Format: " + optionLabel(format);
       if (themeId) detail += " · Tema: " + themeLabel();
       if (sort.value === "az") detail += " · Sortiranje: naziv A–Ž";
-      if (status) status.textContent = "Prikazano: " + shown + " od " + total + detail;
+      if (status) status.textContent = "Rezultati: " + shown + " od " + categoryTotal + scope + detail;
       if (empty) empty.hidden = shown !== 0;
       if (toggle) toggle.setAttribute("data-active", String(active));
       if (badge) badge.textContent = String(active);

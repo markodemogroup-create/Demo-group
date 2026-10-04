@@ -142,6 +142,7 @@
   function writeCart(lines) {
     try { localStorage.setItem(KEY, JSON.stringify(lines)); } catch (e) {}
     updateBadge();
+    window.dispatchEvent(new Event("dg:cart-change"));
   }
 
   function cartCount() {
@@ -227,7 +228,6 @@
     if (header) header.classList.add("has-cart");   /* lets the phone label yield space */
 
     cartLinkEl.addEventListener("click", function (e) {
-      if (document.querySelector("[data-cart-page]")) return;
       if (!window.dgOverlay || !inv) return;
       e.preventDefault();
       openDrawer(null);
@@ -287,7 +287,7 @@
       var requested = v, capped = false;
       if (v > opts.max) { v = opts.max; capped = true; }
       if (v < opts.min) v = opts.min;
-      input.value = String(v);
+      if (input.value !== String(v)) input.value = String(v);
       last = v;
       opts.onChange(v, capped, requested);
     }
@@ -299,6 +299,10 @@
     });
     plus.addEventListener("click", function () { var v = current(); apply((isNaN(v) ? last : v) + 1); });
     input.addEventListener("change", function () { apply(current()); });
+    if (opts.live) input.addEventListener("input", function () {
+      var v = current();
+      if (!isNaN(v) && v >= opts.min && v <= opts.max) apply(v);
+    });
     return {
       root: wrap, input: input, minus: minus, plus: plus,
       set: function (v) { input.value = String(v); last = v; },
@@ -475,7 +479,10 @@
     if (t) { try { t.focus(); } catch (e) {} }
   }
 
+  var drawerData = null;
   function renderDrawer(data, addedId) {
+    drawerData = data;
+    var focused = drawerEl.contains(document.activeElement) ? document.activeElement.getAttribute("data-focus-key") : null;
     var view = evaluate(data);
     var addedRow = null;
     view.rows.forEach(function (r) { if (r.id === addedId) addedRow = r; });
@@ -515,14 +522,53 @@
       var body = el("div", null);
       body.appendChild(el("p", "cart-line__name", nameText));
       if (variantOf(row)) body.appendChild(el("p", "cart-line__meta", variantOf(row) + (skuOf(row) ? " · šifra " + skuOf(row) : "")));
+      var quantityMeta = null;
       if (row.available) {
-        body.appendChild(el("p", "cart-line__meta",
-          row.quantity + " kom × " + net(row.pricePara, data)));
+        quantityMeta = el("p", "cart-line__meta", row.quantity + " kom × " + net(row.pricePara, data));
+        body.appendChild(quantityMeta);
       }
       row.notes.concat(row.messages).forEach(function (m) {
         body.appendChild(el("p", "cart-line__msg", m));
       });
       if (row.inquiry) body.appendChild(inquiryLink(row, "cart-line__inquiry"));
+      if (row.available) {
+        var qtyMessage = el("p", "cart-line__msg");
+        qtyMessage.setAttribute("aria-live", "polite");
+        var change = function (v, capped, requested) {
+          if (sending) return;
+          setQuantity(row.id, v, { price: row.pricePara / 100, wanted: capped ? requested : null });
+          if (lastData) render(data);
+          if (v > 0 && !capped && !row.wanted) {
+            // Keep the active control attached and its native caret/selection intact.
+            // Only price labels and the inquiry link change during ordinary editing.
+            row.quantity = v;
+            quantityMeta.textContent = v + " kom × " + net(row.pricePara, data);
+            side.querySelector(".cart-line__sub").firstChild.nodeValue = money(row.pricePara * v) + " ";
+            quote.href = rootUrl + row.entry.url + "?kolicina=" + v + "#upit";
+            qtyMessage.textContent = "";
+            addedBox.hidden = true;
+            var next = evaluate(data);
+            drawerEl.querySelector(".cart-drawer__total b").textContent = money(next.totalPara);
+            commit(next);
+          } else {
+            renderDrawer(data, null);
+            if (!v) focusDrawerLine(index);
+          }
+        };
+        var qty = buildQty({
+          min: 1, max: row.stock === null ? QTY_LIMIT : row.stock,
+          value: row.quantity, focusKey: "drawer:" + row.id, live: true,
+          onChange: change,
+          onBelowMin: function () { change(0, false, 0); },
+          onInvalid: function (message) { qtyMessage.textContent = message; }
+        });
+        [qty.minus, qty.input, qty.plus].forEach(function (control) { control.disabled = !!sending; });
+        body.appendChild(qty.root);
+        body.appendChild(qtyMessage);
+        var quote = el("a", "cart-line__inquiry", "Upit za uštampavanje");
+        quote.href = rootUrl + row.entry.url + "?kolicina=" + row.quantity + "#upit";
+        body.appendChild(quote);
+      }
       line.appendChild(body);
 
       var side = el("div", "cart-line__side");
@@ -530,8 +576,11 @@
       var remove = el("button", "cart-item__remove", "Ukloni");
       remove.type = "button";
       remove.setAttribute("aria-label", "Ukloni " + nameText + " iz korpe");
+      remove.disabled = !!sending;
       remove.addEventListener("click", function () {
+        if (sending) return;
         setQuantity(row.id, 0);
+        if (lastData) render(data);
         renderDrawer(data, null);
         focusDrawerLine(index);
       });
@@ -559,6 +608,10 @@
     cont.addEventListener("click", hideDrawer);
     foot.appendChild(cont);
     commit(view);                                   /* what the drawer shows is now the seen state */
+    if (focused) Array.prototype.some.call(drawerEl.querySelectorAll("[data-focus-key]"), function (control) {
+      if (control.getAttribute("data-focus-key") !== focused) return false;
+      control.focus(); return true;
+    });
   }
 
   function openDrawer(addedId) {
@@ -573,6 +626,13 @@
     }).catch(function () { /* no data at all — the header link still works */ });
     return true;
   }
+
+  window.addEventListener("storage", function (e) {
+    if (e.key !== KEY || sending || !drawerEl || drawerEl.hidden || !drawerData) return;
+    inv.reload().catch(function () { return drawerData; }).then(function (data) {
+      if (!sending && !drawerEl.hidden) renderDrawer(data, null);
+    });
+  });
 
   /* --- product page commerce block ---------------------------------------- */
 
@@ -694,6 +754,70 @@
 
       box.hidden = false;
     }).catch(function () { /* no data — commerce stays hidden */ });
+  })();
+
+  /* Whole-cart inquiry: only a mode flag travels in the URL. The automatic
+     list is rebuilt from the cart; the customer's message stays separate. */
+  (function mountCartInquiry() {
+    var inquiry = document.querySelector("form[data-cart-inquiry]");
+    if (!inquiry || !inv || new URLSearchParams(location.search).get("upit") !== "korpa") return;
+    var draftKey = "dgCalendarInquiryMessageV1";
+    var message = inquiry.querySelector('textarea[name="Poruka"]');
+    var qtyField = inquiry.querySelector('input[name="Količina ili tiraž"]');
+    if (qtyField) { qtyField.disabled = true; qtyField.closest("label").hidden = true; }
+    var section = el("div", "field cart-inquiry-selection");
+    var label = el("label", null, "Izabrani kalendari");
+    label.htmlFor = "cart-inquiry-items";
+    var list = el("textarea", null);
+    list.id = "cart-inquiry-items"; list.name = "Proizvodi iz korpe";
+    list.rows = 2; list.readOnly = true;
+    list.setAttribute("aria-describedby", "cart-inquiry-help");
+    var note = el("p", "form__note", "Spisak prati trenutnu korpu. Vašu poruku pišite odvojeno ispod; promena spiska je ne briše.");
+    note.id = "cart-inquiry-help";
+    var status = el("p", "form__status"); status.setAttribute("role", "status");
+    section.appendChild(label); section.appendChild(list); section.appendChild(note); section.appendChild(status);
+    inquiry.insertBefore(section, inquiry.firstChild);
+    var button = inquiry.querySelector('button[type="submit"]');
+    var snapshot = null, data = null;
+    function sizeList() {
+      list.style.height = "auto";
+      list.style.height = Math.min(list.scrollHeight + 2, 420) + "px";
+      note.textContent = (list.scrollHeight > list.clientHeight + 2 ? "Spisak se nastavlja — pomerite sadržaj polja naniže. " : "") + "Spisak prati korpu. Vašu poruku pišite odvojeno ispod; promene korpe je ne brišu.";
+    }
+    window.addEventListener("resize", sizeList);
+    function cartSignature() { return JSON.stringify(readCart().map(function (line) { return [line.productId, line.quantity]; })); }
+    function refresh() {
+      if (!data) return;
+      var lines = readCart();
+      list.value = lines.map(function (line, i) {
+        var product = data.products[line.productId];
+        return (i + 1) + ". " + (product ? product.name + (product.variant ? " — " + product.variant : "") : line.productId) +
+          "\nŠifra: " + (product && product.sku ? skuNice(product.sku) : "nije dostupna") + "\nKoličina: " + line.quantity;
+      }).join("\n\n");
+      sizeList();
+      var current = cartSignature();
+      status.textContent = !lines.length ? "Korpa je prazna. Dodajte proizvode pre slanja upita. Vaša poruka je sačuvana." :
+        snapshot !== null && current !== snapshot ? "Spisak je ažuriran prema korpi. Proverite stavke pre slanja." : "";
+      snapshot = current;
+      if (button) button.disabled = !lines.length;
+    }
+    try { if (message && !message.value) message.value = sessionStorage.getItem(draftKey) || ""; } catch (e) {}
+    if (message) message.addEventListener("input", function () {
+      try { sessionStorage.setItem(draftKey, message.value); } catch (e) {}
+    });
+    if (button) button.disabled = true;
+    inv.load().then(function (loaded) { data = loaded; refresh(); }).catch(function () {
+      status.textContent = "Spisak proizvoda trenutno nije dostupan. Osvežite stranicu; upit nije poslat.";
+    });
+    window.addEventListener("storage", function (event) { if (event.key === KEY) refresh(); });
+    window.addEventListener("dg:cart-change", refresh);
+    window.addEventListener("pageshow", refresh);
+    inquiry.addEventListener("submit", function (event) {
+      if (!data || !readCart().length || snapshot !== cartSignature()) {
+        event.preventDefault(); refresh();
+        if (data && readCart().length) status.textContent = "Korpa je izmenjena. Proverite ažurirani spisak i ponovo pošaljite upit.";
+      }
+    }, true);
   })();
 
   /* --- cart page ----------------------------------------------------------- */
@@ -948,7 +1072,7 @@
       var ask = el("p", "cart-summary__ask");
       ask.appendChild(document.createTextNode("Veći tiraž ili posebno uštampavanje? "));
       var askA = el("a", null, "Zatražite ponudu");
-      askA.href = rootUrl + "kalendari/index.html#upit";
+      askA.href = rootUrl + "kalendari/index.html?upit=korpa#upit";
       ask.appendChild(askA);
       ask.appendChild(document.createTextNode("."));
       summaryEl.appendChild(ask);
@@ -1048,7 +1172,7 @@
      quantity controls, "Ukloni" and "Isprazni korpu" are disabled together with the submit button */
   function lockCart(on) {
     if (layoutEl) { layoutEl.classList.toggle("cart-layout--sending", !!on); layoutEl.setAttribute("aria-busy", on ? "true" : "false"); }
-    var ctrls = cartRoot.querySelectorAll("[data-cart-items] button, [data-cart-items] input, [data-cart-summary] button");
+    var ctrls = document.querySelectorAll("[data-cart-items] button, [data-cart-items] input, [data-cart-summary] button, .cart-drawer__list button, .cart-drawer__list input");
     Array.prototype.forEach.call(ctrls, function (c) { c.disabled = !!on; });
   }
   function setSending(on) {

@@ -18,17 +18,16 @@
    to the category link in the markup. Nothing else (referrer, history length,
    arbitrary URLs) is ever used as a destination.
 
-   The position is restored on the listing only right after the back link was
-   activated with a plain click; any user interaction (wheel, touch, pointer,
-   keyboard) cancels a pending restoration. Native history restoration is not
-   changed.
+   A recorded Navigation API entry is traversed for an explicit return. When
+   unavailable, a one-shot restoration follows the filtered layout dependencies.
+   Native Back/Forward and reload restoration remain browser-owned.
    ========================================================================== */
 (function () {
   "use strict";
   var KEY = "dgKalBack", FLAG = "dgKalBackRestore", CHAIN_MAX = 12, FLAG_MAX_AGE = 60000;
   var LISTING = /^\/kalendari\/(?:(?:7-lista|4-lista|stoni|poslovni)\/)?(?:index\.html)?$/;
   var PRODUCT = /^\/kalendari\/[a-z0-9-]+\/index\.html$/;
-  var PARAMS = { vrsta: 1, q: 1, tema: 1, format: 1, sort: 1 };
+  var PARAMS = { vrsta: 1, q: 1, tema: 1, format: 1, sort: 1, upit: 1 };
 
   function norm(p) { return /\/$/.test(p) ? p + "index.html" : p; }
   function here() { return norm(location.pathname); }
@@ -55,10 +54,10 @@
       u.searchParams.forEach(function (v, k) { if (!PARAMS[k] || v.length > 80) ok = false; });
       if (!ok) return null;
       for (var i = 0; i < o.chain.length; i++) { if (typeof o.chain[i] !== "string" || !PRODUCT.test(o.chain[i]) || LISTING.test(o.chain[i])) return null; }
-      return { url: u.pathname + u.search, y: (typeof o.y === "number" && isFinite(o.y) && o.y > 0) ? Math.floor(o.y) : 0, chain: o.chain.slice() };
+      return { entryKey: typeof o.entryKey === "string" ? o.entryKey : null, url: u.pathname + u.search, y: (typeof o.y === "number" && isFinite(o.y) && o.y > 0) ? Math.floor(o.y) : 0, chain: o.chain.slice() };
     } catch (e) { return null; }
   }
-  function write(ctx) { try { sessionStorage.setItem(KEY, JSON.stringify({ url: ctx.url, y: ctx.y, chain: ctx.chain, t: Date.now() })); } catch (e) {} }
+  function write(ctx) { try { sessionStorage.setItem(KEY, JSON.stringify({ url: ctx.url, y: ctx.y, chain: ctx.chain, entryKey: ctx.entryKey || null, t: Date.now() })); } catch (e) {} }
   function plainClick(e) { return e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && !e.defaultPrevented; }
   function cardOf(e) { return e.target && e.target.closest ? e.target.closest("a.card--product") : null; }
 
@@ -69,7 +68,19 @@
     if (ctx && ctx.chain.indexOf(here()) !== -1) {
       link.href = ctx.url;
       link.setAttribute("data-kal-back-context", "listing");
-      link.addEventListener("click", function (e) { if (!plainClick(e)) return; try { sessionStorage.setItem(FLAG, String(Date.now())); } catch (err) {} });
+      link.addEventListener("click", function (e) {
+        if (!plainClick(e)) return;
+        // Return to the exact recorded history entry, preserving the browser's
+        // scroll/layout restoration rather than creating a new page at y=0.
+        if (ctx.entryKey && window.navigation && window.navigation.entries) {
+          var entries = window.navigation.entries(), current = window.navigation.currentEntry;
+          var destination = entries.filter(function (entry) { return entry.key === ctx.entryKey; })[0];
+          if (current && destination && destination.index < current.index) {
+            e.preventDefault(); history.go(destination.index - current.index); return;
+          }
+        }
+        try { sessionStorage.setItem(FLAG, String(Date.now())); } catch (err) {}
+      });
       /* related products opened from product cards continue the same journey */
       document.addEventListener("click", function (e) {
         var a = cardOf(e); if (!a) return;
@@ -84,10 +95,19 @@
 
   /* --- listing pages: remember where the customer left (and which product), restore on return --- */
   if (!LISTING.test(location.pathname)) return;
+  window.dgKalRestoreHandler = true;
+  function rememberPosition() {
+    if (window.dgKalRestore || location.hash) return;
+    var state = Object.assign({}, history.state || {});
+    state.dgKalScroll = { url: location.pathname + location.search, y: Math.round(scrollY) };
+    try { history.replaceState(state, ""); } catch (e) {}
+  }
+  window.addEventListener("pagehide", rememberPosition);
   document.addEventListener("click", function (e) {
     var a = cardOf(e); if (!a) return;
     var p = productPath(a.getAttribute("href")); if (!p) return;
-    write({ url: location.pathname + location.search, y: Math.round(window.scrollY), chain: [p] });
+    rememberPosition();
+    write({ entryKey: window.navigation && window.navigation.currentEntry ? window.navigation.currentEntry.key : null, url: location.pathname + location.search, y: Math.round(window.scrollY), chain: [p] });
   }, true);
 
   var restore = false;
@@ -95,24 +115,14 @@
     var stamp = sessionStorage.getItem(FLAG);
     if (stamp !== null) { sessionStorage.removeItem(FLAG); var age = Date.now() - Number(stamp); restore = stamp === "1" || (isFinite(age) && age >= 0 && age <= FLAG_MAX_AGE); }
   } catch (e) {}
-  if (!restore) return;
-  var back = read();
-  if (!back || back.url !== location.pathname + location.search || !back.y) return;
-  /* the filters are applied before first paint by calendar-filters.js; jump without animation, twice
-     (lazy card images can still shift the layout a little during the first moments) — unless the
-     customer starts scrolling or interacting first, which cancels whatever is still pending */
-  var root = document.documentElement, prev = root.style.scrollBehavior, timers = [], done = false;
-  var CANCEL = ["wheel", "touchstart", "pointerdown", "mousedown", "keydown"];
-  function finish() {
-    if (done) return;
-    done = true;
-    for (var i = 0; i < timers.length; i++) window.clearTimeout(timers[i]);
-    for (var j = 0; j < CANCEL.length; j++) window.removeEventListener(CANCEL[j], finish, true);
-    if (root.style.scrollBehavior === "auto") root.style.scrollBehavior = prev;
+  var back = restore ? read() : null;
+  var target = !window.dgKalRestoreAbandoned && (window.dgKalRestore || (back && back.url === location.pathname + location.search ? back : null));
+  if (!target || location.hash) {
+    delete window.dgKalRestore;
+    document.documentElement.classList.remove("kal-restoring");
+    return;
   }
-  function jump() { if (!done) window.scrollTo(0, Math.min(back.y, Math.max(0, root.scrollHeight - window.innerHeight))); }
-  root.style.scrollBehavior = "auto";
-  for (var k = 0; k < CANCEL.length; k++) window.addEventListener(CANCEL[k], finish, { capture: true, passive: true });
-  timers.push(window.setTimeout(jump, 40));
-  timers.push(window.setTimeout(function () { jump(); finish(); }, 340));
+  // The catalogue filters run synchronously. Network resources must never
+  // hold the page hidden; the head's DOMContentLoaded handler restores and
+  // reveals after the browser has applied its native history restoration.
 })();
