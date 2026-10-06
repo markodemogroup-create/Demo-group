@@ -38,7 +38,9 @@
    Owner decision 2026-09-26 (final): the whole site shows ONLY net EUR prices;
    every amount carries the basis wording ("bez PDV-a") — unit prices, line
    amounts, the one amount of goods and the order e-mail fields. No gross price,
-   no separate VAT line.
+   no separate VAT line. Owner decision 2026-10-06: the main price on the
+   product page ("0,97 EUR po komadu") and the catalogue card price show the
+   amount without the wording; amounts, basis and calculation are unchanged.
 
    Consistency rules (independent review 2026-09-24, R1–R3):
    - evaluate() is a pure comparison of the stored cart against CURRENT data; it
@@ -395,6 +397,12 @@
   function nameOf(row) { return (row.entry && row.entry.name) ? row.entry.name : row.id; }
   function variantOf(row) { return row.entry && row.entry.variant ? row.entry.variant : ""; }
   function skuOf(row) { return row.entry && row.entry.sku ? skuNice(row.entry.sku) : ""; }
+  /* "Šifra artikla 400 001" on its own line; the number in its own element so it stands out (style.css §44) */
+  function skuLine(className, sku) {
+    var p = el("p", className, "Šifra artikla ");
+    p.appendChild(el("span", "sku-num", sku));
+    return p;
+  }
 
   function inquiryLink(row, className) {
     var a = el("a", className || "cart-item__inquiry", "Pošaljite upit za " + row.inquiry.qty + " " + komad(row.inquiry.qty));
@@ -521,7 +529,8 @@
 
       var body = el("div", null);
       body.appendChild(el("p", "cart-line__name", nameText));
-      if (variantOf(row)) body.appendChild(el("p", "cart-line__meta", variantOf(row) + (skuOf(row) ? " · šifra " + skuOf(row) : "")));
+      if (variantOf(row)) body.appendChild(el("p", "cart-line__meta", variantOf(row)));
+      if (skuOf(row)) body.appendChild(skuLine("cart-line__meta cart-sku", skuOf(row)));
       var quantityMeta = null;
       if (row.available) {
         quantityMeta = el("p", "cart-line__meta", row.quantity + " kom × " + net(row.pricePara, data));
@@ -652,7 +661,7 @@
       box.textContent = "";
 
       var priceRow = el("p", "kal-buy__price", inv.formatMoney(price));
-      var unit = el("small", null, " po komadu · " + inv.priceBasis(data));
+      var unit = el("small", null, " po komadu");    /* owner decision 2026-10-06: no basis wording beside the main price */
       priceRow.appendChild(unit);
       box.appendChild(priceRow);
       /* the list price never includes the imprint — said right beside the price, above the purchase controls */
@@ -932,10 +941,8 @@
       name.textContent = nameText;
     }
     body.appendChild(name);
-    var metaBits = [];
-    if (variantOf(row)) metaBits.push(variantOf(row));
-    if (skuOf(row)) metaBits.push("Šifra artikla " + skuOf(row));
-    if (metaBits.length) body.appendChild(el("p", "cart-item__meta", metaBits.join(" · ")));
+    if (variantOf(row)) body.appendChild(el("p", "cart-item__meta", variantOf(row)));
+    if (skuOf(row)) body.appendChild(skuLine("cart-item__meta cart-sku", skuOf(row)));
     if (row.available) {
       ref.unit = el("p", "cart-item__unit", money(row.pricePara) + " po komadu · " + inv.priceBasis(lastData));
       body.appendChild(ref.unit);

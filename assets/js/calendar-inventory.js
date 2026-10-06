@@ -206,15 +206,14 @@
 
     /* retail price line, only while the product is sellable — created here so
        the card markup needs no extra slot and pages without commerce data
-       render exactly as before */
+       render exactly as before. Owner decision 2026-10-06: the card shows the
+       amount alone ("0,97 EUR"); the basis wording stays in the cart, the
+       drawer, the order and the general price explanations. */
     var price = priceFor(data, entry);
     if (price !== null && !el.parentNode.querySelector(".card-price")) {
       var pe = document.createElement("span");
       pe.className = "card-price";
-      pe.textContent = formatMoney(price) + " ";
-      var basis = document.createElement("small");
-      basis.textContent = priceBasis(data);
-      pe.appendChild(basis);
+      pe.textContent = formatMoney(price);
       el.parentNode.insertBefore(pe, el.nextSibling);
     }
   }
