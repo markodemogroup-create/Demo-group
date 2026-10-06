@@ -4116,3 +4116,51 @@ a.cart-line__media:focus-visible{ outline: 2px solid var(--crimson); outline-off
 @media (max-width: 479px){
   .kal-cat-grid--wall:not(.kal-cat-grid--all) .avail{ padding-inline: 8px; gap: 6px; }
 }
+
+/* == 39  Specifikacije: „Pakovanje: 50/1“ (2026-10-06) ===============================================================
+   Novi red u listi .pp-facts na 28 strana (7 listova, 4 lista, stoni; poslovni bez oznake). Podatak o pakovanju — ne menja
+   minimalnu količinu (1), korak (1), cenu po komadu ni korpu. Lista ima 3 kolone od 641 px; strane sa 4 lista sada imaju
+   10 stavki, pa bi poslednja stajala sama uz dva prazna (siva) polja — samo tada zauzima ceo red. Ostale strane: 9 stavki
+   (pun raspored) ili 8 kod poslovnih (nepromenjeno). */
+.pp-facts > div:nth-child(3n+1):last-child{ grid-column: 1 / -1; }
+
+/* == 40  PREDLOG P1 — veće slike u katalogu (lokalni predlog 2026-10-06, NIJE odobren) ===============================
+   Merenje (QA PAKOVANJE-PREDLOZI, b1/b2): zidni fajlovi su tesni (sadržaj ~87 × 94 %), ali su na hubu u vodoravnim
+   okvirima (1,5 : 1 desktop, 1,25 : 1 do 360 px) uspravni proizvodi sitni — zidni 37 %, poslovni i trodelni 31 % širine
+   okvira na desktopu; Stoni I ima ~25 % beline levo i desno u samom fajlu. Iste slike, object-fit contain (bez rastezanja),
+   uvećanje samo u belini fajla: proizvod ceo u kadru, ≥ max(6 px, 3 %) od ivice okvira i pri hover-u (×1,02).
+   Hub: okvir desktop 1,5 → 1,25; telefoni u dve kolone (361–640 px) 1 : 1 → 4 : 5; jedna kolona (≤ 360 px) 1,25 → 1 : 1
+   samo za uspravne proizvode; tableti (641–900 px) bez promene. Stona kategorija: 16 : 11 / 16 : 10 → 4 : 3.
+   Uvećanje u belini fajla: Stoni I ×1,25 (hub do 900 px), Stoni II ×1,10 (hub) i ×1,05 (stona kategorija).
+   Zidne kategorije (7, 4 lista) i poslovna kategorija se ne menjaju: proizvod već zauzima 86–95 % visine okvira.
+   Broj kolona, redosled i 3D vizuali na početnoj nepromenjeni. */
+@media (min-width: 901px){
+  .calendar-hub .kal-cat-grid--all .card--product .card__media{ aspect-ratio: 1.25; }
+}
+@media (max-width: 360px){   /* jedna kolona: viši okvir samo za uspravne proizvode */
+  .calendar-hub .kal-cat-grid--all .card--product.card--wall .card__media,
+  .calendar-hub .kal-cat-grid--all .card--product[data-kal-format="uspravni"] .card__media{ aspect-ratio: 1; }
+}
+@media (min-width: 361px) and (max-width: 640px){   /* telefoni u dve kolone: 29 od 32 modela su uspravni proizvodi */
+  .calendar-hub .kal-cat-grid--all .card--product .card__media{ aspect-ratio: 4 / 5; }
+}
+.kal-cat-grid--desk .card--product .card__media{ aspect-ratio: 4 / 3; }
+/* uvećanje po formatu — samo gde fajl ima dovoljno beline (izmereno), nikad isti faktor za sve */
+.calendar-hub .kal-cat-grid--all a.card.card--product .card__media img,
+.kal-cat-grid--desk a.card.card--product .card__media img{ transform: scale(var(--kal-zoom, 1)); }
+@media (hover: hover) and (pointer: fine){
+  .calendar-hub .kal-cat-grid--all a.card.card--product:hover .card__media img,
+  .kal-cat-grid--desk a.card.card--product:hover .card__media img{ transform: scale(calc(var(--kal-zoom, 1) * 1.02)); }
+}
+@media (max-width: 900px){   /* Stoni I u kvadratnim okvirima huba */
+  .calendar-hub .kal-cat-grid--all [data-kal-format="uspravni"] .card__media img{ --kal-zoom: 1.25; }
+}
+.calendar-hub .kal-cat-grid--all [data-kal-format="polozeni"] .card__media img{ --kal-zoom: 1.1; }
+.kal-cat-grid--desk [data-kal-format="polozeni"] .card__media img{ --kal-zoom: 1.05; }
+
+/* == 41  PREDLOG P2 — „Zatražite ponudu“ odmah ispod količine i korpe (lokalni predlog 2026-10-06, NIJE odobren) ==========
+   Na 32 strane proizvoda postojeća grupa poziva (pitanje „Potrebna vam je veća količina ili brendiranje?“, „Zatražite
+   ponudu“, telefon, „Upit ne obavezuje…“) premeštena je u HTML-u odmah posle bloka kupovine (.kal-buy), ispred osnovnih
+   podataka i šifre — bez novih dugmadi, istim stilom (sekundarno dugme) i istim tokom upita (#upit; site.js prenosi
+   izabranu količinu). Ovde samo razmak liste podataka, koja sada dolazi posle te grupe. */
+.kal-panel--v3 .form__promise + .kal-facts{ margin-top: var(--s-5); }
