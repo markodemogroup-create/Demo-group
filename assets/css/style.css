@@ -4164,3 +4164,13 @@ a.cart-line__media:focus-visible{ outline: 2px solid var(--crimson); outline-off
    podataka i šifre — bez novih dugmadi, istim stilom (sekundarno dugme) i istim tokom upita (#upit; site.js prenosi
    izabranu količinu). Ovde samo razmak liste podataka, koja sada dolazi posle te grupe. */
 .kal-panel--v3 .form__promise + .kal-facts{ margin-top: var(--s-5); }
+
+/* == 42  Specifikacije: red „Uštampavanje“ (2026-10-06) =============================================================
+   Novi red u .pp-facts odmah posle „Prostor za uštampavanje“ (tehnika uštampavanja; bez izbora tehnike, doplate i novog
+   obračuna). Lista ima 3 kolone od 641 px: strane sa 4 lista sada imaju 11 stavki, pa bi poslednje dve stajale uz jedno
+   prazno (sivo) polje — tada poslednja stavka zauzima dve kolone. Strane sa 10 stavki pokriva §39, sa 9 je raspored pun.
+   Isto pravilo popunjava i poslednji red lista sa 8 stavki (poslovni, ako ostanu bez reda). Samo od 641 px: u jednoj
+   koloni (telefon) „span 2“ bi napravio drugu, implicitnu kolonu. */
+@media (min-width: 641px){
+  .pp-facts > div:nth-child(3n+2):last-child{ grid-column: span 2; }
+}
