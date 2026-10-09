@@ -296,6 +296,179 @@
       return list;
     }
 
+    /* Local proposal: opt-in detail viewer for the four business calendars.
+       Existing image bytes are used; zoom stops at source-pixel size. */
+    function setupDetailViewer() {
+      var panel = $('.lightbox__panel', lightbox);
+      var viewport = $('.lightbox__stage', lightbox);
+      var caption = $('.lightbox__caption', lightbox);
+      var close = $('.lightbox__close', lightbox);
+      var previous = $('.lightbox__nav--prev', lightbox);
+      var following = $('.lightbox__nav--next', lightbox);
+      var canvas = document.createElement('div');
+      var toolbar = document.createElement('div');
+      var footer = document.createElement('div');
+      var hint = document.createElement('p');
+      var error = document.createElement('p');
+      var factor = 1, fit = 1, iw = 0, ih = 0, ready = false, request = 0;
+      var drag = null;
+      lightbox.classList.add('lightbox--detail');
+      lightbox.setAttribute('aria-label', 'Detaljan pregled kalendara');
+      canvas.className = 'kal-detail__canvas';
+      canvas.appendChild(lbImage);
+      viewport.appendChild(canvas);
+      viewport.tabIndex = 0;
+      viewport.setAttribute('role', 'region');
+      viewport.setAttribute('aria-label', 'Slika kalendara. Uvećanu sliku pomerajte prstom, mišem ili strelicama.');
+      toolbar.className = 'kal-detail__toolbar';
+      toolbar.setAttribute('role', 'group');
+      toolbar.setAttribute('aria-label', 'Uvećanje kalendara');
+      toolbar.innerHTML = '<button type="button" data-detail-minus aria-label="Umanji">−</button>' +
+        '<output data-detail-scale aria-live="polite">1×</output>' +
+        '<button type="button" data-detail-plus aria-label="Uvećaj">+</button>' +
+        '<button type="button" data-detail-fit>Ceo kalendar</button>';
+      toolbar.appendChild(close);
+      panel.insertBefore(toolbar, viewport);
+      footer.className = 'kal-detail__footer';
+      previous.setAttribute('aria-label', 'Prethodni list');
+      following.setAttribute('aria-label', 'Sledeći list');
+      footer.appendChild(previous);
+      footer.appendChild(caption);
+      footer.appendChild(following);
+      hint.className = 'kal-detail__hint';
+      hint.textContent = 'Uvećajte za detalje · pomerajte sliku prstom ili mišem';
+      footer.appendChild(hint);
+      panel.appendChild(footer);
+      error.className = 'kal-detail__error';
+      error.setAttribute('role', 'status');
+      error.hidden = true;
+      viewport.appendChild(error);
+      var minus = $('[data-detail-minus]', toolbar);
+      var plus = $('[data-detail-plus]', toolbar);
+      var reset = $('[data-detail-fit]', toolbar);
+      var output = $('[data-detail-scale]', toolbar);
+
+      function maxFactor() { return Math.max(1, 1 / fit); }
+      function layout(nextFactor, point) {
+        if (!ready || lightbox.hidden) return;
+        var vw = viewport.clientWidth, vh = viewport.clientHeight;
+        if (!vw || !vh) return;
+        var oldWidth = parseFloat(lbImage.style.width) || iw;
+        var oldHeight = parseFloat(lbImage.style.height) || ih;
+        var px = point ? point.x : vw / 2, py = point ? point.y : vh / 2;
+        var ox = (viewport.scrollLeft + px - Math.max(0, (vw - oldWidth) / 2)) / oldWidth;
+        var oy = (viewport.scrollTop + py - Math.max(0, (vh - oldHeight) / 2)) / oldHeight;
+        fit = Math.min(vw / iw, vh / ih, 1);
+        factor = Math.max(1, Math.min(nextFactor, maxFactor()));
+        var w = iw * fit * factor, h = ih * fit * factor;
+        canvas.style.width = Math.max(vw, w) + 'px';
+        canvas.style.height = Math.max(vh, h) + 'px';
+        lbImage.style.width = w + 'px';
+        lbImage.style.height = h + 'px';
+        lbImage.style.left = Math.max(0, (vw - w) / 2) + 'px';
+        lbImage.style.top = Math.max(0, (vh - h) / 2) + 'px';
+        viewport.scrollLeft = factor === 1 ? 0 : ox * w + Math.max(0, (vw - w) / 2) - px;
+        viewport.scrollTop = factor === 1 ? 0 : oy * h + Math.max(0, (vh - h) / 2) - py;
+        output.textContent = factor.toLocaleString('sr-Latn', { maximumFractionDigits: 1 }) + '×';
+        minus.disabled = factor <= 1.001;
+        plus.disabled = factor >= maxFactor() - 0.001;
+        viewport.classList.toggle('is-zoomed', factor > 1.001);
+      }
+      function renderDetail() {
+        var token = ++request, t = thumbs[index], s = sides()[0];
+        ready = false;
+        factor = 1;
+        minus.disabled = plus.disabled = reset.disabled = true;
+        output.textContent = '1×';
+        lbTitle.textContent = name;
+        lbMeta.textContent = t.dataset.kalLabel + ' · ' + (index + 1) + ' / ' + thumbs.length;
+        lbMeta.setAttribute('aria-live', 'polite');
+        canvas.hidden = true;
+        error.hidden = false;
+        error.textContent = 'Učitavanje slike…';
+        viewport.setAttribute('aria-busy', 'true');
+        var incoming = new Image();
+        incoming.onload = function () {
+          if (token !== request) return;
+          iw = incoming.naturalWidth; ih = incoming.naturalHeight;
+          lbImage.src = s.src;
+          lbImage.alt = s.alt || (name + ' — ' + t.dataset.kalLabel);
+          canvas.hidden = false;
+          error.hidden = true;
+          viewport.removeAttribute('aria-busy');
+          ready = true;
+          reset.disabled = false;
+          layout(1);
+        };
+        incoming.onerror = function () {
+          if (token !== request) return;
+          viewport.removeAttribute('aria-busy');
+          error.textContent = 'Slika nije učitana. Izaberite drugi list ili ponovo otvorite pregled.';
+        };
+        incoming.src = s.src;
+      }
+      function moveSheet(delta) {
+        select(index + delta, false);
+        renderDetail();
+      }
+      function changeZoom(multiplier, point) { layout(factor * multiplier, point); }
+      plus.addEventListener('click', function () { changeZoom(1.5); });
+      minus.addEventListener('click', function () { changeZoom(1 / 1.5); });
+      reset.addEventListener('click', function () { layout(1); });
+      previous.addEventListener('click', function () { moveSheet(-1); });
+      following.addEventListener('click', function () { moveSheet(1); });
+      previous.hidden = following.hidden = thumbs.length < 2;
+      $('[data-kal-zoom]', shot).addEventListener('click', function () {
+        window.dgOverlay.show(lightbox, close);
+        renderDetail();
+      });
+      $$('[data-lightbox-close]', lightbox).forEach(function (el) {
+        el.addEventListener('click', function () { window.dgOverlay.hide(lightbox); });
+      });
+      lightbox.addEventListener('keydown', function (e) {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        if (e.key === '+' || e.key === '=') { e.preventDefault(); changeZoom(1.5); }
+        if (e.key === '-') { e.preventDefault(); changeZoom(1 / 1.5); }
+        if (e.key === '0') { e.preventDefault(); layout(1); }
+        /* Arrows pan when the image has focus; otherwise browse sheets. */
+        if (e.target !== viewport && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+          e.preventDefault(); moveSheet(e.key === 'ArrowLeft' ? -1 : 1);
+        }
+        if (e.key === 'PageDown' || e.key === 'PageUp') {
+          e.preventDefault(); moveSheet(e.key === 'PageDown' ? 1 : -1);
+        }
+      });
+      lbImage.draggable = false;
+      viewport.addEventListener('dblclick', function (e) {
+        var r = viewport.getBoundingClientRect();
+        if (factor > 1.001) layout(1);
+        else layout(3, { x: e.clientX - r.left, y: e.clientY - r.top });
+      });
+      /* Native touch scrolling keeps mobile pan and browser pinch available. */
+      viewport.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button !== 0 || factor <= 1.001) return;
+        e.preventDefault();
+        viewport.focus({ preventScroll: true });
+        drag = { x: e.clientX, y: e.clientY, left: viewport.scrollLeft, top: viewport.scrollTop };
+        viewport.setPointerCapture(e.pointerId);
+        viewport.classList.add('is-dragging');
+      });
+      viewport.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        viewport.scrollLeft = drag.left - e.clientX + drag.x;
+        viewport.scrollTop = drag.top - e.clientY + drag.y;
+      });
+      function endDrag() { drag = null; viewport.classList.remove('is-dragging'); }
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      viewport.addEventListener('lostpointercapture', endDrag);
+      if (window.ResizeObserver) new ResizeObserver(function () { layout(factor); }).observe(viewport);
+      else window.addEventListener('resize', function () { layout(factor); });
+    }
+
+    if (stage.hasAttribute('data-kal-detail-view')) {
+      setupDetailViewer();
+    } else {
     function renderLb() {
       var list = sides();
       lbSide = (lbSide + list.length) % list.length;
@@ -328,6 +501,7 @@
       if (e.key === "ArrowLeft") { lbSide--; renderLb(); }
       if (e.key === "ArrowRight") { lbSide++; renderLb(); }
     });
+    }
   }
 
   select(0, false, true);

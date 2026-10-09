@@ -4184,3 +4184,47 @@ a.cart-line__media:focus-visible{ outline: 2px solid var(--crimson); outline-off
 .sku-num{ color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0; white-space: nowrap; }
 .card__sku .sku-num, .kal-form__model-value .sku-num, .cart-sku .sku-num{ font-size: 15px; }
 .kal-panel__code b{ font-size: 16px; white-space: nowrap; }
+
+/* 45. Local zoom proposal — opt-in business calendar viewer only. */
+.lightbox--detail{ padding: 8px; }
+.lightbox--detail .lightbox__panel{
+  width: min(1440px, 100%); height: calc(100vh - 16px); height: calc(100dvh - 16px);
+  max-height: none; grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.lightbox--detail .lightbox__stage{
+  display: block; position: relative; padding: 0; overflow: auto;
+  overscroll-behavior: contain; touch-action: pan-x pan-y pinch-zoom;
+  scroll-behavior: auto; outline-offset: -3px;
+}
+.kal-detail__canvas{ position: relative; }
+.kal-detail__canvas[hidden], .kal-detail__error[hidden]{ display: none; }
+.lightbox--detail .lightbox__stage img{
+  position: absolute; display: block; max-width: none; max-height: none;
+  margin: 0; transform: none; user-select: none; -webkit-user-select: none;
+}
+.lightbox--detail .lightbox__stage.is-zoomed{ cursor: grab; }
+.lightbox--detail .lightbox__stage.is-dragging{ cursor: grabbing; }
+.kal-detail__toolbar{ display: flex; align-items: center; gap: 6px; padding: 8px; }
+.kal-detail__toolbar button, .lightbox--detail .lightbox__nav, .lightbox--detail .lightbox__close{
+  position: static; transform: none; flex-shrink: 0; width: 44px; height: 44px;
+  border: 1px solid #626772; border-radius: 8px; background: #282e38; color: #fff;
+  cursor: pointer; font: 600 24px/1 var(--font-body);
+}
+.kal-detail__toolbar button:hover, .lightbox--detail .lightbox__nav:hover{ background: #414957; }
+.kal-detail__toolbar button:disabled{ opacity: .4; cursor: default; }
+.kal-detail__toolbar [data-detail-fit]{ width: auto; padding: 0 12px; font-size: 14px; }
+.kal-detail__toolbar output{ min-width: 38px; text-align: center; color: #fff; font-size: 14px; }
+.lightbox--detail .lightbox__close{ margin-left: auto; }
+.kal-detail__footer{ display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 4px 8px; padding: 8px; }
+.lightbox--detail .lightbox__caption{ min-width: 0; padding: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+.lightbox--detail .lightbox__caption strong{ font-size: 16px; }
+.lightbox--detail .lightbox__caption span{ color: #d3d7dd; font-size: 13px; }
+.kal-detail__hint{ grid-column: 1 / -1; margin: 0; color: #d3d7dd; text-align: center; font-size: 12px; line-height: 1.4; }
+.kal-detail__error{ padding: 24px; text-align: center; color: #242932; }
+.lightbox--detail button:focus-visible, .lightbox--detail .lightbox__stage:focus-visible{ outline: 3px solid #f4bc65; }
+@media (max-width: 360px){
+  .kal-detail__toolbar{ gap: 4px; padding: 6px; }
+  .kal-detail__toolbar [data-detail-fit]{ padding: 0 7px; font-size: 13px; }
+  .kal-detail__toolbar output{ min-width: 32px; }
+  .lightbox--detail .lightbox__caption strong{ font-size: 14px; }
+}
