@@ -1173,6 +1173,28 @@
   var IS_LOCAL = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
   var AJAX_URL = "https://formsubmit.co/ajax/info@demogroup.rs";
 
+  /* A lost or unreadable response does not prove the service did not receive the order. */
+  function readSendResponse(res) {
+    return res.text().then(function (txt) {
+      var json = null; try { json = JSON.parse(txt); } catch (err) { json = null; }
+      if (res.ok && json && (json.success === true || json.success === "true")) return json;
+      var why = (json && json.message) ? String(json.message) : ("odgovor servisa " + res.status);
+      var failure = new Error(why);
+      failure.confirmedFailure = !!(json && (json.success === false || json.success === "false"));
+      throw failure;
+    });
+  }
+
+  function showSendFailure(err, ref) {
+    if (err && err.confirmedFailure) {
+      formStatus("Servis nije prihvatio porudžbinu " + ref + " (" + err.message + "). Korpa i uneti podaci su sačuvani — pokušajte ponovo ili nas pozovite na 063 227 674.", "error");
+      notice("Servis je prijavio neuspeh slanja porudžbine " + ref + ". Ništa iz korpe nije obrisano.");
+      return;
+    }
+    formStatus("Nismo dobili potvrdu za porudžbinu " + ref + ". Moguće je da je ipak stigla. Korpa i uneti podaci su sačuvani. Pre ponovnog slanja pozovite nas na 063 227 674 i navedite ovaj broj porudžbine da proverimo prijem.", "error");
+    notice("Ishod slanja porudžbine " + ref + " nije potvrđen. Pre novog pokušaja proverite prijem sa nama da ne biste poslali istu porudžbinu dva puta.");
+  }
+
   function submitButton() { return form.querySelector('button[type="submit"]'); }
 
   /* while a request is pending nothing on this page may change the cart (R2):
@@ -1216,7 +1238,7 @@
       if (addr && !addr.value.trim()) { formStatus("Za dostavu unesite adresu (ulicu i broj).", "error"); addr.focus(); return false; }
     }
     var consent = form.querySelector('.consent input[type="checkbox"][required]');   /* the imprint option is a .consent-styled checkbox too, but optional */
-    if (consent && !consent.checked) { formStatus("Potrebna je saglasnost za obradu podataka.", "error"); consent.focus(); return false; }
+    if (consent && !consent.checked) { formStatus("Potvrdite da ste upoznati sa politikom privatnosti.", "error"); consent.focus(); return false; }
     formStatus("");
     return true;
   }
@@ -1382,17 +1404,7 @@
           headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify(body),
           signal: controller ? controller.signal : undefined
-        }).then(function (res) {
-          return res.text().then(function (txt) {
-            var json = null; try { json = JSON.parse(txt); } catch (err) { json = null; }
-            var ok = res.ok && json && (json.success === true || json.success === "true");
-            if (!ok) {
-              var why = (json && json.message) ? String(json.message) : ("odgovor servisa " + res.status);
-              throw new Error(why);
-            }
-            return json;
-          });
-        }).then(function () {
+        }).then(readSendResponse).then(function () {
           if (timeout) window.clearTimeout(timeout);
           var remaining = settleAfterSend(snapshot);
           noteMemory = {};
@@ -1412,9 +1424,7 @@
           if (timeout) window.clearTimeout(timeout);
           setSending(false);
           render(data);                          /* the display follows current data even after a failure */
-          var reason = (err && err.name === "AbortError") ? "istek vremena" : ((err && err.message) ? err.message : "greška u mreži");
-          formStatus("Slanje nije uspelo (" + reason + "). Korpa i uneti podaci su sačuvani — pokušajte ponovo ili nas pozovite na 063 227 674.", "error");
-          notice("Porudžbina nije poslata. Možete pokušati ponovo — ništa iz korpe nije obrisano.");
+          showSendFailure(err, ref);
         });
       }).catch(function () {
         /* inventory unreachable: nothing was sent; show the cart as it is NOW (another tab may have changed it)
