@@ -838,10 +838,12 @@
   var summaryEl = cartRoot.querySelector("[data-cart-summary]");
   var layoutEl  = cartRoot.querySelector("[data-cart-layout]");
   var emptyEl   = cartRoot.querySelector("[data-cart-empty]");
+  var loadingEl = cartRoot.querySelector("[data-cart-loading]");
   var orderEl   = cartRoot.querySelector("[data-order-section]");
   var noticeEl  = cartRoot.querySelector("[data-cart-notice]");
   var successEl = cartRoot.querySelector("[data-order-success]");
   var form      = cartRoot.querySelector("[data-order-form]");
+  if (loadingEl) loadingEl.hidden = false;
 
   var lastData = null;      /* the most recent inventory data every re-render uses */
   var rowEls = {};          /* productId → { li, qty, sub, unit, msgBox, available, stock, pricePara } — rows are updated in place */
@@ -1007,6 +1009,7 @@
     var focus = activeInfo();
     var view = evaluate(data);
     var hasLines = view.rows.length > 0;
+    if (loadingEl) loadingEl.hidden = true;
     if (layoutEl) layoutEl.hidden = !hasLines;
     if (emptyEl) emptyEl.hidden = hasLines;
     if (orderEl) orderEl.hidden = !hasLines || view.units === 0;
@@ -1446,6 +1449,7 @@
   });
 
   inv.load().then(render).catch(function () {
+    if (loadingEl) loadingEl.hidden = true;
     if (layoutEl) layoutEl.hidden = true;
     if (orderEl) orderEl.hidden = true;
     if (emptyEl) emptyEl.hidden = readCart().length > 0 ? true : false;
