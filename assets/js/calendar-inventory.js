@@ -18,8 +18,9 @@
    later without rebuilding commerce:
 
      "confirmation" (current, owner decision 2026-09-24): every sellable model
-       is "Dostupno za poručivanje"; stock is UNKNOWN (null) — never zero, never
-       an invented figure; no low-stock badges, arrival dates, sold-out states
+       is "Dostupno za poručivanje" unless the owner supplied a positive stock
+       figure, displayed as "Na stanju" with quantity. Unknown stock stays null.
+       This display does not impose stock caps; no low-stock badges or sold-out states
        or stock caps. Quantity and delivery date are confirmed by Demo Group
        after the order request arrives.
      "stock": the original behaviour —
@@ -122,7 +123,7 @@
       if (typeof entry.manualStatus === "string" && STATUS[entry.manualStatus] && entry.manualStatus !== "dostupno" && !sellable(data, entry)) {
         return entry.manualStatus;                 /* an explicit non-selling status still shows on a switched-off model */
       }
-      return sellable(data, entry) ? "dostupno" : null;
+      return sellable(data, entry) ? (hasPositiveStock(entry) ? "na-stanju" : "dostupno") : null;
     }
     if (typeof entry.manualStatus === "string" && STATUS[entry.manualStatus]) {
       return entry.manualStatus;
@@ -149,6 +150,18 @@
 
   function priceFor(data, entry) {
     return sellable(data, entry) ? entry.price : null;
+  }
+
+  function hasPositiveStock(entry) {
+    return !!entry && typeof entry.stock === "number" && isFinite(entry.stock) &&
+      entry.stock > 0 && Math.floor(entry.stock) === entry.stock;
+  }
+
+  function availabilityText(label, key, entry) {
+    if ((key === "na-stanju" || key === "mala-kolicina") && hasPositiveStock(entry)) {
+      return label + " — " + String(entry.stock).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " kom.";
+    }
+    return label;
   }
 
   var loadPromise = null;
@@ -200,7 +213,7 @@
       el.innerHTML = TRUCK;                      /* fixed trusted markup */
       el.appendChild(document.createTextNode(s.card));
     } else {
-      el.textContent = s.card;
+      el.textContent = availabilityText(s.card, key, entry);
     }
     el.hidden = false;
 
@@ -229,11 +242,11 @@
       status.innerHTML = TRUCK;                  /* fixed trusted markup */
       status.appendChild(document.createTextNode(s.panel));
     } else {
-      status.textContent = s.panel;
+      status.textContent = availabilityText(s.panel, key, entry);
     }
     el.appendChild(status);
 
-    if (key === "dostupno") {
+    if (key === "dostupno" || (key === "na-stanju" && mode(data) === "confirmation")) {
       line(el, "kal-avail__note", CONFIRM_NOTE);
     }
     if (key === "stize-uskoro" && isDate(entry.arrivalDate)) {
@@ -267,3 +280,4 @@
     });
   }).catch(function () { /* no data — availability UI simply stays hidden */ });
 })();
+
